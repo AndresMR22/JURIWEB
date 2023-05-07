@@ -2,85 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Administrador;
 use App\Http\Requests\StoreAdministradorRequest;
 use App\Http\Requests\UpdateAdministradorRequest;
 
 class AdministradorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $administradores = Administrador::all();
+
+        return view("admin.administrador.index",compact('administradores'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.administrador.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAdministradorRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreAdministradorRequest $request)
     {
-        //
+        $user = User::create([
+            "name"=>$request->username,
+            "email"=>$request->email,
+            "password"=>Hash::make($request->password)
+        ]);
+
+        Administrador::create([
+            "user_id"=>$user->id
+        ]);
+
+        return redirect()->route('administrador.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Administrador  $administrador
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Administrador $administrador)
+    public function update(UpdateAdministradorRequest $request, $id)
     {
-        //
+        $admin = Administrador::find($id);
+        $user_id = $admin->user->id;
+        $user = User::find($user_id);
+        $user->update(
+            [
+            "name"=>$request->username,
+            "password"=>Hash::make($request->password)
+            ]
+        );
+        return back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Administrador  $administrador
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Administrador $administrador)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAdministradorRequest  $request
-     * @param  \App\Models\Administrador  $administrador
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateAdministradorRequest $request, Administrador $administrador)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Administrador  $administrador
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Administrador $administrador)
-    {
-        //
+        Administrador::destroy($id);
     }
 }
