@@ -26,14 +26,30 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('administrador', AdministradorController::class);
-Route::resource('abogado',AbogadoController::class);
-Route::resource('audiencia',AudienciaController::class);
-Route::resource('cliente',ClienteController::class);
-Route::resource('unidad',UnidadJudicialController::class);
-Route::resource('juicio',JuicioController::class);
+Route::group(['prefix' => 'dashboard'], function()
+{
 
-//RUTAS AJAX
-//BUSCAR CANTONES POR PROVINCIA
-Route::get('/cantonesByProvincia',[ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::group(['middleware' => 'admin'], function()
+    {
+    Route::resource('administrador', AdministradorController::class);
+    Route::resource('abogado',AbogadoController::class);
+    });
+
+    Route::group(['middleware' => ['adminabogado']], function()
+    {
+        Route::resource('audiencia',AudienciaController::class);
+        Route::resource('cliente',ClienteController::class);
+        Route::resource('unidad',UnidadJudicialController::class);
+        Route::resource('juicio',JuicioController::class);
+
+        //RUTAS AJAX
+        //BUSCAR CANTONES POR PROVINCIA
+        Route::get('/cantonesByProvincia',[ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
+    });
+
+    Route::group(['middleware' => 'cliente'], function()
+    {
+    });
+});
