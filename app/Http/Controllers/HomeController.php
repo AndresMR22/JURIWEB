@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cliente;
+use App\Models\Administrador;
+use App\Models\Abogado;
+use App\Models\Juicio;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $administradores = Administrador::all();
+        $abogados = Abogado::all();
+        $clientes = Cliente::all();
+        $juicios = Juicio::all();
+
+
+        return view('dashboard',compact('administradores','abogados','clientes','juicios'));
     }
 }

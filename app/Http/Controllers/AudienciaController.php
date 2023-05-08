@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Audiencia;
+use App\Models\Juicio;
 use App\Http\Requests\StoreAudienciaRequest;
 use App\Http\Requests\UpdateAudienciaRequest;
 
@@ -15,7 +16,9 @@ class AudienciaController extends Controller
      */
     public function index()
     {
-        //
+        $audiencias = Audiencia::all();
+        $juicios = Juicio::all();
+        return view('admin.audiencia.index',compact('audiencias','juicios'));
     }
 
     /**
@@ -25,7 +28,8 @@ class AudienciaController extends Controller
      */
     public function create()
     {
-        return view('admin.audiencia.create');
+        $juicios = Juicio::all();
+        return view('admin.audiencia.create',compact('juicios'));
     }
 
     /**
@@ -36,16 +40,14 @@ class AudienciaController extends Controller
      */
     public function store(StoreAudienciaRequest $request)
     {
-        $fecha = substr($request->get('fechahora'),0,10);
-        $hora = substr($request->get('fechahora'),11);
+        $fecha = $request->get('fechahora');
         Audiencia::create([
             "fecha"=>$fecha,
-            "hora"=>$hora,
             "observacion"=>$request->get('observacion'),
             "juicio_id"=>$request->get('juicio_id')
         ]);
 
-        return back();
+        return redirect()->route('audiencia.index');
     }
 
     /**
@@ -77,9 +79,16 @@ class AudienciaController extends Controller
      * @param  \App\Models\Audiencia  $audiencia
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAudienciaRequest $request, Audiencia $audiencia)
+    public function update(UpdateAudienciaRequest $request, $id)
     {
-        //
+        $audiencia = Audiencia::find($id);
+        $audiencia->update([
+            "fecha"=>$request->fecha,
+            "observacion"=>$request->observacion,
+            "juicio_id"=>$request->juicio_id,
+        ]);
+
+        return back();
     }
 
     /**

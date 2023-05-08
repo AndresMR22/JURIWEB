@@ -16,7 +16,6 @@ class CreateAudienciasTable extends Migration
         Schema::create('audiencias', function (Blueprint $table) {
             $table->id();
             $table->timestamp('fecha');
-            $table->string('hora');
             $table->text('observacion')->nullable();
 
             $table->unsignedBigInteger('juicio_id');

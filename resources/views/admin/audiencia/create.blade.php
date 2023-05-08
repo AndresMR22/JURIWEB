@@ -47,9 +47,9 @@
                    <label for="inputStatus">Juicio</label>
                    <select id="inputStatus" name="juicio_id" class="form-control custom-select">
                      <option selected disabled>Seleccionar juicio</option>
-                     <option value="1">Juicio 1</option>
-                     <option value="2">Juicio 2</option>
-                     <option value="3">Juicio 3</option>
+                     @foreach($juicios as $juicio)
+                     <option value="{{ $juicio->id }}">{{ $juicio->materia }}</option>
+                     @endforeach
                    </select>
                  </div>
                </div>

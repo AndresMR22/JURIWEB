@@ -162,9 +162,9 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" onclick="event.preventDefault();
+        <a title="Cerrar sesión" class="nav-link" onclick="event.preventDefault();
         document.getElementById('logout-form').submit();" role="button">
-          <i class="fas fa-th-large"></i>
+          <i class="fas fa-sign-out-alt"></i>
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                 class="d-none">
@@ -213,7 +213,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="{{ route('home') }}" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -317,6 +317,12 @@
                 <a href="{{route('audiencia.create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agregar</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('audiencia.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listar</p>
                 </a>
               </li>
             </ul>

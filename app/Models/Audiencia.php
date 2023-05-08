@@ -10,6 +10,11 @@ class Audiencia extends Model
     use HasFactory;
 
     public $fillable = [
-        "fecha","hora","observacion","juicio_id"
+        "fecha","observacion","juicio_id"
     ];
+
+    public function juicio()
+    {
+        return $this->belongsTo(Juicio::class);
+    }
 }
