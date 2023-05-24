@@ -19,7 +19,8 @@ class Cliente extends Model
         "estatus",
         "user_id",
         "provincia_id",
-        "responsable_id"
+        "responsable_id",
+        "cedula"
     ];
 
     public function user()

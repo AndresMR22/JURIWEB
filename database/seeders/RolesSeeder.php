@@ -53,6 +53,7 @@ class RolesSeeder extends Seeder
             "estatus"=>"A",
             "empresa_id"=>$empresa->id,
             "user_id"=>$user2->id,
+            "cedula"=>"2100463187"
         ]);
 
 
@@ -75,6 +76,7 @@ class RolesSeeder extends Seeder
             "provincia_id"=>1,
             "responsable_id"=>1,
             "user_id"=>$user3->id,
+            "cedula"=>"0101415052"
         ]);
       
     }

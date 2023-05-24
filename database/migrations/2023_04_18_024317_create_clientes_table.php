@@ -24,6 +24,8 @@ class CreateClientesTable extends Migration
             $table->string('estado_civil');
             $table->string('estatus');
             $table->string('responsable_id');
+            $table->string('cedula');
+
 
             $table->unsignedBigInteger('provincia_id');
             $table->foreign('provincia_id')->references('id')->on('provincias');

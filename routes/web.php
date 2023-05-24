@@ -46,6 +46,7 @@ Route::group(['prefix' => 'dashboard'], function()
 
         //RUTAS AJAX
         //BUSCAR CANTONES POR PROVINCIA
+        Route::get('/validarCedula',[AbogadoController::class,'validarCedula'])->name('abogado.validarCedula');
         Route::get('/cantonesByProvincia',[ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
     });
 

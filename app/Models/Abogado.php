@@ -9,7 +9,7 @@ class Abogado extends Model
 {
     use HasFactory;
 
-    public $fillable=["nombres","apellidos","celular","direccion","genero","estatus","empresa_id","user_id"];
+    public $fillable=["nombres","apellidos","celular","direccion","genero","estatus","empresa_id","user_id","cedula"];
 
     public function user()
     {

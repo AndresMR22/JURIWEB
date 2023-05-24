@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreAbogadoRequest;
 use App\Http\Requests\UpdateAbogadoRequest;
+use Illuminate\Http\Request;
+use App\Rules\ValidarCedula;
+use App\Rules\ValidarCedulaRepetida;
 
 class AbogadoController extends Controller
 {
@@ -35,8 +38,6 @@ class AbogadoController extends Controller
             "password"=>Hash::make($request->celular)
         ]);
 
-        dd($user);
-
         $user->assignRole('Abogado');
 
         Abogado::create([
@@ -47,10 +48,25 @@ class AbogadoController extends Controller
             "genero"=>$request->genero,
             "estatus"=>$request->estatus,
             "empresa_id"=>$request->empresa_id,
-            "user_id"=>$user->id
+            "user_id"=>$user->id,
+            "cedula"=>$request->cedula
         ]);
 
         return redirect()->route('abogado.index');
+    }
+
+    public function validarCedula(Request $request)
+    {
+        $msg1 = null; $msg2 = null;
+        $cedula = !empty($request->get('cedula')) ? $request->get('cedula') : '';
+        $vc = new ValidarCedula;
+        $msg1 =  $vc->passes('cedula',$cedula);
+        $vcr = new ValidarCedulaRepetida;
+        $msg2 = $vcr->passes('cedula',$cedula);
+        
+        //logica para validar cedula
+
+        return [$msg1,$msg2];
     }
 
     public function update(UpdateAbogadoRequest $request, $id)

@@ -63,12 +63,12 @@
             </div>
           </div> --}}
           <!-- /.col -->
-          <div class="col-6">
+          <div class="col-12">
             <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
           </div>
-          <div class="col-6">
+          {{-- <div class="col-6">
             <a href="{{route('register')}}" class="btn btn-info">Registrarse</a>
-          </div>
+          </div> --}}
           <!-- /.col -->
         </div>
       </form>

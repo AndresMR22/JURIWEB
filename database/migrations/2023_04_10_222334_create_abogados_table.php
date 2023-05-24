@@ -21,6 +21,7 @@ class CreateAbogadosTable extends Migration
             $table->string('direccion');
             $table->string('genero');
             $table->string('estatus');
+            $table->string('cedula');
 
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade')->onUpdate('cascade');

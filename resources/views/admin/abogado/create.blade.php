@@ -18,8 +18,20 @@
       </div><!-- /.container-fluid -->
     </section>
     
+    @if (count($errors) > 0)
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>
+                    {{ $error }}
+                </li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <!-- Main content -->
-   <form method="POST" action="{{route('abogado.store')}}">
+   <form id="formCreateAbogado" method="POST" action="{{route('abogado.store')}}">
     @csrf
        <section class="content">
          <div class="row d-flex justify-content-center">
@@ -35,25 +47,49 @@
                  </div>
                </div>
                <div class="card-body">
+
+                <div class="form-group" style="display:flex; justify-content:flex-start; align-items:center;">
+                  <div style="flex:1 0 100px;">
+                    <label for="inputName">Cedula</label>
+                    <input name="cedula" onkeypress="return valideKey(event);" type="text" id="cedula" value="{{ old('cedula') }}" class="form-control" minlength="10" maxlength="10">
+                    
+                    {{-- @error('cedula')
+                    <br>
+                    <small>*{{ $message }}</small>
+                    <br>
+                    @enderror --}}
+
+                  </div>
+                  <div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                    <label for="inputName">Estado</label>
+                    <div>
+
+                      <img id="visto" style="visibility: hidden;"  src="{{ asset('assets/dist/img/visto.png') }}">
+                      <img id="x" style="visibility: hidden; display:none;" src="{{ asset('assets/dist/img/x.png') }}">
+                    </div>
+                    
+                  </div>
+                </div>
+
                  <div class="form-group">
                    <label for="inputName">Nombres</label>
-                   <input name="nombres" type="text" id="nombres" class="form-control">
+                   <input name="nombres" value="{{ old('nombres') }}" type="text" id="nombres" class="form-control">
                  </div>
                  <div class="form-group">
                     <label for="inputName">Apellidos</label>
-                    <input name="apellidos" type="text" id="apellidos" class="form-control">
+                    <input name="apellidos" value="{{ old('apellidos') }}" type="text" id="apellidos" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="inputName">Dirección</label>
-                    <input name="direccion" type="text" id="direccion" class="form-control">
+                    <input name="direccion" value="{{ old('direccion') }}" type="text" id="direccion" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="inputName">Correo</label>
-                    <input name="correo" type="mail" id="correo" class="form-control">
+                    <input name="correo" value="{{ old('correo') }}" type="mail" id="correo" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="inputName">Celular</label>
-                    <input name="celular" type="tel" id="celular" class="form-control">
+                    <input name="celular" value="{{ old('celular') }}" type="tel" id="celular" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="inputStatus">Genero</label>
@@ -91,12 +127,98 @@
          </div>
          <div class="row">
            <div class="col-12 d-flex justify-content-center my-2" style="gap:20px;">
-             <a href="#" class="btn btn-secondary">Cancelar</a>
-             <input type="submit" value="Crear" class="btn btn-success float-right">
+             <a onclick="enviarForm()" class="btn btn-success float-right">Crear</a>
            </div>
          </div>
        </section>
     </form> 
     <!-- /.content -->
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+  integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded',function()
+    {
+      document.getElementById('cedula').addEventListener('change',validarCedula)
+    })
+
+    function valideKey(evt){
+      // code is the decimal ASCII representation of the pressed key.
+      var code = (evt.which) ? evt.which : evt.keyCode;
+      if(code==8) { // tecla de borrar
+        return true;
+      } else if(code>=48 && code<=57) { // rango de digitos
+        return true;
+      } else{ // otros caracteres
+        return false;
+      }
+    }
+
+    function enviarForm()
+    {
+      if(!cedulaValida)
+        document.getElementById('formCreateAbogado').submit();
+    }
+   
+    var cedulaValida = false;
+    function validarCedula(e)
+    {
+      let inputCedula = document.getElementById('cedula');
+      let imgEstadoVisto = document.getElementById('visto');
+      let imgEstadoX = document.getElementById('x');
+      //ajax
+      $.ajax({
+                url: "{{ route('abogado.validarCedula') }}",
+                dataType: "json",
+                data: 
+                {
+                  cedula:e.target.value
+                }
+            }).done(function(res)
+            {
+                if(!res[0])
+                {
+                  inputCedula.style.border='2px solid red';
+                  imgEstadoX.style.display='';
+                  imgEstadoX.style.visibility='';
+                  imgEstadoVisto.style.display='none';
+                  imgEstadoVisto.style.visibility='hidden';
+                  cedulaValida=false;
+                }else
+                {
+                  imgEstadoX.style.display='none';
+                  imgEstadoX.style.visibility='hidden';
+                  imgEstadoVisto.style.display='';
+                  imgEstadoVisto.style.visibility='';
+                  inputCedula.style.border='2px solid #2ECC71';
+                  cedulaValida=true;
+                }
+                
+                if(!res[1])
+                {
+                  inputCedula.style.border='2px solid red';
+                  imgEstadoX.style.display='';
+                  imgEstadoX.style.visibility='';
+                  imgEstadoVisto.style.display='none';
+                  imgEstadoVisto.style.visibility='hidden';
+                  cedulaValida=false;
+                }else{
+                  imgEstadoX.style.display='none';
+                  imgEstadoX.style.visibility='hidden';
+                  imgEstadoVisto.style.display='';
+                  imgEstadoVisto.style.visibility='';
+                  inputCedula.style.border='2px solid #2ECC71';
+                  cedulaValida=true;
+                }
+            })
+
+    }
+  </script>
 @endsection
