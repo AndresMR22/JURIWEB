@@ -41,19 +41,22 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                    <th>Cedula</th>
                     <th>Nombres</th>
                     <th>Celular</th>
                     <th>Dirección</th>
-                    {{-- <th>Correo</th> --}}
+                    <th>Estatus</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody>
                     @foreach($abogados as $key => $abogado)
                   <tr>
+                    <td>{{ $abogado->cedula }}</td>
                     <td>{{$abogado->nombres}} {{$abogado->apellidos}}</td>
                     <td>{{$abogado->celular}}</td>
                     <td>{{$abogado->direccion}}</td>
+                    <td>{{$abogado->estatus == '1' ? 'Activo' : 'Inactivo'}}</td>
                     {{-- <td>{{$abogado->correo}}</td> --}}
                     <td >
                     
@@ -76,20 +79,25 @@
                             </div>
                             <div class="modal-body">
                             <div class="fila">
+                            
                                 <div class="form-group">
                                     <label for="inputName">Nombres</label>
-                                    <input name="nombres" type="text" id="nombres" value="{{$abogado->nombres}}" class="form-control">
+                                    <input required name="nombres" type="text" id="nombres" value="{{$abogado->nombres}}" class="form-control">
                                 </div>
                                 <div class="form-group">
                                      <label for="inputName">Apellidos</label>
-                                     <input name="apellidos" type="text" id="apellidos" value="{{$abogado->apellidos}}" class="form-control">
+                                     <input required name="apellidos" type="text" id="apellidos" value="{{$abogado->apellidos}}" class="form-control">
                                 </div>
                             </div>
                             <div class="fila">
                                 <div class="form-group">
                                   <label for="inputName">Dirección</label>
-                                  <input name="direccion" type="text" id="direccion" value="{{$abogado->direccion}}" class="form-control">
+                                  <input required name="direccion" type="text" id="direccion" value="{{$abogado->direccion}}" class="form-control">
                                 </div>
+                                <div class="form-group">
+                                  <label for="inputName">Cedula</label>
+                                  <input required name="cedula" type="text" onkeypress="return valideKey(event);" id="cedula" value="{{$abogado->cedula}}" class="form-control">
+                              </div>
                                 {{-- <div class="form-group">
                                   <label for="inputName">Correo</label>
                                   <input name="correo" type="mail" id="correo" value="{{$abogado->correo}}" class="form-control">
@@ -98,11 +106,11 @@
                             <div class="fila">
                                 <div class="form-group">
                                   <label for="inputName">Celular</label>
-                                  <input name="celular" type="tel" id="celular" value="{{$abogado->celular}}" class="form-control">
+                                  <input required name="celular" type="tel" id="celular" value="{{$abogado->celular}}" class="form-control">
                                 </div>
                                 <div class="form-group">
                                   <label for="inputStatus">Genero</label>
-                                  <select id="genero" name="genero" class="form-control custom-select">
+                                  <select required id="genero" name="genero" class="form-control custom-select">
                                     <option selected disabled>Seleccionar genero</option>
                                     <option value="M" {{$abogado->genero == 'M' ? 'selected' : ''}}>Masculino</option>
                                     <option value="F" {{$abogado->genero == 'F' ? 'selected' : ''}}>Femenino</option>
@@ -113,7 +121,7 @@
                             <div class="fila">
                                 <div class="form-group">
                                   <label for="inputStatus">Empresa</label>
-                                  <select id="empresa" name="empresa_id" class="form-control custom-select">
+                                  <select required id="empresa" name="empresa_id" class="form-control custom-select">
                                     <option selected disabled>Seleccionar empresa</option>
                                     @foreach($empresas as $empresa)
                                     <option value="{{$empresa->id}}" {{$abogado->empresa_id == $empresa->id ? 'selected' : ''}}>{{$empresa->razon}}</option>
@@ -122,7 +130,7 @@
                                 </div>
                                <div class="form-group">
                                  <label for="inputStatus">Estatus</label>
-                                 <select id="estatus" name="estatus" class="form-control custom-select">
+                                 <select required id="estatus" name="estatus" class="form-control custom-select">
                                    <option selected disabled>Seleccionar estatus</option>
                                    <option value="1" {{$abogado->estatus == '1' ? 'selected' : ''}}>Estatus 1</option>
                                    <option value="2" {{$abogado->estatus == '2' ? 'selected' : ''}}>Estatus 2</option>
@@ -202,6 +210,18 @@
         let form = document.getElementById('formEliminar'+id);
         console.log(form)
         form.submit();
+    }
+
+    function valideKey(evt){
+      // code is the decimal ASCII representation of the pressed key.
+      var code = (evt.which) ? evt.which : evt.keyCode;
+      if(code==8) { // tecla de borrar
+        return true;
+      } else if(code>=48 && code<=57) { // rango de digitos
+        return true;
+      } else{ // otros caracteres
+        return false;
+      }
     }
   </script>
 @endsection

@@ -83,11 +83,11 @@ class AbogadoController extends Controller
 
 
         $abogado->update([
+            "cedula"=>$request->cedula,
             "nombres"=>$request->nombres,
             "apellidos"=>$request->apellidos,
             "celular"=>$request->celular,
             "direccion"=>$request->direccion,
-            // "correo"=>$request->correo,
             "genero"=>$request->genero,
             "estatus"=>$request->estatus,
             "empresa_id"=>$request->empresa_id

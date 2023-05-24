@@ -113,9 +113,8 @@
                    <label for="inputStatus">Estatus</label>
                    <select id="estatus" name="estatus" class="form-control custom-select">
                      <option selected disabled>Seleccionar estatus</option>
-                     <option value="1">Estatus 1</option>
-                     <option value="2">Estatus 2</option>
-                     <option value="3">Estatus 3</option>
+                     <option value="1">Activo</option>
+                     <option value="2">Inactivo</option>
                    </select>
                  </div>
                </div>
