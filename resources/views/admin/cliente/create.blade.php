@@ -112,7 +112,7 @@
 
                   <div class="form-group">
                     <label for="inputName">Fecha de nacimiento</label>
-                    <input name="fnacimiento" type="date" id="fnacimiento" class="form-control @error('fnacimiento') is-invalid @enderror">
+                    <input name="fnacimiento" max="{{date('Y-m-d')}}" type="date" id="fnacimiento" class="form-control @error('fnacimiento') is-invalid @enderror">
                     @error('fnacimiento')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

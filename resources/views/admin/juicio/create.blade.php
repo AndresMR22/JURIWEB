@@ -55,7 +55,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Fecha</label>
-                                    <input name="fecha" type="date" id="fecha" class="form-control">
+                                    <input name="fecha" min="{{date('Y-m-d')}}" type="date" id="fecha" class="form-control">
                                 </div>
 
                                 <div class="form-group">
