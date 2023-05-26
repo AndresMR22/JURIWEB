@@ -37,7 +37,7 @@
                <div class="card-body">
                  <div class="form-group">
                    <label for="inputName">Fecha y hora</label>
-                   <input name="fechahora" type="datetime-local" id="fecha" class="form-control">
+                   <input name="fechahora" min="<?=date('Y-m-d\Th:i')?>" type="datetime-local" id="fecha" class="form-control">
                  </div>
                  <div class="form-group">
                    <label for="inputDescription">Observación</label>

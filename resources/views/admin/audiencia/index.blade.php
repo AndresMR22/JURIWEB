@@ -76,7 +76,7 @@
                             <div class="fila">
                                 <div class="form-group">
                                     <label for="inputName">Fecha y hora</label>
-                                    <input name="fecha" type="datetime-local" id="fecha" value="{{$audiencia->fecha}}" class="form-control">
+                                    <input name="fecha" type="datetime-local" min="<?=date('Y-m-d\Th:i')?>" id="fecha" value="{{$audiencia->fecha}}" class="form-control">
                                 </div>
                             </div>
                             <div class="fila">
