@@ -24,7 +24,18 @@ class StoreClienteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombres' => 'required|string|max:50',
+            'apellidos' => 'required|string|max:50',
+            'celular'  => 'required',
+            'direccion' => 'required|string|max:250',
+            'correo'    => 'required|email',
+            'genero' =>'required|string|max:15',
+            'estatus' =>'required|string',
+            'cedula' => 'required|string|min:10|max:10',
+            'fnacimiento' =>'required|string',
+            'estado_civil' =>'required|string',
+            'provincia_id' =>'required',
+            'responsable_id' =>'required',
         ];
     }
 }

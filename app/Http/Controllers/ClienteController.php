@@ -16,8 +16,15 @@ class ClienteController extends Controller
 
     public function index()
     {
-        $abogado = Abogado::where('user_id',auth::id())->first();
-        $clientes = Cliente::where('responsable_id',$abogado->id)->get();
+        $user = User::find(auth::id());
+        if($user->hasRole('Administrador'))
+            $clientes = Cliente::all();
+        else if($user->hasRole('Abogado'))
+        {
+            $abogado = Abogado::where('user_id',auth::id())->first();
+            $clientes = Cliente::where('responsable_id',$abogado->id)->get();
+        }else{$clientes='';}
+        
         return view('admin.cliente.index',compact('clientes'));
     }
 

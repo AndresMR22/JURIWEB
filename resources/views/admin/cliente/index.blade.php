@@ -24,7 +24,24 @@
             display:flex;
             justify-content:space-between;
         }
+
+        /* .modal-content
+        {
+          height: 700px;;
+        } */
     </style>
+
+@if (count($errors) > 0)
+<div class="alert alert-danger" role="alert">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>
+                {{ $error }}
+            </li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
     <!-- Main content -->
     <section class="content">
@@ -74,72 +91,127 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                            <div class="fila">
+                              <div class="fila">
                                 <div class="form-group">
-                                    <label for="inputName">Nombres</label>
-                                    <input name="nombres" type="text" id="nombres" value="{{$cliente->nombres}}" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                     <label for="inputName">Apellidos</label>
-                                     <input name="apellidos" type="text" id="apellidos" value="{{$cliente->apellidos}}" class="form-control">
-                                </div>
+                                  <label for="inputName">Cedula</label>
+                                  <input required name="cedula" type="text"
+                                      onkeypress="return valideKey(event);"
+                                      id="cedula" value="{{ $cliente->cedula }}"
+                                      class="form-control @error('cedula') is-invalid @enderror">
+                                  @error('cedula')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
                             </div>
-                            <div class="fila">
-                                <div class="form-group">
-                                  <label for="inputName">Dirección</label>
-                                  <input name="direccion" type="text" id="direccion" value="{{$cliente->direccion}}" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputName">Fecha de nacimiento</label>
-                                    <input name="fnacimiento" type="date" id="fnacimiento" value="{{$cliente->fnacimiento}}" class="form-control">
+                              <div class="fila">
+                                  <div class="form-group">
+                                      <label for="inputName">Nombres</label>
+                                      <input name="nombres" type="text" id="nombres" value="{{$cliente->nombres}}" class="form-control @error('nombres') is-invalid @enderror">
+                                      @error('nombres')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
                                   </div>
-                            </div>
-                            <div class="fila">
-                                <div class="form-group">
-                                  <label for="inputName">Celular</label>
-                                  <input name="celular" type="tel" id="celular" value="{{$cliente->celular}}" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                  <label for="inputStatus">Genero</label>
-                                  <select id="genero" name="genero" class="form-control custom-select">
-                                    <option selected disabled>Seleccionar genero</option>
-                                    <option value="M" {{$cliente->genero == 'M' ? 'selected' : ''}}>Masculino</option>
-                                    <option value="F" {{$cliente->genero == 'F' ? 'selected' : ''}}>Femenino</option>
-                                    <option value="I" {{$cliente->genero == 'I' ? 'selected' : ''}}>Indefinido</option>
-                                  </select>
-                                </div>
-                            </div>
-
-                            <div class="fila">
-                               
-                                <div class="form-group">
-                                  <label for="inputStatus">Estado civil</label>
-                                  <select id="estado_civil" name="estado_civil" class="form-control custom-select">
-                                    <option selected disabled>Seleccionar estado</option>
-                                    <option value="soltero" {{$cliente->estatus == 'soltero' ? 'selected' : ''}}>Soltero</option>
-                                    <option value="casado" {{$cliente->estatus == 'casado' ? 'selected' : ''}}>Casado</option>
-                                    <option value="divorciado" {{$cliente->estatus == 'divorciado' ? 'selected' : ''}}>Divorciado</option>
-                                    <option value="viudo" {{$cliente->estatus == 'viudo' ? 'selected' : ''}}>Viudo</option>
-                                  </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputStatus">Estatus</label>
-                                    <select id="estatus" name="estatus" class="form-control custom-select">
-                                      <option selected disabled>Seleccionar estatus</option>
-                                      <option value="1" {{$cliente->estatus == '1' ? 'selected' : ''}}>Estatus 1</option>
-                                      <option value="2" {{$cliente->estatus == '2' ? 'selected' : ''}}>Estatus 2</option>
-                                      <option value="3" {{$cliente->estatus == '3' ? 'selected' : ''}}>Estatus 3</option>
+                                  <div class="form-group">
+                                       <label for="inputName">Apellidos</label>
+                                       <input name="apellidos" type="text" id="apellidos" value="{{$cliente->apellidos}}" class="form-control @error('apellidos') is-invalid @enderror">
+                                       @error('apellidos')
+                                       <span class="invalid-feedback" role="alert">
+                                           <strong>{{ $message }}</strong>
+                                       </span>
+                                   @enderror
+                                  </div>
+                              </div>
+                              <div class="fila">
+                                  <div class="form-group">
+                                    <label for="inputName">Dirección</label>
+                                    <input name="direccion" type="text" id="direccion" value="{{$cliente->direccion}}" class="form-control @error('direccion') is-invalid @enderror">
+                                    @error('direccion')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+  
+                                  <div class="form-group">
+                                      <label for="inputName">Fecha de nacimiento</label>
+                                      <input name="fnacimiento" type="date" id="fnacimiento" value="{{$cliente->fnacimiento}}" class="form-control @error('fnacimiento') is-invalid @enderror">
+                                      @error('fnacimiento')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                                    </div>
+                              </div>
+                              <div class="fila">
+                                  <div class="form-group">
+                                    <label for="inputName">Celular</label>
+                                    <input name="celular" type="tel" id="celular" value="{{$cliente->celular}}" class="form-control @error('celular') is-invalid @enderror">
+                                    @error('celular')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="inputStatus">Genero</label>
+                                    <select id="genero" name="genero" class="form-control custom-select @error('genero') is-invalid @enderror">
+                                      <option selected disabled>Seleccionar genero</option>
+                                      <option value="M" {{$cliente->genero == 'M' ? 'selected' : ''}}>Masculino</option>
+                                      <option value="F" {{$cliente->genero == 'F' ? 'selected' : ''}}>Femenino</option>
+                                      <option value="I" {{$cliente->genero == 'I' ? 'selected' : ''}}>Indefinido</option>
                                     </select>
+                                    @error('genero')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                   </div>
-                                  
-                             </div>
-
+                              </div>
+                              <div class="fila">
+                                 
+                                  <div class="form-group">
+                                    <label for="inputStatus">Estado civil</label>
+                                    <select id="estado_civil" name="estado_civil" class="form-control custom-select @error('estado_civil') is-invalid @enderror">
+                                      <option selected disabled>Seleccionar estado</option>
+                                      <option value="soltero" {{$cliente->estatus == 'soltero' ? 'selected' : ''}}>Soltero</option>
+                                      <option value="casado" {{$cliente->estatus == 'casado' ? 'selected' : ''}}>Casado</option>
+                                      <option value="divorciado" {{$cliente->estatus == 'divorciado' ? 'selected' : ''}}>Divorciado</option>
+                                      <option value="viudo" {{$cliente->estatus == 'viudo' ? 'selected' : ''}}>Viudo</option>
+                                    </select>
+                                    @error('estado_civil')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="inputStatus">Estatus</label>
+                                      <select id="estatus" name="estatus" class="form-control custom-select @error('estatus') is-invalid @enderror">
+                                        <option selected disabled>Seleccionar estatus</option>
+                                        <option value="1" {{$cliente->estatus == '1' ? 'selected' : ''}}>Estatus 1</option>
+                                        <option value="2" {{$cliente->estatus == '2' ? 'selected' : ''}}>Estatus 2</option>
+                                        <option value="3" {{$cliente->estatus == '3' ? 'selected' : ''}}>Estatus 3</option>
+                                      </select>
+                                      @error('estatus')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                                    </div>
+                                    
+                               </div>
+  
+                              </div>
+                              <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                              </div>
                             </div>
-                            <div class="modal-footer justify-content-between">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                              <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                            </div>
+                            
                           </div>
                           <!-- /.modal-content -->
                         </div>
@@ -206,6 +278,76 @@
         let form = document.getElementById('formEliminar'+id);
         console.log(form)
         form.submit();
+    }
+
+    function valideKey(evt) {
+            // code is the decimal ASCII representation of the pressed key.
+            var code = (evt.which) ? evt.which : evt.keyCode;
+            if (code == 8) { // tecla de borrar
+                return true;
+            } else if (code >= 48 && code <= 57) { // rango de digitos
+                return true;
+            } else { // otros caracteres
+                return false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded',function()
+    {
+      document.getElementById('cedula').addEventListener('change',validarCedula)
+    })
+
+ function validarCedula(e)
+    {
+      let inputCedula = document.getElementById('cedula');
+      let imgEstadoVisto = document.getElementById('visto');
+      let imgEstadoX = document.getElementById('x');
+      //ajax
+      $.ajax({
+                url: "{{ route('abogado.validarCedula') }}",
+                dataType: "json",
+                data: 
+                {
+                  cedula:e.target.value
+                }
+            }).done(function(res)
+            {
+                if(!res[0])
+                {
+                  inputCedula.style.border='2px solid red';
+                  imgEstadoX.style.display='';
+                  imgEstadoX.style.visibility='';
+                  imgEstadoVisto.style.display='none';
+                  imgEstadoVisto.style.visibility='hidden';
+                  cedulaValida=false;
+                }else
+                {
+                  imgEstadoX.style.display='none';
+                  imgEstadoX.style.visibility='hidden';
+                  imgEstadoVisto.style.display='';
+                  imgEstadoVisto.style.visibility='';
+                  inputCedula.style.border='2px solid #2ECC71';
+                  cedulaValida=true;
+                }
+                
+                if(!res[1])
+                {
+                  inputCedula.style.border='2px solid red';
+                  imgEstadoX.style.display='';
+                  imgEstadoX.style.visibility='';
+                  imgEstadoVisto.style.display='none';
+                  imgEstadoVisto.style.visibility='hidden';
+                  cedulaValida=false;
+                }else{
+                  imgEstadoX.style.display='none';
+                  imgEstadoX.style.visibility='hidden';
+                  imgEstadoVisto.style.display='';
+                  imgEstadoVisto.style.visibility='';
+                  inputCedula.style.border='2px solid #2ECC71';
+                  cedulaValida=true;
+                }
+            })
+
     }
   </script>
 @endsection

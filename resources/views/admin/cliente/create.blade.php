@@ -19,7 +19,7 @@
     </section>
     
     <!-- Main content -->
-   <form method="POST" action="{{route('cliente.store')}}">
+   <form  id="formCrearCliente" method="POST" action="{{route('cliente.store')}}">
     @csrf
        <section class="content">
          <div class="row d-flex justify-content-center">
@@ -35,73 +35,147 @@
                  </div>
                </div>
                <div class="card-body">
+
+                <div class="form-group" style="display:flex; justify-content:flex-start; align-items:center;">
+                  <div style="flex:1 0 100px;">
+                    <label for="inputName">Cedula</label>
+                    <input name="cedula" onkeypress="return valideKey(event);" type="text" id="cedula" value="{{ old('cedula') }}" class="form-control @error('cedula') is-invalid @enderror" minlength="10" maxlength="10">
+                    
+                    @error('cedula')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
+                  </div>
+                  <div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                    <label for="inputName">Estado</label>
+                    <div>
+
+                      <img id="visto" style="visibility: hidden;"  src="{{ asset('assets/dist/img/visto.png') }}">
+                      <img id="x" style="visibility: hidden; display:none;" src="{{ asset('assets/dist/img/x.png') }}">
+                    </div>
+                    
+                  </div>
+                </div>
+
                  <div class="form-group">
                    <label for="inputName">Nombres</label>
-                   <input name="nombres" type="text" id="nombres" class="form-control">
+                   <input name="nombres" type="text" id="nombres" class="form-control @error('nombres') is-invalid @enderror">
+                   @error('nombres')
+                   <span class="invalid-feedback" role="alert">
+                       <strong>{{ $message }}</strong>
+                   </span>
+               @enderror
                  </div>
                  <div class="form-group">
                     <label for="inputName">Apellidos</label>
-                    <input name="apellidos" type="text" id="apellidos" class="form-control">
+                    <input name="apellidos" type="text" id="apellidos" class="form-control @error('apellidos') is-invalid @enderror">
+                    @error('apellidos')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputName">Celular</label>
-                    <input name="celular" type="tel" id="celular" class="form-control">
+                    <input name="celular" type="tel" id="celular" class="form-control @error('celular') is-invalid @enderror">
+                    @error('celular')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputName">Dirección</label>
-                    <input name="direccion" type="text" id="direccion" class="form-control">
+                    <input name="direccion" type="text" id="direccion" class="form-control @error('direccion') is-invalid @enderror">
+                    @error('direccion')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputStatus">Genero</label>
-                    <select id="genero" name="genero" class="form-control custom-select">
+                    <select id="genero" name="genero" class="form-control custom-select @error('genero') is-invalid @enderror">
                       <option selected disabled>Seleccionar genero</option>
                       <option value="M">Masculino</option>
                       <option value="F">Femenino</option>
                       <option value="I">Indefinido</option>
                     </select>
+                    @error('genero')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
 
                   <div class="form-group">
                     <label for="inputName">Fecha de nacimiento</label>
-                    <input name="fnacimiento" type="date" id="fnacimiento" class="form-control">
+                    <input name="fnacimiento" type="date" id="fnacimiento" class="form-control @error('fnacimiento') is-invalid @enderror">
+                    @error('fnacimiento')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
 
                   <div class="form-group">
                     <label for="inputName">Correo</label>
-                    <input name="correo" type="mail" id="correo" class="form-control">
+                    <input name="correo" type="mail" id="correo" class="form-control @error('correo') is-invalid @enderror">
+                    @error('correo')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                  
                 
                  
                  <div class="form-group">
                    <label for="inputStatus">Estado civil</label>
-                   <select id="estado_civil" name="estado_civil" class="form-control custom-select">
+                   <select id="estado_civil" name="estado_civil" class="form-control custom-select @error('estado_civil') is-invalid @enderror">
                      <option selected disabled>Seleccionar estado</option>
                      <option value="casado">Casado</option>
                      <option value="soltero">Soltero</option>
                      <option value="divorciado">Divorciado</option>
                      <option value="viudo">Viudo</option>
                    </select>
+                   @error('estado_civil')
+                   <span class="invalid-feedback" role="alert">
+                       <strong>{{ $message }}</strong>
+                   </span>
+               @enderror
                  </div>
 
                  <div class="form-group">
                     <label for="inputStatus">Estatus</label>
-                    <select id="estatus" name="estatus" class="form-control custom-select">
+                    <select id="estatus" name="estatus" class="form-control custom-select @error('estatus') is-invalid @enderror">
                       <option selected disabled>Seleccionar estatus</option>
                       <option value="1">Estatus 1</option>
                       <option value="2">Estatus 2</option>
                       <option value="3">Estatus 3</option>
                     </select>
+                    @error('estatus')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
 
                   <div class="form-group">
                     <label for="inputStatus">Provincia</label>
-                    <select id="provincia_id" name="provincia_id" class="form-control custom-select">
+                    <select id="provincia_id" name="provincia_id" class="form-control custom-select @error('provincia_id') is-invalid @enderror">
                     <option selected disabled>Seleccionar provincia</option>
                       @foreach($provincias as $key => $provincia)
                       <option value="{{$provincia->id}}">{{$provincia->nombre}}</option>
                       @endforeach
                     </select>
+                    @error('provincia_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
 
                   <div class="form-group" id="cantones">
@@ -116,7 +190,7 @@
          <div class="row">
            <div class="col-12 d-flex justify-content-center my-2" style="gap:20px;">
              <a href="#" class="btn btn-secondary">Cancelar</a>
-             <input type="submit" value="Crear" class="btn btn-success float-right">
+             <a onclick="enviarForm()" class="btn btn-success float-right">Crear</a>
            </div>
          </div>
        </section>
@@ -131,6 +205,83 @@
     integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
+
+document.addEventListener('DOMContentLoaded',function()
+    {
+      document.getElementById('cedula').addEventListener('change',validarCedula)
+    })
+
+    function valideKey(evt){
+      // code is the decimal ASCII representation of the pressed key.
+      var code = (evt.which) ? evt.which : evt.keyCode;
+      if(code==8) { // tecla de borrar
+        return true;
+      } else if(code>=48 && code<=57) { // rango de digitos
+        return true;
+      } else{ // otros caracteres
+        return false;
+      }
+    }
+
+    function enviarForm()
+    {
+      if(!cedulaValida)
+        document.getElementById('formCrearCliente').submit();
+    }
+   
+    var cedulaValida = false;
+    function validarCedula(e)
+    {
+      let inputCedula = document.getElementById('cedula');
+      let imgEstadoVisto = document.getElementById('visto');
+      let imgEstadoX = document.getElementById('x');
+      //ajax
+      $.ajax({
+                url: "{{ route('abogado.validarCedula') }}",
+                dataType: "json",
+                data: 
+                {
+                  cedula:e.target.value
+                }
+            }).done(function(res)
+            {
+                if(!res[0])
+                {
+                  inputCedula.style.border='2px solid red';
+                  imgEstadoX.style.display='';
+                  imgEstadoX.style.visibility='';
+                  imgEstadoVisto.style.display='none';
+                  imgEstadoVisto.style.visibility='hidden';
+                  cedulaValida=false;
+                }else
+                {
+                  imgEstadoX.style.display='none';
+                  imgEstadoX.style.visibility='hidden';
+                  imgEstadoVisto.style.display='';
+                  imgEstadoVisto.style.visibility='';
+                  inputCedula.style.border='2px solid #2ECC71';
+                  cedulaValida=true;
+                }
+                
+                if(!res[1])
+                {
+                  inputCedula.style.border='2px solid red';
+                  imgEstadoX.style.display='';
+                  imgEstadoX.style.visibility='';
+                  imgEstadoVisto.style.display='none';
+                  imgEstadoVisto.style.visibility='hidden';
+                  cedulaValida=false;
+                }else{
+                  imgEstadoX.style.display='none';
+                  imgEstadoX.style.visibility='hidden';
+                  imgEstadoVisto.style.display='';
+                  imgEstadoVisto.style.visibility='';
+                  inputCedula.style.border='2px solid #2ECC71';
+                  cedulaValida=true;
+                }
+            })
+
+    }
 
     document.getElementById('provincia_id').addEventListener('change',function(e)
     {

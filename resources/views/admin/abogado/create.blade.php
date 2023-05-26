@@ -18,17 +18,7 @@
       </div><!-- /.container-fluid -->
     </section>
     
-    @if (count($errors) > 0)
-    <div class="alert alert-danger" role="alert">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>
-                    {{ $error }}
-                </li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+   
 
     <!-- Main content -->
    <form id="formCreateAbogado" method="POST" action="{{route('abogado.store')}}">
@@ -51,13 +41,13 @@
                 <div class="form-group" style="display:flex; justify-content:flex-start; align-items:center;">
                   <div style="flex:1 0 100px;">
                     <label for="inputName">Cedula</label>
-                    <input name="cedula" onkeypress="return valideKey(event);" type="text" id="cedula" value="{{ old('cedula') }}" class="form-control" minlength="10" maxlength="10">
+                    <input name="cedula" onkeypress="return valideKey(event);" type="text" id="cedula" value="{{ old('cedula') }}" class="form-control @error('cedula') is-invalid @enderror" minlength="10" maxlength="10">
                     
-                    {{-- @error('cedula')
-                    <br>
-                    <small>*{{ $message }}</small>
-                    <br>
-                    @enderror --}}
+                    @error('cedula')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 
                   </div>
                   <div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
@@ -73,49 +63,89 @@
 
                  <div class="form-group">
                    <label for="inputName">Nombres</label>
-                   <input name="nombres" value="{{ old('nombres') }}" type="text" id="nombres" class="form-control">
+                   <input name="nombres" value="{{ old('nombres') }}" type="text" id="nombres" class="form-control @error('nombres') is-invalid @enderror">
+                   @error('nombres')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                  </div>
                  <div class="form-group">
                     <label for="inputName">Apellidos</label>
-                    <input name="apellidos" value="{{ old('apellidos') }}" type="text" id="apellidos" class="form-control">
+                    <input name="apellidos" value="{{ old('apellidos') }}" type="text" id="apellidos" class="form-control @error('apellidos') is-invalid @enderror">
+                    @error('apellidos')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputName">Dirección</label>
-                    <input name="direccion" value="{{ old('direccion') }}" type="text" id="direccion" class="form-control">
+                    <input name="direccion" value="{{ old('direccion') }}" type="text" id="direccion" class="form-control @error('direccion') is-invalid @enderror">
+                    @error('direccion')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputName">Correo</label>
-                    <input name="correo" value="{{ old('correo') }}" type="mail" id="correo" class="form-control">
+                    <input name="correo" value="{{ old('correo') }}" type="mail" id="correo" class="form-control @error('correo') is-invalid @enderror">
+                    @error('correo')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputName">Celular</label>
-                    <input name="celular" value="{{ old('celular') }}" type="tel" id="celular" class="form-control">
+                    <input name="celular" value="{{ old('celular') }}" type="tel" id="celular" class="form-control @error('celular') is-invalid @enderror">
+                    @error('celular')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputStatus">Genero</label>
-                    <select id="genero" name="genero" class="form-control custom-select">
+                    <select id="genero" name="genero" class="form-control custom-select @error('genero') is-invalid @enderror">
                       <option selected disabled>Seleccionar genero</option>
                       <option value="M">Masculino</option>
                       <option value="F">Femenino</option>
                       <option value="I">Indefinido</option>
                     </select>
+                    @error('genero')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputStatus">Empresa</label>
-                    <select id="empresa" name="empresa_id" class="form-control custom-select">
+                    <select id="empresa" name="empresa_id" class="form-control custom-select @error('empresa_id') is-invalid @enderror">
                       <option selected disabled>Seleccionar empresa</option>
                       @foreach($empresas as $empresa)
                       <option value="{{$empresa->id}}">{{$empresa->razon}}</option>
                       @endforeach
                     </select>
+                    @error('empresa_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                   </div>
                  <div class="form-group">
                    <label for="inputStatus">Estatus</label>
-                   <select id="estatus" name="estatus" class="form-control custom-select">
+                   <select id="estatus" name="estatus" class="form-control custom-select @error('estatus') is-invalid @enderror">
                      <option selected disabled>Seleccionar estatus</option>
                      <option value="1">Activo</option>
                      <option value="2">Inactivo</option>
                    </select>
+                   @error('estatus')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                  </div>
                </div>
                <!-- /.card-body -->
