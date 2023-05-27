@@ -24,7 +24,9 @@ class StoreAudienciaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'fechahora' => 'required|date',
+            'observacion' => 'nullable|string|max:255',
+            'juicio_id'  => 'required',
         ];
     }
 }

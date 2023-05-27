@@ -40,7 +40,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Número</label>
-                                    <input name="nro" type="text" id="nro" class="form-control">
+                                    <input name="nro" type="text" id="nro" readonly value="{{ $idSiguiente }}" class="form-control">
                                 </div>
 
                                 <div class="form-group">
@@ -62,9 +62,9 @@
                                     <label for="inputStatus">Estatus</label>
                                     <select id="estatus" name="estatus" class="form-control custom-select">
                                         <option selected disabled>Seleccionar estatus</option>
-                                        <option value="1">Estatus 1</option>
-                                        <option value="2">Estatus 2</option>
-                                        <option value="3">Estatus 3</option>
+                                        <option value="1">En proceso</option>
+                                        <option value="2">Archivado</option>
+                                        <option value="3">Finalizado</option>
                                     </select>
                                 </div>
                                 

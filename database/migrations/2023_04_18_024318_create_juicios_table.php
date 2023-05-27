@@ -15,7 +15,7 @@ class CreateJuiciosTable extends Migration
     {
         Schema::create('juicios', function (Blueprint $table) {
             $table->id();
-            $table->integer('nro');
+            $table->string('nro');
             $table->string('materia');
             $table->string('estadop');
             $table->timestamp('fecha');

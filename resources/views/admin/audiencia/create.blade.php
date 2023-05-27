@@ -37,20 +37,35 @@
                <div class="card-body">
                  <div class="form-group">
                    <label for="inputName">Fecha y hora</label>
-                   <input name="fechahora" min="<?=date('Y-m-d\Th:i')?>" type="datetime-local" id="fecha" class="form-control">
+                   <input name="fechahora" min="<?=date('Y-m-d\Th:i')?>" type="datetime-local" id="fecha" class="form-control @error('fechahora') is-invalid @enderror">
+                   @error('fechahora')
+                   <span class="invalid-feedback" role="alert">
+                       <strong>{{ $message }}</strong>
+                   </span>
+               @enderror
                  </div>
                  <div class="form-group">
                    <label for="inputDescription">Observación</label>
-                   <textarea name="observacion" id="inputDescription" class="form-control" rows="4"></textarea>
+                   <textarea name="observacion" id="inputDescription" class="form-control @error('observacion') is-invalid @enderror" rows="4"></textarea>
+                   @error('observacion')
+                   <span class="invalid-feedback" role="alert">
+                       <strong>{{ $message }}</strong>
+                   </span>
+               @enderror
                  </div>
                  <div class="form-group">
                    <label for="inputStatus">Juicio</label>
-                   <select id="inputStatus" name="juicio_id" class="form-control custom-select">
+                   <select id="inputStatus" name="juicio_id" class="form-control custom-select @error('juicio_id') is-invalid @enderror">
                      <option selected disabled>Seleccionar juicio</option>
                      @foreach($juicios as $juicio)
                      <option value="{{ $juicio->id }}">{{ $juicio->materia }}</option>
                      @endforeach
                    </select>
+                   @error('juicio_id')
+                   <span class="invalid-feedback" role="alert">
+                       <strong>{{ $message }}</strong>
+                   </span>
+               @enderror
                  </div>
                </div>
                <!-- /.card-body -->

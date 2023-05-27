@@ -72,7 +72,7 @@ class RolesSeeder extends Seeder
             "genero"=>"Masculino",
             "fnacimiento"=>"1998-03-12 12:49:00",
             "estado_civil"=>"soltero",
-            "estatus"=>"A",
+            // "estatus"=>"A",
             "provincia_id"=>1,
             "responsable_id"=>1,
             "user_id"=>$user3->id,

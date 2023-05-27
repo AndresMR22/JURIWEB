@@ -36,9 +36,14 @@ class JuicioController extends Controller
         if($user->hasRole('Abogado'))
         {
             $esAbogado = true;
-            $abogados = Abogado::find(auth::id());// no es array
+            $abogados = Abogado::where('user_id',auth::id())->first();// no es array
+            // dd($abogados);
         }
-        return view('admin.juicio.create',compact('juicios','esAbogado','abogados','clientes','unidades'));
+
+        $ultimoJuicioAgregado = Juicio::latest()->first()->get('id');
+        $idSiguiente = $ultimoJuicioAgregado[0]['id']+1;
+        $idSiguiente = "JN-".$idSiguiente;
+        return view('admin.juicio.create',compact('idSiguiente','juicios','esAbogado','abogados','clientes','unidades'));
     }
 
     public function store(StoreJuicioRequest $request)

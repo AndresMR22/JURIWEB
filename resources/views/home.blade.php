@@ -300,6 +300,31 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Unidad Judicial
+                <i class="fas fa-angle-left right"></i>
+                {{-- <span class="badge badge-info right">6</span> --}}
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('unidad.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Agregar</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('unidad.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listar</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           @endif
 
           @if(auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Abogado') )
@@ -351,30 +376,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Unidad Judicial
-                <i class="fas fa-angle-left right"></i>
-                {{-- <span class="badge badge-info right">6</span> --}}
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('unidad.create')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Agregar</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('unidad.index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Listar</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+         
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>

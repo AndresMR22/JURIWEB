@@ -6,6 +6,9 @@ use App\Models\Audiencia;
 use App\Models\Juicio;
 use App\Http\Requests\StoreAudienciaRequest;
 use App\Http\Requests\UpdateAudienciaRequest;
+use App\Models\User;
+use App\Models\Abogado;
+use Illuminate\Support\Facades\Auth;
 
 class AudienciaController extends Controller
 {
@@ -28,7 +31,16 @@ class AudienciaController extends Controller
      */
     public function create()
     {
+
         $juicios = Juicio::all();
+
+        $user = User::find(auth::id());
+        if($user->hasRole('Abogado'))
+        {
+            $id = Abogado::where('user_id',auth::id())->first('id');
+        
+            $juicios = Juicio::where('abogado_id',$id->id)->get();
+        }
         return view('admin.audiencia.create',compact('juicios'));
     }
 

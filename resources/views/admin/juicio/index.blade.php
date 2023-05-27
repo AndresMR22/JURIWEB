@@ -66,7 +66,7 @@
                     <td>{{$juicio->materia}}</td>
                     <td>{{$juicio->estadop}}</td>
                     <td>{{$juicio->fecha}}</td>
-                    <td>{{$juicio->estatus}}</td>
+                    <td>{{ $juicio->estatus=='1' ? 'En proceso' :($juicio->estatus=='2' ? 'Archivado' :'Finalizado') }}</td>
                     <td>{{$juicio->abogado->nombres}}</td>
                     <td>{{$juicio->cliente->nombres}}</td>
                     {{-- <td>{{isset($juicio->unidad_judicial) ? 'si' : 'no'}}</td> --}}
@@ -94,7 +94,7 @@
                                 <div class="fila">
                                     <div class="form-group">
                                         <label for="inputName">Número</label>
-                                        <input name="nro" type="text" id="nro" value="{{$juicio->nro}}" class="form-control">
+                                        <input name="nro" type="text" id="nro" readonly value="{{$juicio->nro}}" class="form-control">
                                     </div>
                                     <div class="form-group">
                                          <label for="inputName">Estado</label>

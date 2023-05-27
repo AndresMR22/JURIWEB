@@ -35,13 +35,14 @@ Route::group(['prefix' => 'dashboard'], function()
     {
     Route::resource('administrador', AdministradorController::class);
     Route::resource('abogado',AbogadoController::class);
+    Route::resource('unidad',UnidadJudicialController::class);
+
     });
 
     Route::group(['middleware' => ['adminabogado']], function()
     {
         Route::resource('audiencia',AudienciaController::class);
         Route::resource('cliente',ClienteController::class);
-        Route::resource('unidad',UnidadJudicialController::class);
         Route::resource('juicio',JuicioController::class);
 
         //RUTAS AJAX
