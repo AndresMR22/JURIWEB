@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Juicio;
 use App\Models\Abogado;
+use App\Models\User;
 use App\Models\Cliente;
 use App\Models\UnidadJudicial;
 use App\Http\Requests\StoreJuicioRequest;
 use App\Http\Requests\UpdateJuicioRequest;
+use Illuminate\Support\Facades\Auth;
 
 class JuicioController extends Controller
 {
@@ -29,7 +31,14 @@ class JuicioController extends Controller
         $abogados = Abogado::all();
         $clientes = Cliente::all();
         $unidades = UnidadJudicial::all();
-        return view('admin.juicio.create',compact('juicios','abogados','clientes','unidades'));
+        $esAbogado = false;
+        $user = User::find(auth::id());
+        if($user->hasRole('Abogado'))
+        {
+            $esAbogado = true;
+            $abogados = Abogado::find(auth::id());// no es array
+        }
+        return view('admin.juicio.create',compact('juicios','esAbogado','abogados','clientes','unidades'));
     }
 
     public function store(StoreJuicioRequest $request)

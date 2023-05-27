@@ -67,7 +67,11 @@
                                         <option value="3">Estatus 3</option>
                                     </select>
                                 </div>
-
+                                
+                                @if(isset($esAbogado) && $esAbogado)
+                            
+                                <input type="hidden" name="abogado_id" value="{{ $abogados->id }}">
+                                @else
                                 <div class="form-group">
                                     <label for="inputStatus">Abogado</label>
                                     <select id="abogado_id" name="abogado_id" class="form-control custom-select">
@@ -77,6 +81,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                @endif
 
                                 <div class="form-group">
                                     <label for="inputStatus">Cliente</label>
