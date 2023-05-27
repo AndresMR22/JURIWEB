@@ -22,7 +22,6 @@ class CreateClientesTable extends Migration
             $table->string('genero');
             $table->string('fnacimiento');
             $table->string('estado_civil');
-            $table->string('estatus');
             $table->string('responsable_id');
             $table->string('cedula');
 

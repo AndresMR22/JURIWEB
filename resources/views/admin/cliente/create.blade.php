@@ -122,7 +122,7 @@
 
                   <div class="form-group">
                     <label for="inputName">Correo</label>
-                    <input name="correo" type="mail" id="correo" class="form-control @error('correo') is-invalid @enderror">
+                    <input name="correo" type="email" id="correo" class="form-control @error('correo') is-invalid @enderror">
                     @error('correo')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -148,20 +148,6 @@
                @enderror
                  </div>
 
-                 <div class="form-group">
-                    <label for="inputStatus">Estatus</label>
-                    <select id="estatus" name="estatus" class="form-control custom-select @error('estatus') is-invalid @enderror">
-                      <option selected disabled>Seleccionar estatus</option>
-                      <option value="1">Estatus 1</option>
-                      <option value="2">Estatus 2</option>
-                      <option value="3">Estatus 3</option>
-                    </select>
-                    @error('estatus')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-                  </div>
 
                   <div class="form-group">
                     <label for="inputStatus">Provincia</label>
@@ -189,7 +175,6 @@
          </div>
          <div class="row">
            <div class="col-12 d-flex justify-content-center my-2" style="gap:20px;">
-             <a href="#" class="btn btn-secondary">Cancelar</a>
              <a onclick="enviarForm()" class="btn btn-success float-right">Crear</a>
            </div>
          </div>

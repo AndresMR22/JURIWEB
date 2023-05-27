@@ -30,7 +30,7 @@ class UpdateClienteRequest extends FormRequest
             'direccion' => 'required|string|max:250',
             // 'correo'    => 'required|email',
             'genero' =>'required|string|max:15',
-            'estatus' =>'required|string',
+            // 'estatus' =>'required|string',
             'cedula' => 'required|string|min:10|max:10',
             'fnacimiento' =>'required|string',
             'estado_civil' =>'required|string',

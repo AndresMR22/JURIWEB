@@ -90,7 +90,7 @@
                   </div>
                   <div class="form-group">
                     <label for="inputName">Correo</label>
-                    <input name="correo" value="{{ old('correo') }}" type="mail" id="correo" class="form-control @error('correo') is-invalid @enderror">
+                    <input name="correo" value="{{ old('correo') }}" type="email" id="correo" class="form-control @error('correo') is-invalid @enderror">
                     @error('correo')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

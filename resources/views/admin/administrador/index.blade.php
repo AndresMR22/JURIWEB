@@ -26,6 +26,18 @@
         }
     </style>
 
+@if (count($errors) > 0)
+<div class="alert alert-danger" role="alert">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>
+                {{ $error }}
+            </li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -73,13 +85,23 @@
                                 <div class="fila">
                                     <div class="form-group">
                                         <label for="inputName">Nombre de usuario</label>
-                                        <input name="username" type="text" id="username" value="{{$admin->user->name}}" class="form-control">
+                                        <input name="username" type="text" id="username" value="{{$admin->user->name}}" class="form-control @error('username') is-invalid @enderror">
+                                        @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                     </div>
 
                                     <div class="form-group">
                                         <label for="inputName">Contraseña</label>
-                                        <input name="password" type="text" id="password" value="" class="form-control">
-                                    </div>
+                                        <input name="password" type="text" id="password" value="" class="form-control @error('password') is-invalid @enderror">
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                      </div>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">

@@ -16,7 +16,6 @@ class Cliente extends Model
         "genero",
         "fnacimiento",
         "estado_civil",
-        "estatus",
         "user_id",
         "provincia_id",
         "responsable_id",

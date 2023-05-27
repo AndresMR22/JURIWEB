@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
+
 
 class StoreAdministradorRequest extends FormRequest
 {
@@ -24,7 +26,18 @@ class StoreAdministradorRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'username' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => [
+                'required',
+                Password::min(8)
+                ->letters()//al menos una letra
+                ->mixedCase()// 1 may y 1 min
+                ->numbers()//al menos 1 num
+                ->symbols()//al menos 1 caracter especial
+                //->uncompromised() 
+            ],
+           
         ];
     }
 }
