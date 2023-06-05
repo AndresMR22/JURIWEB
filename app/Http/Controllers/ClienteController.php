@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\User;
 use App\Models\Abogado;
@@ -61,6 +62,12 @@ class ClienteController extends Controller
 
 
         return redirect()->route('cliente.index');
+    }
+
+    public function buscarCliente(Request $request)
+    {
+        $clientes = Cliente::where('nombres','LIKE','%'.$request->get('palabra').'%')->get();
+        return $clientes;
     }
 
     public function update(UpdateClienteRequest $request, $id)

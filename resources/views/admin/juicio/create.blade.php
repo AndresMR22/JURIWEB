@@ -85,12 +85,17 @@
 
                                 <div class="form-group">
                                     <label for="inputStatus">Cliente</label>
-                                    <select id="cliente_id" name="cliente_id" class="form-control custom-select">
+                                    <input name="cliente" type="text" id="cliente" class="form-control">
+                                    <input name="cliente_id" type="hidden" id="cliente_id" class="form-control">
+                                    <div id="resultado_clientes" style="display:flex;justify-content:flex-start;flex-flow:wrap;">
+
+                                    </div>
+                                    {{-- <select id="cliente_id" name="cliente_id" class="form-control custom-select">
                                         <option selected disabled>Seleccionar cliente</option>
                                         @foreach ($clientes as $cliente)
                                             <option value="{{ $cliente->id }}">{{ $cliente->nombres }}</option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
                                 </div>
 
                                 <div class="form-group">
@@ -120,4 +125,75 @@
         </form>
         <!-- /.content -->
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded',e=>
+        {
+           document.getElementById('cliente').addEventListener('change',traer)
+        //    document.querySelectorAll('.clienteItem').forEach((item,i)=>
+        //    {
+        //     console.log(item)
+        //    })
+        })
+
+        function traer(e)
+        {
+           let palabra = e.target.value
+
+           $.ajax({
+                url: "{{ route('cliente.buscarCliente') }}",
+                dataType: "json",
+                data: 
+                {
+                  palabra
+                }
+            }).done(function(res)
+            {
+                
+                if(res.length > 0)
+                {
+                    let resClientes = document.getElementById('resultado_clientes')
+                    resClientes.innerHTML = ''
+     
+                    res.forEach(item=>
+                    {
+                   
+                     let cliente = `
+                     <span id="${item.id}" onclick="seleccionarCliente('${item.nombres}','${item.apellidos}',${item.id})" style="margin:10px 5px; background-color:white; border-radius:10px; padding:0px 5px; cursor:pointer;">${item.nombres} ${item.apellidos}</span>
+                     `;
+                     $(resClientes).append(cliente);
+     
+                    }
+               
+                    )
+                    resClientes.style.background = '#85929E';
+                    resClientes.style.borderRadius = '10px';
+                    resClientes.style.marginTop = '10px';
+                    resClientes.style.padding = '10px 10px';
+                }else
+                {
+                    let resClientes = document.getElementById('resultado_clientes')
+                    resClientes.style.background = '#85929E';
+                    resClientes.style.borderRadius = '10px';
+                    resClientes.style.marginTop = '10px';
+                    resClientes.style.padding = '10px 10px';
+                    let cliente = `
+                        <span style="color:white;margin-left:35%; font-weight:500">Sin resultados</span>
+                     `;
+                     $(resClientes).append(cliente);
+                    
+                }
+         
+            })
+        }
+
+        function seleccionarCliente(nombres,apellidos,id)
+        {
+            let inputCliente = document.getElementById('cliente').value = nombres+' '+apellidos
+            document.getElementById('cliente_id').value = id
+
+        }
+
+
+    </script>
 @endsection

@@ -8,7 +8,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UnidadJudicialController;
 use App\Http\Controllers\JuicioController;
 use App\Http\Controllers\ProvinciaController;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +36,6 @@ Route::group(['prefix' => 'dashboard'], function()
     Route::resource('administrador', AdministradorController::class);
     Route::resource('abogado',AbogadoController::class);
     Route::resource('unidad',UnidadJudicialController::class);
-
     });
 
     Route::group(['middleware' => ['adminabogado']], function()
@@ -49,6 +48,8 @@ Route::group(['prefix' => 'dashboard'], function()
         //BUSCAR CANTONES POR PROVINCIA
         Route::get('/validarCedula',[AbogadoController::class,'validarCedula'])->name('abogado.validarCedula');
         Route::get('/cantonesByProvincia',[ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
+        Route::get('/buscarClientes',[ClienteController::class,'buscarCliente'])->name('cliente.buscarCliente');
+        
     });
 
     Route::group(['middleware' => 'cliente'], function()
