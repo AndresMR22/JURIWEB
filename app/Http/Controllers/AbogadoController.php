@@ -65,7 +65,6 @@ class AbogadoController extends Controller
         $msg2 = $vcr->passes('cedula',$cedula);
         
         //logica para validar cedula
-
         return [$msg1,$msg2];
     }
 

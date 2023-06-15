@@ -55,4 +55,6 @@ Route::group(['prefix' => 'dashboard'], function()
     Route::group(['middleware' => 'cliente'], function()
     {
     });
+    Route::get('/crearCliente',[ClienteController::class,'storeAsync'])->name('cliente.storeAsync');
+
 });

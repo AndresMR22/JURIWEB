@@ -37,13 +37,11 @@ class ClienteController extends Controller
 
     public function store(StoreClienteRequest $request)
     {
-     
         $user = User::create([
             "name"=>$request->nombres,
             "email"=>$request->correo,
             "password"=>Hash::make($request->celular)
         ]);
-
         $cliente = Cliente::create([
             "nombres"=>$request->nombres,
             "apellidos"=>$request->apellidos,
@@ -55,7 +53,8 @@ class ClienteController extends Controller
             "estado_civil"=>$request->estado_civil,
             "estatus"=>$request->estatus,
             "responsable_id"=>auth::id(),
-            "user_id"=>$user->id
+            "user_id"=>$user->id,
+            "cedula"=>$request->cedula
         ]);
 
         $cliente->cantones()->attach($request->get('canton_id'),['provincia_id'=>$request->get('provincia_id')]);
@@ -63,6 +62,38 @@ class ClienteController extends Controller
 
         return redirect()->route('cliente.index');
     }
+
+    public function storeAsync(StoreClienteRequest $request)
+    {
+        $estadoRes = false;
+
+        $user = User::create([
+            "name"=>$request->nombres,
+            "email"=>$request->correo,
+            "password"=>Hash::make($request->celular)
+        ]);
+        $cliente = Cliente::create([
+            "nombres"=>$request->nombres,
+            "apellidos"=>$request->apellidos,
+            "celular"=>$request->celular,
+            "direccion"=>$request->direccion,
+            "genero"=>$request->genero,
+            "fnacimiento"=>$request->fnacimiento,
+            "provincia_id"=>$request->provincia_id,
+            "estado_civil"=>$request->estado_civil,
+            "estatus"=>$request->estatus,
+            "responsable_id"=>auth::id(),
+            "user_id"=>$user->id,
+            "cedula"=>$request->cedula
+        ]);
+
+        $cliente->cantones()->attach($request->get('canton_id'),['provincia_id'=>$request->get('provincia_id')]);
+
+        if(!empty($user) && !empty($cliente))
+            $estadoRes = true;
+        return $estadoRes;
+    }
+
 
     public function buscarCliente(Request $request)
     {

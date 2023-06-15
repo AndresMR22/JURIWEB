@@ -9,6 +9,7 @@ use App\Models\Cliente;
 use App\Models\UnidadJudicial;
 use App\Http\Requests\StoreJuicioRequest;
 use App\Http\Requests\UpdateJuicioRequest;
+use App\Models\Provincia;
 use Illuminate\Support\Facades\Auth;
 
 class JuicioController extends Controller
@@ -43,11 +44,14 @@ class JuicioController extends Controller
         $ultimoJuicioAgregado = Juicio::latest()->first()->get('id');
         $idSiguiente = $ultimoJuicioAgregado[0]['id']+1;
         $idSiguiente = "JN-".$idSiguiente;
-        return view('admin.juicio.create',compact('idSiguiente','juicios','esAbogado','abogados','clientes','unidades'));
+        $provincias = Provincia::all();
+
+        return view('admin.juicio.create',compact('idSiguiente','juicios','esAbogado','abogados','clientes','unidades','provincias'));
     }
 
     public function store(StoreJuicioRequest $request)
     {
+        // dd($request);
         Juicio::create([
             "nro"=>$request->nro,
             "materia"=>$request->materia,

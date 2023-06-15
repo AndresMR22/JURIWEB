@@ -35,7 +35,7 @@ class StoreClienteRequest extends FormRequest
             'fnacimiento' =>'required|string',
             'estado_civil' =>'required|string',
             'provincia_id' =>'required',
-            'responsable_id' =>'required',
+            // 'responsable_id' =>'required',
         ];
     }
 }
