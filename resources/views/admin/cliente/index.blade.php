@@ -58,8 +58,10 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                    <th>Cedula</th>
                     <th>Nombres</th>
                     <th>Celular</th>
+                    <th>Correo</th>
                     <th>Dirección</th>
                     <th>Acciones</th>
                   </tr>
@@ -67,8 +69,10 @@
                   <tbody>
                     @foreach($clientes as $key => $cliente)
                   <tr>
+                    <td>{{$cliente->cedula}}</td>
                     <td>{{$cliente->nombres}} {{$cliente->apellidos}}</td>
                     <td>{{$cliente->celular}}</td>
+                    <td>{{ $cliente->user->email }}</td>
                     <td>{{$cliente->direccion}}</td>
                     {{-- <td>{{$cliente->correo}}</td> --}}
                     <td >

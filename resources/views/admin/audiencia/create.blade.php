@@ -58,7 +58,7 @@
                    <select id="inputStatus" name="juicio_id" class="form-control custom-select @error('juicio_id') is-invalid @enderror">
                      <option selected disabled>Seleccionar juicio</option>
                      @foreach($juicios as $juicio)
-                     <option value="{{ $juicio->id }}">{{ $juicio->materia }}</option>
+                     <option value="{{ $juicio->id }}">{{ $juicio->nro }}</option>
                      @endforeach
                    </select>
                    @error('juicio_id')
