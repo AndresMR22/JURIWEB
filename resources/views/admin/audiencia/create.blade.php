@@ -76,7 +76,6 @@
          </div>
          <div class="row">
            <div class="col-12 d-flex justify-content-center my-2" style="gap:20px;">
-             <a href="#" class="btn btn-secondary">Cancelar</a>
              <input type="submit" value="Crear" class="btn btn-success float-right">
            </div>
          </div>

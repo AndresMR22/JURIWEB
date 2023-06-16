@@ -11,6 +11,7 @@ use App\Http\Requests\StoreJuicioRequest;
 use App\Http\Requests\UpdateJuicioRequest;
 use App\Models\Provincia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JuicioController extends Controller
 {
@@ -38,11 +39,11 @@ class JuicioController extends Controller
         {
             $esAbogado = true;
             $abogados = Abogado::where('user_id',auth::id())->first();// no es array
-            // dd($abogados);
         }
 
-        $ultimoJuicioAgregado = Juicio::latest()->first()->get('id');
-        $idSiguiente = $ultimoJuicioAgregado[0]['id']+1;
+        $id = Juicio::whereRaw('id = (select max(`id`) from juicios)')->first();
+        $id = $id->id;
+        $idSiguiente = $id+1;
         $idSiguiente = "JN-".$idSiguiente;
         $provincias = Provincia::all();
 
