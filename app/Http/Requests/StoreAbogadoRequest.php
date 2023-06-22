@@ -21,7 +21,7 @@ class StoreAbogadoRequest extends FormRequest
         [
             'nombres' => 'required|string|max:50',
             'apellidos' => 'required|string|max:50',
-            'celular'  => 'required',
+            'celular'  => 'required|regex:/[0-9]{10}/',
             'direccion' => 'required|string|max:250',
             'correo'    => 'required|email',
             'genero' =>'required|string|max:15',

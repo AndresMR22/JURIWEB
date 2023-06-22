@@ -24,7 +24,11 @@ class UpdateJuicioRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nro' => 'required',
+            'materia' => 'required|string',
+            'estadop'  => 'required',
+            'fecha' => 'required',
+            'cliente_id' => 'required',
         ];
     }
 }

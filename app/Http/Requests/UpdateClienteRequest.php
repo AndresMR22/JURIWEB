@@ -26,7 +26,7 @@ class UpdateClienteRequest extends FormRequest
         return [
             'nombres' => 'required|string|max:50',
             'apellidos' => 'required|string|max:50',
-            'celular'  => 'required',
+            'celular'  => 'required|regex:/[0-9]{10}/',
             'direccion' => 'required|string|max:250',
             'genero' =>'required|string|max:15',
             'cedula' => 'required|string|min:10|max:10',

@@ -155,7 +155,8 @@
                                                                     <div class="form-group">
                                                                         <label for="inputName">Celular</label>
                                                                         <input required name="celular" type="tel"
-                                                                            id="celular" value="{{ $abogado->celular }}"
+                                                                            id="celular" value="{{ $abogado->celular }}" minlength="10"
+                                                                            maxlength="10"
                                                                             class="form-control @error('celular') is-invalid @enderror">
                                                                         @error('celular')
                                                                             <span class="invalid-feedback" role="alert">

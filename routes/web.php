@@ -44,6 +44,8 @@ Route::group(['prefix' => 'dashboard'], function()
         Route::resource('cliente',ClienteController::class);
         Route::resource('juicio',JuicioController::class);
 
+        Route::get('/cambiar_estado/{juicio_id}',[JuicioController::class,'cambiarEstado'])->name('juicio.cambiarEstado');
+
         //RUTAS AJAX
         //BUSCAR CANTONES POR PROVINCIA
         Route::get('/validarCedula',[AbogadoController::class,'validarCedula'])->name('abogado.validarCedula');

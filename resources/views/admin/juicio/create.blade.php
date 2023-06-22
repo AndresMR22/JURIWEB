@@ -53,33 +53,44 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Número</label>
-                                    <input name="nro" type="text" id="nro" readonly value="{{ $idSiguiente }}" class="form-control">
+                                    <input name="nro" type="text" id="nro" readonly value="{{ $idSiguiente }}" class="form-control @error('nro') is-invalid @enderror">
+                                    @error('nro')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputName">Materia</label>
-                                    <input name="materia" type="text" id="materia" class="form-control">
+                                    <input name="materia" type="text" id="materia" class="form-control @error('materia') is-invalid @enderror">
+                                    @error('materia')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputName">Estado</label>
-                                    <input name="estadop" type="text" id="estadop" class="form-control">
+                                    <input name="estadop" type="text" id="estadop" class="form-control @error('estadop') is-invalid @enderror">
+                                    @error('estadop')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputName">Fecha</label>
-                                    <input name="fecha" min="{{date('Y-m-d')}}" type="date" id="fecha" class="form-control">
+                                    <input name="fecha" min="{{date('Y-m-d')}}" type="date" id="fecha" class="form-control @error('fecha') is-invalid @enderror">
+                                    @error('fecha')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="inputStatus">Estatus</label>
-                                    <select id="estatus" name="estatus" class="form-control custom-select">
-                                        <option selected disabled>Seleccionar estatus</option>
-                                        <option value="1">En proceso</option>
-                                        <option value="2">Archivado</option>
-                                        <option value="3">Finalizado</option>
-                                    </select>
-                                </div>
                                 
                                 @if(isset($esAbogado) && $esAbogado)
                             
@@ -87,21 +98,26 @@
                                 @else
                                 <div class="form-group">
                                     <label for="inputStatus">Abogado</label>
-                                    <select id="abogado_id" name="abogado_id" class="form-control custom-select">
+                                    <select id="abogado_id" name="abogado_id" class="form-control custom-select @error('abogado_id') is-invalid @enderror">
                                         <option selected disabled>Seleccionar abogado</option>
                                         @foreach ($abogados as $abogado)
                                             <option value="{{ $abogado->id }}">{{ $abogado->nombres }}</option>
                                         @endforeach
                                     </select>
+                                    @error('abogado_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 @endif
 
                                 <div class="form-group">
                                     <label for="inputStatus">Cliente</label>
-                                    <input name="cliente" type="text" id="cliente" class="form-control">
-                                    <input name="cliente_id" type="hidden" id="cliente_id" class="form-control">
+                                    <input name="cliente" type="text" id="cliente" class="form-control ">
+                                    <input name="cliente_id" type="hidden" id="cliente_id" class="form-control @error('cliente_id') is-invalid @enderror">
                                     <div id="resultado_clientes" style="display:flex;justify-content:flex-start;flex-flow:wrap;">
-
+                                      
                                     </div>
                                     {{-- <select id="cliente_id" name="cliente_id" class="form-control custom-select">
                                         <option selected disabled>Seleccionar cliente</option>
@@ -109,16 +125,26 @@
                                             <option value="{{ $cliente->id }}">{{ $cliente->nombres }}</option>
                                         @endforeach
                                     </select> --}}
+                                    @error('cliente_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputStatus">Unidad Judicial</label>
-                                    <select id="unidad_id" name="unidad_id" class="form-control custom-select">
+                                    <select id="unidad_id" name="unidad_id" class="form-control custom-select @error('unidad_id') is-invalid @enderror">
                                         <option selected disabled>Seleccionar unidad judicial</option>
                                         @foreach ($unidades as $unidad)
                                             <option value="{{ $unidad->id }}">{{ $unidad->nombre }}</option>
                                         @endforeach
                                     </select>
+                                    @error('unidad_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
                             </div>

@@ -19,7 +19,7 @@ class CreateJuiciosTable extends Migration
             $table->string('materia');
             $table->string('estadop');
             $table->timestamp('fecha');
-            $table->string('estatus');
+            $table->string('estatus')->default(1);
 
             $table->unsignedBigInteger('abogado_id');
             $table->foreign('abogado_id')->references('id')->on('abogados')->onDelete('cascade')->onUpdate('cascade');

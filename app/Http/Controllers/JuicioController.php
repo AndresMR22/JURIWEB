@@ -58,7 +58,6 @@ class JuicioController extends Controller
             "materia"=>$request->materia,
             "estadop"=>$request->estadop,
             "fecha"=>$request->fecha,
-            "estatus"=>$request->estatus,
             "abogado_id"=>$request->abogado_id,
             "cliente_id"=>$request->cliente_id,
             "unidad_juidicial_id"=>$request->unidad_id,
@@ -75,14 +74,27 @@ class JuicioController extends Controller
             "materia"=>$request->materia,
             "estadop"=>$request->estadop,
             "fecha"=>$request->fecha,
-            "estatus"=>$request->estatus,
-            "abogado_id"=>$request->abogado_id,
+            // "estatus"=>$request->estatus,
+            // "abogado_id"=>$request->abogado_id,
             "cliente_id"=>$request->cliente_id,
             // "unidad_juidicial_id"=>$request->unidad_juidicial_id,
         ]);
 
         return back();
 
+    }
+
+    public function cambiarEstado($juicio_id)
+    {
+        $juicio = Juicio::find($juicio_id);
+        $estadoActual = $juicio->estatus;
+        if($estadoActual=="1")
+            $juicio->update(['estatus'=>"2"]);
+        else if($estadoActual=="2")
+            $juicio->update(['estatus'=>"3"]);
+        else if($estadoActual=="3")
+            $juicio->update(['estatus'=>"1"]);
+        return back();
     }
 
     public function destroy($id)

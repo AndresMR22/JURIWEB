@@ -26,6 +26,18 @@
         }
     </style>
 
+@if (count($errors) > 0)
+<div class="alert alert-danger" role="alert">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>
+                {{ $error }}
+            </li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -66,7 +78,7 @@
                     <td>{{$juicio->materia}}</td>
                     <td>{{$juicio->estadop}}</td>
                     <td>{{$juicio->fecha}}</td>
-                    <td>{{ $juicio->estatus=='1' ? 'En proceso' :($juicio->estatus=='2' ? 'Archivado' :'Finalizado') }}</td>
+                    <td>{{ $juicio->estatus=='1' ? 'En proceso' :($juicio->estatus=='2' ? 'Archivado' :'Finalizado') }} <a title="Cambiar estado" href="{{ route('juicio.cambiarEstado',$juicio->id) }}" class="btn btn-{{ $juicio->estatus=='1' ? 'warning' :($juicio->estatus=='2' ? 'primary' :'success') }}"><i class="fas fa-arrow-right"></i></a></td>
                     <td>{{$juicio->abogado->nombres}}</td>
                     <td>{{$juicio->cliente->nombres}}</td>
                     {{-- <td>{{isset($juicio->unidad_judicial) ? 'si' : 'no'}}</td> --}}
@@ -94,41 +106,51 @@
                                 <div class="fila">
                                     <div class="form-group">
                                         <label for="inputName">Número</label>
-                                        <input name="nro" type="text" id="nro" readonly value="{{$juicio->nro}}" class="form-control">
-                                    </div>
+                                        <input name="nro" type="text" id="nro" readonly value="{{$juicio->nro}}" class="form-control @error('nro') is-invalid @enderror">
+                                        @error('nro')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                      </div>
                                     <div class="form-group">
                                          <label for="inputName">Estado</label>
-                                         <input name="estadop" type="text" id="estadop" value="{{$juicio->estadop}}" class="form-control">
-                                    </div>
+                                         <input name="estadop" type="text" id="estadop" value="{{$juicio->estadop}}" class="form-control @error('estadop') is-invalid @enderror">
+                                         @error('estadop')
+                                         <span class="invalid-feedback" role="alert">
+                                             <strong>{{ $message }}</strong>
+                                         </span>
+                                     @enderror
+                                        </div>
                                 </div>
 
 
                             <div class="fila">
                                 <div class="form-group">
                                     <label for="inputName">Materia</label>
-                                    <input name="materia" type="text" id="materia" value="{{$juicio->materia}}" class="form-control">
-                                </div>
+                                    <input name="materia" type="text" id="materia" value="{{$juicio->materia}}" class="form-control @error('materia') is-invalid @enderror">
+                                    @error('materia')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
                                 <div class="form-group">
                                      <label for="inputName">Fecha</label>
-                                     <input name="fecha" type="datetime-local" id="fecha" value="{{$juicio->fecha}}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="fila">
-                                <div class="form-group">
-                                  <label for="inputName">Estado</label>
-                                  <input name="estadop" type="text" id="estadop" value="{{$juicio->estadop}}" class="form-control">
-                                </div>
-                                {{-- <div class="form-group">
-                                  <label for="inputName">Correo</label>
-                                  <input name="correo" type="mail" id="correo" value="{{$juicio->correo}}" class="form-control">
-                                </div> --}}
+                                     <input name="fecha" type="datetime-local" id="fecha" value="{{$juicio->fecha}}" class="form-control @error('fecha') is-invalid @enderror">
+                                     @error('fecha')
+                                     <span class="invalid-feedback" role="alert">
+                                         <strong>{{ $message }}</strong>
+                                     </span>
+                                 @enderror
+                                    </div>
                             </div>
                             <div class="fila">
                                 {{-- <div class="form-group">
                                   <label for="inputName">Celular</label>
                                   <input name="celular" type="tel" id="celular" value="{{$juicio->celular}}" class="form-control">
                                 </div> --}}
-                              <div class="form-group">
+                              {{-- <div class="form-group">
                                   <label for="inputStatus">Abogado</label>
                                   <select id="abogado" name="abogado_id" class="form-control custom-select">
                                     <option selected disabled>Seleccionar abogado</option>
@@ -136,16 +158,21 @@
                                     <option value="{{$abogado->id}}" {{$juicio->abogado_id == $abogado->id ? 'selected' : ''}}>{{$abogado->nombres}}</option>
                                     @endforeach
                                   </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
                                     <label for="inputStatus">Cliente</label>
-                                    <select id="cliente" name="cliente_id" class="form-control custom-select">
+                                    <select id="cliente" name="cliente_id" class="form-control custom-select @error('cliente_id') is-invalid @enderror">
                                       <option selected disabled>Seleccionar cliente</option>
                                       @foreach($clientes as $cliente)
                                       <option value="{{$cliente->id}}" {{$juicio->cliente_id == $cliente->id ? 'selected' : ''}}>{{$cliente->nombres}}</option>
                                       @endforeach
                                     </select>
+                                    @error('cliente_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                   </div>
                                 
                             </div>
@@ -159,7 +186,7 @@
                                     @endforeach
                                   </select>
                                 </div> --}}
-                               <div class="form-group">
+                               {{-- <div class="form-group">
                                  <label for="inputStatus">Estatus</label>
                                  <select id="estatus" name="estatus" class="form-control custom-select">
                                    <option selected disabled>Seleccionar estatus</option>
@@ -167,7 +194,7 @@
                                    <option value="2" {{$juicio->estatus == '2' ? 'selected' : ''}}>Estatus 2</option>
                                    <option value="3" {{$juicio->estatus == '3' ? 'selected' : ''}}>Estatus 3</option>
                                  </select>
-                               </div>
+                               </div> --}}
                             </div>
 
                             </div>

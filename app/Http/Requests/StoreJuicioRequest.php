@@ -24,7 +24,13 @@ class StoreJuicioRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nro' => 'required',
+            'materia' => 'required|string',
+            'estadop'  => 'required',
+            'fecha' => 'required',
+            'abogado_id' =>'required',
+            'cliente_id' => 'required',
+            'unidad_id' =>'required',
         ];
     }
 }

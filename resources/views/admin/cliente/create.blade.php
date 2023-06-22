@@ -69,7 +69,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Nombres</label>
-                                    <input name="nombres" type="text" id="nombres"
+                                    <input name="nombres" type="text" id="nombres" value="{{ old('nombres') }}"
                                         class="form-control @error('nombres') is-invalid @enderror">
                                     @error('nombres')
                                         <span class="invalid-feedback" role="alert">
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">Apellidos</label>
-                                    <input name="apellidos" type="text" id="apellidos"
+                                    <input name="apellidos" type="text" id="apellidos" value="{{ old('apellidos') }}"
                                         class="form-control @error('apellidos') is-invalid @enderror">
                                     @error('apellidos')
                                         <span class="invalid-feedback" role="alert">
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">Celular</label>
-                                    <input name="celular" type="tel" id="celular"
+                                    <input name="celular" type="tel" id="celular" minlength="10" maxlength="10" value="{{ old('celular') }}"
                                         class="form-control @error('celular') is-invalid @enderror">
                                     @error('celular')
                                         <span class="invalid-feedback" role="alert">
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">Dirección</label>
-                                    <input name="direccion" type="text" id="direccion"
+                                    <input name="direccion" type="text" id="direccion" value="{{ old('direccion') }}"
                                         class="form-control @error('direccion') is-invalid @enderror">
                                     @error('direccion')
                                         <span class="invalid-feedback" role="alert">
@@ -125,7 +125,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Fecha de nacimiento</label>
-                                    <input name="fnacimiento" max="{{ date('Y-m-d') }}" type="date" id="fnacimiento"
+                                    <input name="fnacimiento" max="{{ date('Y-m-d') }}" type="date" id="fnacimiento" value="{{ old('fnacimiento') }}"
                                         class="form-control @error('fnacimiento') is-invalid @enderror">
                                     @error('fnacimiento')
                                         <span class="invalid-feedback" role="alert">
@@ -136,7 +136,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Correo</label>
-                                    <input name="correo" type="email" id="correo"
+                                    <input name="correo" type="email" id="correo" value="{{ old('correo') }}"
                                         class="form-control @error('correo') is-invalid @enderror">
                                     @error('correo')
                                         <span class="invalid-feedback" role="alert">
@@ -225,7 +225,7 @@
         }
 
         function enviarForm() {
-            if (cedulaValida)
+            // if (cedulaValida)
                 document.getElementById('formCrearCliente').submit();
         }
 
