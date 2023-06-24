@@ -55,21 +55,26 @@
                   <tr>
                     <th>Fecha</th>
                     <th>Observación</th>
-                    <th>Juicio</th>
+                    <th>Nro Juicio</th>
+                    <th>Materia</th>
+                    @if(auth()->user()->hasRole('Abogado'))
                     <th>Acciones</th>
+                    @endif
                   </tr>
                   </thead>
                   <tbody>
                     @foreach($audiencias as $key => $audiencia)
                   <tr>
-                    <td>{{$audiencia->fecha}}</td>
+                    <td>{{ date('d-m-y h:i', strtotime($audiencia->fecha))}}</td>
                     <td>{{$audiencia->observacion}}</td>
+                    <td>{{$audiencia->juicio->nro}}</td>
                     <td>{{$audiencia->juicio->materia}}</td>
+                    @if(auth()->user()->hasRole('Abogado'))
                     <td >
-                    
                         <a data-toggle="modal" data-target="#modal-default{{$audiencia->id}}" title="Editar" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                         <a data-toggle="modal" data-target="#modal-danger{{$audiencia->id}}" title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                     </td>
+                    @endif
                   </tr>
 
                   <div class="modal fade" id="modal-default{{$audiencia->id}}">
@@ -88,7 +93,7 @@
                             <div class="fila">
                                 <div class="form-group">
                                     <label for="inputName">Fecha y hora</label>
-                                    <input name="fecha" type="datetime-local" min="<?=date('Y-m-d\Th:i')?>" id="fecha" value="{{$audiencia->fecha}}" class="form-control">
+                                    <input name="fecha" type="datetime-local" min="{{ date('Y-m-d h:i') }}" id="fecha" value="{{$audiencia->fecha}}" class="form-control">
                                 </div>
                             </div>
                             <div class="fila">
@@ -99,12 +104,19 @@
                             </div>
 
                             <div class="fila">
+                              <div class="form-group">
+                                  <label for="inputName">Materia</label>
+                                  <input name="materia" type="text" id="materia" value="{{$audiencia->juicio->materia}}" class="form-control">
+                              </div>
+                          </div>
+
+                            <div class="fila">
                             <div class="form-group">
                                 <label for="inputStatus">Juicio</label>
                                 <select id="juicio" name="juicio_id" class="form-control custom-select">
-                                  <option selected disabled>Seleccionar juicio</option>
+                                  <option selected disabled>Seleccionar nro de juicio</option>
                                   @foreach($juicios as $juicio)
-                                  <option value="{{$juicio->id}}" {{$audiencia->juicio_id == $juicio->id ? 'selected' : ''}}>{{$juicio->materia}}</option>
+                                  <option value="{{$juicio->id}}" {{$audiencia->juicio_id == $juicio->id ? 'selected' : ''}}>{{$juicio->nro}}</option>
                                   @endforeach
                                 </select>
                               </div>

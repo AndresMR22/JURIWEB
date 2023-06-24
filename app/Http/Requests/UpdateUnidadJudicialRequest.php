@@ -24,7 +24,9 @@ class UpdateUnidadJudicialRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'required|string|max:100',
+            'ubicacion' => 'required|string|max:255',
+            'direccion'  => 'required|string|max:255',
         ];
     }
 }

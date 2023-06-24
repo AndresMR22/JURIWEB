@@ -134,19 +134,6 @@
                                     </span>
                                 @enderror
                   </div>
-                 <div class="form-group">
-                   <label for="inputStatus">Estatus</label>
-                   <select id="estatus" name="estatus" class="form-control custom-select @error('estatus') is-invalid @enderror">
-                     <option selected disabled>Seleccionar estatus</option>
-                     <option value="1">Activo</option>
-                     <option value="2">Inactivo</option>
-                   </select>
-                   @error('estatus')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                 </div>
                </div>
                <!-- /.card-body -->
              </div>

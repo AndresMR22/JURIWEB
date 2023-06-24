@@ -9,7 +9,8 @@ class UnidadJudicial extends Model
 {
     use HasFactory;
     public $fillable =
-    ["nombre",
+    [
+    "nombre",
     "ubicacion",
     "direccion"
     ];

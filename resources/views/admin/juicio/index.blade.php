@@ -68,7 +68,9 @@
                     <th>Abogado</th>
                     <th>Cliente</th>
                     {{-- <th>Unidad</th> --}}
+                    @if(auth()->user()->hasRole('Abogado'))
                     <th>Acciones</th>
+                    @endif
                   </tr>
                   </thead>
                   <tbody>
@@ -77,16 +79,17 @@
                     <td>{{$juicio->nro}}</td>
                     <td>{{$juicio->materia}}</td>
                     <td>{{$juicio->estadop}}</td>
-                    <td>{{$juicio->fecha}}</td>
+                    <td>{{ date('d-m-y h:i', strtotime($juicio->fecha)) }}</td>
                     <td>{{ $juicio->estatus=='1' ? 'En proceso' :($juicio->estatus=='2' ? 'Archivado' :'Finalizado') }} <a title="Cambiar estado" href="{{ route('juicio.cambiarEstado',$juicio->id) }}" class="btn btn-{{ $juicio->estatus=='1' ? 'warning' :($juicio->estatus=='2' ? 'primary' :'success') }}"><i class="fas fa-arrow-right"></i></a></td>
                     <td>{{$juicio->abogado->nombres}}</td>
                     <td>{{$juicio->cliente->nombres}}</td>
                     {{-- <td>{{isset($juicio->unidad_judicial) ? 'si' : 'no'}}</td> --}}
+                   @if(auth()->user()->hasRole('Abogado'))
                     <td >
-                    
                         <a data-toggle="modal" data-target="#modal-default{{$juicio->id}}" title="Editar" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                         <a data-toggle="modal" data-target="#modal-danger{{$juicio->id}}" title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                     </td>
+                    @endif
                   </tr>
 
                   <div class="modal fade" id="modal-default{{$juicio->id}}">
@@ -137,7 +140,7 @@
                                   </div>
                                 <div class="form-group">
                                      <label for="inputName">Fecha</label>
-                                     <input name="fecha" type="datetime-local" id="fecha" value="{{$juicio->fecha}}" class="form-control @error('fecha') is-invalid @enderror">
+                                     <input name="fecha" type="datetime-local" min={{ date('Y-m-d h:i') }} value="{{$juicio->fecha}}" class="form-control @error('fecha') is-invalid @enderror">
                                      @error('fecha')
                                      <span class="invalid-feedback" role="alert">
                                          <strong>{{ $message }}</strong>

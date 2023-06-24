@@ -20,7 +20,7 @@ class CreateAbogadosTable extends Migration
             $table->string('celular');
             $table->string('direccion');
             $table->string('genero');
-            $table->string('estatus');
+            $table->string('estatus')->default(1);
             $table->string('cedula');
 
             $table->unsignedBigInteger('empresa_id');

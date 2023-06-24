@@ -338,12 +338,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @if(auth()->user()->hasRole('Abogado'))
               <li class="nav-item">
                 <a href="{{route('audiencia.create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agregar</p>
                 </a>
               </li>
+              @endif
               <li class="nav-item">
                 <a href="{{route('audiencia.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -362,12 +364,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @if(auth()->user()->hasRole('Abogado'))
               <li class="nav-item">
                 <a href="{{route('cliente.create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agregar</p>
                 </a>
               </li>
+              @endif
               <li class="nav-item">
                 <a href="{{route('cliente.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -387,12 +391,15 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @if(auth()->user()->hasRole('Abogado'))
               <li class="nav-item">
                 <a href="{{route('juicio.create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agregar</p>
                 </a>
               </li>
+              @endif
+
               <li class="nav-item">
                 <a href="{{route('juicio.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

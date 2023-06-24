@@ -6,21 +6,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAbogadoRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+   
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+    
     public function rules()
     {
         return [
@@ -30,7 +22,7 @@ class UpdateAbogadoRequest extends FormRequest
             'direccion' => 'required|string|max:250',
             // 'correo'    => 'required|email',
             'genero' =>'required|string|max:15',
-            'estatus' =>'required|string',
+            // 'estatus' =>'required|string',
             'cedula' => 'required|string|min:10|max:10',
         ];
     }

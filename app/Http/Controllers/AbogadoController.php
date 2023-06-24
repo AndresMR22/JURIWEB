@@ -46,13 +46,24 @@ class AbogadoController extends Controller
             "celular"=>$request->celular,
             "direccion"=>$request->direccion,
             "genero"=>$request->genero,
-            "estatus"=>$request->estatus,
+            // "estatus"=>$request->estatus,
             "empresa_id"=>$request->empresa_id,
             "user_id"=>$user->id,
             "cedula"=>$request->cedula
         ]);
 
         return redirect()->route('abogado.index');
+    }
+
+    public function cambiarEstado($abogado_id)
+    {
+        $abogado = Abogado::find($abogado_id);
+        if($abogado->estatus == "1")
+            $abogado->update(["estatus"=>"2"]);
+        else
+            $abogado->update(["estatus"=>"1"]);
+        
+        return back();
     }
 
     public function validarCedula(Request $request)
@@ -88,7 +99,7 @@ class AbogadoController extends Controller
             "celular"=>$request->celular,
             "direccion"=>$request->direccion,
             "genero"=>$request->genero,
-            "estatus"=>$request->estatus,
+            // "estatus"=>$request->estatus,
             "empresa_id"=>$request->empresa_id
         ]);
 

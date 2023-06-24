@@ -67,7 +67,12 @@
                                                 <td>{{ $abogado->nombres }} {{ $abogado->apellidos }}</td>
                                                 <td>{{ $abogado->celular }}</td>
                                                 <td>{{ $abogado->direccion }}</td>
+
+                                                @if(auth()->user()->hasRole('Administrador'))
+                                                <td>{{ $abogado->estatus == '1' ? 'Activo' : 'Inactivo' }} <a href="{{ route('abogado.cambiarEstado',$abogado->id) }}" class="btn btn-{{ $abogado->estatus=='1' ? 'success' :'secondary' }}" title="Cambiar estado"><i class="fas fa-arrow-right"></i></a></td>
+                                                @else
                                                 <td>{{ $abogado->estatus == '1' ? 'Activo' : 'Inactivo' }}</td>
+                                                @endif
                                                 {{-- <td>{{$abogado->correo}}</td> --}}
                                                 <td>
 
@@ -206,7 +211,7 @@
                                                                             </span>
                                                                         @enderror
                                                                     </div>
-                                                                    <div class="form-group">
+                                                                    {{-- <div class="form-group">
                                                                         <label for="inputStatus">Estatus</label>
                                                                         <select required id="estatus" name="estatus"
                                                                             class="form-control custom-select @error('estatus') is-invalid @enderror">
@@ -227,7 +232,7 @@
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
-                                                                    </div>
+                                                                    </div> --}}
                                                                 </div>
 
                                                             </div>

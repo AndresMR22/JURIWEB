@@ -84,33 +84,31 @@ class AudienciaController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAudienciaRequest  $request
-     * @param  \App\Models\Audiencia  $audiencia
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(UpdateAudienciaRequest $request, $id)
     {
         $audiencia = Audiencia::find($id);
+        $juicio = Juicio::where('id',$request->juicio_id)->first();
+
         $audiencia->update([
             "fecha"=>$request->fecha,
             "observacion"=>$request->observacion,
-            "juicio_id"=>$request->juicio_id,
+            "juicio_id"=>$juicio->id,
+        ]);
+
+        // $juicio = Juicio::find($request->juicio_id);
+        $juicio->update([
+            "nro"=>$juicio->nro,
+            "materia"=>$request->materia
         ]);
 
         return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Audiencia  $audiencia
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Audiencia $audiencia)
+   
+    public function destroy(Audiencia $audiencia, $id)
     {
-        //
+        Audiencia::destroy($id);
+        return back();
     }
 }

@@ -26,6 +26,18 @@
         }
     </style>
 
+@if (count($errors) > 0)
+<div class="alert alert-danger" role="alert">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>
+                {{ $error }}
+            </li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -45,6 +57,7 @@
                     <th>Ubicación</th>
                     <th>Dirección</th>
                     {{-- <th>Correo</th> --}}
+                    
                     <th>Acciones</th>
                   </tr>
                   </thead>
@@ -78,20 +91,35 @@
                             <div class="fila">
                                 <div class="form-group">
                                     <label for="inputName">Nombre</label>
-                                    <input name="nombre" type="text" id="nombre" value="{{$unidad->nombre}}" class="form-control">
+                                    <input name="nombre" type="text" id="nombre" value="{{$unidad->nombre}}" class="form-control @error('nombre') is-invalid @enderror">
+                                    @error('nombre')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
                             </div>
                             <div class="fila">
                                 <div class="form-group">
                                     <label for="inputName">Ubicación</label>
-                                    <input name="ubicacion" type="text" id="ubicacion" value="{{$unidad->ubicacion}}" class="form-control">
-                                </div>
+                                    <input name="ubicacion" type="text" id="ubicacion" value="{{$unidad->ubicacion}}" class="form-control @error('ubicacion') is-invalid @enderror">
+                                    @error('ubicacion')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
+                                  </div>
                             </div>
 
                             <div class="fila">
                                 <div class="form-group">
                                   <label for="inputName">Dirección</label>
-                                  <input name="direccion" type="text" id="direccion" value="{{$unidad->direccion}}" class="form-control">
+                                  <input name="direccion" type="text" id="direccion" value="{{$unidad->direccion}}" class="form-control @error('direccion') is-invalid @enderror">
+                                  @error('direccion')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                  @enderror
                                 </div>
                             </div>
 

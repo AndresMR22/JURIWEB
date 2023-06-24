@@ -83,7 +83,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Fecha</label>
-                                    <input name="fecha" min="{{date('Y-m-d')}}" type="date" id="fecha" class="form-control @error('fecha') is-invalid @enderror">
+                                    <input name="fecha" min="{{date('Y-m-d h:i')}}" type="datetime-local" id="fecha" class="form-control @error('fecha') is-invalid @enderror">
                                     @error('fecha')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

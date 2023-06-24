@@ -33,30 +33,42 @@ Route::group(['prefix' => 'dashboard'], function()
 
     Route::group(['middleware' => 'admin'], function()
     {
-    Route::resource('administrador', AdministradorController::class);
-    Route::resource('abogado',AbogadoController::class);
-    Route::resource('unidad',UnidadJudicialController::class);
+        Route::resource('audiencia',AudienciaController::class)->only(['index']);
+        Route::resource('cliente',ClienteController::class)->only(['index']);
+        Route::resource('juicio',JuicioController::class);
+        
+        Route::resource('administrador', AdministradorController::class);
+        Route::resource('abogado',AbogadoController::class);
+        Route::resource('unidad',UnidadJudicialController::class);
+        Route::get('abogado/cambiar_estado/{abogado_id}',[AbogadoController::class,'cambiarEstado'])->name('abogado.cambiarEstado');
+
     });
 
-    Route::group(['middleware' => ['adminabogado']], function()
+    Route::group(['middleware' => 'abogado'], function()
     {
         Route::resource('audiencia',AudienciaController::class);
         Route::resource('cliente',ClienteController::class);
         Route::resource('juicio',JuicioController::class);
 
-        Route::get('/cambiar_estado/{juicio_id}',[JuicioController::class,'cambiarEstado'])->name('juicio.cambiarEstado');
+        Route::get('juicio/cambiar_estado/{juicio_id}',[JuicioController::class,'cambiarEstado'])->name('juicio.cambiarEstado');
+        Route::get('/buscarClientes',[ClienteController::class,'buscarCliente'])->name('cliente.buscarCliente');
+    });
 
-        //RUTAS AJAX
-        //BUSCAR CANTONES POR PROVINCIA
+    Route::group(['middleware' => ['adminabogado']], function()
+    {
+        Route::get('/audiencia',[AudienciaController::class,'index'])->name('audiencia.index');
+        Route::get('/cliente',[ClienteController::class,'index'])->name('cliente.index');
+        Route::get('/juicio',[JuicioController::class,'index'])->name('juicio.index');
+
+        //------------RUTAS AJAX-------------------//
         Route::get('/validarCedula',[AbogadoController::class,'validarCedula'])->name('abogado.validarCedula');
         Route::get('/cantonesByProvincia',[ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
-        Route::get('/buscarClientes',[ClienteController::class,'buscarCliente'])->name('cliente.buscarCliente');
-        
     });
 
     Route::group(['middleware' => 'cliente'], function()
     {
     });
+
     Route::get('/crearCliente',[ClienteController::class,'storeAsync'])->name('cliente.storeAsync');
 
 });

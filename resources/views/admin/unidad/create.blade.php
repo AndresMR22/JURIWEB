@@ -37,15 +37,30 @@
                <div class="card-body">
                  <div class="form-group">
                    <label for="inputName">Nombre</label>
-                   <input name="nombre" type="text" id="nombre" class="form-control">
+                   <input name="nombre" type="text" id="nombre" class="form-control @error('nombre') is-invalid @enderror">
+                   @error('nombre')
+                   <span class="invalid-feedback" role="alert">
+                       <strong>{{ $message }}</strong>
+                   </span>
+               @enderror
                  </div>
                  <div class="form-group">
                     <label for="inputName">Ubicación</label>
-                    <input name="ubicacion" type="text" id="ubicacion" class="form-control">
+                    <input name="ubicacion" type="text" id="ubicacion" class="form-control @error('ubicacion') is-invalid @enderror">
+                    @error('ubicacion')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   <div class="form-group">
                     <label for="inputName">Dirección</label>
-                    <input name="direccion" type="text" id="direccion" class="form-control">
+                    <input name="direccion" type="text" id="direccion" class="form-control @error('direccion') is-invalid @enderror">
+                    @error('direccion')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                   </div>
                   
                  

@@ -63,7 +63,9 @@
                     <th>Celular</th>
                     <th>Correo</th>
                     <th>Dirección</th>
+                    @if(auth()->user()->hasRole('Abogado'))
                     <th>Acciones</th>
+                    @endif
                   </tr>
                   </thead>
                   <tbody>
@@ -75,11 +77,12 @@
                     <td>{{ $cliente->user->email }}</td>
                     <td>{{$cliente->direccion}}</td>
                     {{-- <td>{{$cliente->correo}}</td> --}}
+                    @if(auth()->user()->hasRole('Abogado'))
                     <td >
-                    
                         <a data-toggle="modal" data-target="#modal-default{{$cliente->id}}" title="Editar" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                         <a data-toggle="modal" data-target="#modal-danger{{$cliente->id}}" title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                     </td>
+                    @endif
                   </tr>
 
                   <div class="modal fade" id="modal-default{{$cliente->id}}">
