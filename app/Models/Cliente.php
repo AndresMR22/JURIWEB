@@ -16,7 +16,8 @@ class Cliente extends Model
         "genero",
         "fnacimiento",
         "estado_civil",
-        "user_id",
+        "correo",
+        // "user_id",
         "provincia_id",
         "responsable_id",
         "cedula"
@@ -33,7 +34,7 @@ class Cliente extends Model
     }
 
 
-    // =========================== c c p 
+    // =========================== c c p
     public function cantones()
     {
         return $this->belongsToMany(Canton::class,'canton_cliente_provincias')->withTimestamps()->withPivot('provincia_id');
@@ -43,5 +44,5 @@ class Cliente extends Model
     {
         return $this->belongsToMany(Provincia::class,'canton_cliente_provincias')->withTimestamps()->withPivot('canton_id');
     }
-    
+
 }

@@ -24,13 +24,14 @@ class CreateClientesTable extends Migration
             $table->string('estado_civil');
             $table->string('responsable_id');
             $table->string('cedula');
+            $table->string('correo');
 
 
             $table->unsignedBigInteger('provincia_id');
             $table->foreign('provincia_id')->references('id')->on('provincias');
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            // $table->unsignedBigInteger('user_id');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

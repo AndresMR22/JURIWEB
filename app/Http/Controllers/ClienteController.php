@@ -25,7 +25,7 @@ class ClienteController extends Controller
             $abogado = Abogado::where('user_id',auth::id())->first();
             $clientes = Cliente::where('responsable_id',$abogado->id)->get();
         }else{$clientes='';}
-        
+
         return view('admin.cliente.index',compact('clientes'));
     }
 
@@ -53,7 +53,8 @@ class ClienteController extends Controller
             "estado_civil"=>$request->estado_civil,
             "estatus"=>$request->estatus,
             "responsable_id"=>auth::id(),
-            "user_id"=>$user->id,
+            "correo"=>$request->correo,
+            // "user_id"=>$user->id,
             "cedula"=>$request->cedula
         ]);
 
@@ -67,11 +68,11 @@ class ClienteController extends Controller
     {
         $estadoRes = false;
 
-        $user = User::create([
-            "name"=>$request->nombres,
-            "email"=>$request->correo,
-            "password"=>Hash::make($request->celular)
-        ]);
+        // $user = User::create([
+        //     "name"=>$request->nombres,
+        //     "email"=>$request->correo,
+        //     "password"=>Hash::make($request->celular)
+        // ]);
         $cliente = Cliente::create([
             "nombres"=>$request->nombres,
             "apellidos"=>$request->apellidos,
@@ -82,8 +83,9 @@ class ClienteController extends Controller
             "provincia_id"=>$request->provincia_id,
             "estado_civil"=>$request->estado_civil,
             "estatus"=>$request->estatus,
+            "correo"=>$request->correo,
             "responsable_id"=>auth::id(),
-            "user_id"=>$user->id,
+            // "user_id"=>$user->id,
             "cedula"=>$request->cedula
         ]);
 
@@ -105,14 +107,6 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::find($id);
 
-        $user_id = $cliente->user->id;
-        $user = User::find($user_id);
-        $user->update(
-            [
-            "name"=>$request->nombres,
-            // "password"=>Hash::make($request->password)
-            ]);
-
         $cliente->update([
             "nombres"=>$request->nombres,
             "apellidos"=>$request->apellidos,
@@ -122,8 +116,7 @@ class ClienteController extends Controller
             "fnacimiento"=>$request->fnacimiento,
             "estado_civil"=>$request->estado_civil,
             "estatus"=>$request->estatus,
-            // "user_id"=>$request->apellidos,
-            // "correo"=>$request->apellidos
+            "correo"=>$request->correo
         ]);
 
         return back();

@@ -17,9 +17,9 @@ class AbogadoMiddleware
     public function handle(Request $request, Closure $next)
     {
          //si esta iniciado sesion y tiene el rol de cliente entonces de paso a la ruta que busca
-         if(auth()->check() && auth()->user()->hasRole('Abogado'))
+         if(auth()->check() && auth()->user()->hasRole('Abogado') && auth()->user()->abogados->estatus == 1)
             return $next($request);
-        
+
             //sino redirigir a login
         return redirect()->route('login');
     }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Cliente;
 use App\Models\Empresa;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -15,8 +16,8 @@ class RolesSeeder extends Seeder
     {
         Role::create(["name"=>"Administrador"]);
         Role::create(["name"=>"Abogado"]); // este sera el abogado
-        Role::create(["name"=>"Cliente"]); // este sera el cliente
-        
+        // Role::create(["name"=>"Cliente"]); // este sera el cliente
+
         $empresa = Empresa::create([
             "razon"=>"Sistema Judicial JuriWeb",
             "direccion"=>"av. 234",
@@ -50,7 +51,7 @@ class RolesSeeder extends Seeder
             "celular"=>"0988703045",
             "direccion"=>"av. 123",
             "genero"=>"Masculino",
-            "estatus"=>"1",
+            "estatus"=>"2",
             "empresa_id"=>$empresa->id,
             "user_id"=>$user2->id,
             "cedula"=>"2100463187"
@@ -58,13 +59,13 @@ class RolesSeeder extends Seeder
 
 
                 //Creación Cliente
-        $user3 = User::create([
-            "name"=>"Michael",
-            "email"=>"cliente@gmail.com",
-            "password"=>'$2y$10$Ztoy.56ZbM.7kfG60rosJuERbO4I5HDnBceACPNs7SVgADd9Xw62m'
-        ]);
-        $user3->assignRole('Cliente');//Asignación Rol Cliente
-        $cliente = $user3->clientes()->create([
+        // $user3 = User::create([
+        //     "name"=>"Michael",
+        //     "email"=>"cliente@gmail.com",
+        //     "password"=>'$2y$10$Ztoy.56ZbM.7kfG60rosJuERbO4I5HDnBceACPNs7SVgADd9Xw62m'
+        // ]);
+        // $user3->assignRole('Cliente');//Asignación Rol Cliente
+        Cliente::create([
             "nombres"=>"Michael",
             "apellidos"=>"Vera",
             "celular"=>"0988703045",
@@ -72,12 +73,13 @@ class RolesSeeder extends Seeder
             "genero"=>"Masculino",
             "fnacimiento"=>"1998-03-12 12:49:00",
             "estado_civil"=>"soltero",
+            "correo"=>"cliente@gmail.com",
             // "estatus"=>"A",
             "provincia_id"=>1,
             "responsable_id"=>1,
-            "user_id"=>$user3->id,
+            // "user_id"=>$user3->id,
             "cedula"=>"0101415052"
         ]);
-      
+
     }
 }

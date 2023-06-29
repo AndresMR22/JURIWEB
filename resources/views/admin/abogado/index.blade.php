@@ -54,6 +54,7 @@
                                         <tr>
                                             <th>Cedula</th>
                                             <th>Nombres</th>
+                                            <th>Correo</th>
                                             <th>Celular</th>
                                             <th>Dirección</th>
                                             <th>Estatus</th>
@@ -65,6 +66,7 @@
                                             <tr>
                                                 <td>{{ $abogado->cedula }}</td>
                                                 <td>{{ $abogado->nombres }} {{ $abogado->apellidos }}</td>
+                                                <td>{{ $abogado->user->email }}</td>
                                                 <td>{{ $abogado->celular }}</td>
                                                 <td>{{ $abogado->direccion }}</td>
 
@@ -169,6 +171,9 @@
                                                                             </span>
                                                                         @enderror
                                                                     </div>
+
+
+
                                                                     <div class="form-group">
                                                                         <label for="inputStatus">Genero</label>
                                                                         <select required id="genero" name="genero"
@@ -210,6 +215,20 @@
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
+                                                                    </div>
+
+                                                                    <div class="fila">
+                                                                        <div class="form-group">
+                                                                            <label for="inputName">Correo</label>
+                                                                            <input required name="correo" type="email"
+                                                                                id="correo" value="{{ $abogado->user->email }}"
+                                                                                class="form-control @error('correo') is-invalid @enderror">
+                                                                            @error('correo')
+                                                                                <span class="invalid-feedback" role="alert">
+                                                                                    <strong>{{ $message }}</strong>
+                                                                                </span>
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
                                                                     {{-- <div class="form-group">
                                                                         <label for="inputStatus">Estatus</label>

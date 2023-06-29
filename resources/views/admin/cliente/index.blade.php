@@ -54,7 +54,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                
+
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -74,7 +74,7 @@
                     <td>{{$cliente->cedula}}</td>
                     <td>{{$cliente->nombres}} {{$cliente->apellidos}}</td>
                     <td>{{$cliente->celular}}</td>
-                    <td>{{ $cliente->user->email }}</td>
+                    <td>{{ $cliente->correo }}</td>
                     <td>{{$cliente->direccion}}</td>
                     {{-- <td>{{$cliente->correo}}</td> --}}
                     @if(auth()->user()->hasRole('Abogado'))
@@ -142,7 +142,7 @@
                                     </span>
                                 @enderror
                                   </div>
-  
+
                                   <div class="form-group">
                                       <label for="inputName">Fecha de nacimiento</label>
                                       <input name="fnacimiento" type="date" id="fnacimiento" value="{{$cliente->fnacimiento}}" class="form-control @error('fnacimiento') is-invalid @enderror">
@@ -153,6 +153,30 @@
                                   @enderror
                                     </div>
                               </div>
+
+                              <div class="fila">
+                                <div class="form-group">
+                                  <label for="inputName">Correo</label>
+                                  <input name="correo" type="text" id="correo" value="{{$cliente->correo}}" class="form-control @error('correo') is-invalid @enderror">
+                                  @error('correo')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputName">Fecha de nacimiento</label>
+                                    <input name="fnacimiento" type="date" id="fnacimiento" value="{{$cliente->fnacimiento}}" class="form-control @error('fnacimiento') is-invalid @enderror">
+                                    @error('fnacimiento')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                  </div>
+                            </div>
+
+
                               <div class="fila">
                                   <div class="form-group">
                                     <label for="inputName">Celular</label>
@@ -179,7 +203,7 @@
                                   </div>
                               </div>
                               <div class="fila">
-                                 
+
                                   <div class="form-group">
                                     <label for="inputStatus">Estado civil</label>
                                     <select id="estado_civil" name="estado_civil" class="form-control custom-select @error('estado_civil') is-invalid @enderror">
@@ -195,27 +219,27 @@
                                     </span>
                                 @enderror
                                   </div>
-                                    
+
                                </div>
-  
+
                               </div>
                               <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
                               </div>
                             </div>
-                            
+
                           </div>
                           <!-- /.modal-content -->
                         </div>
-                      
+
                     </form>
                     <!-- /.modal-dialog -->
 
                   </div>
 
 
-                  
+
 
                   <div class="modal fade" id="modal-danger{{$cliente->id}}">
                     <form id="formEliminar"{{$cliente->id}} method="POST" action="{{route('cliente.destroy',$cliente->id)}}">
@@ -245,7 +269,7 @@
 
                   </div>
 
-                  
+
 
                   @endforeach
                 </table>
@@ -263,7 +287,7 @@
     <!-- /.content -->
   </div>
 
-  
+
 
   <script>
     function eliminar(id)
@@ -299,7 +323,7 @@
       $.ajax({
                 url: "{{ route('abogado.validarCedula') }}",
                 dataType: "json",
-                data: 
+                data:
                 {
                   cedula:e.target.value
                 }
@@ -322,7 +346,7 @@
                   inputCedula.style.border='2px solid #2ECC71';
                   cedulaValida=true;
                 }
-                
+
                 if(!res[1])
                 {
                   inputCedula.style.border='2px solid red';

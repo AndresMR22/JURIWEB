@@ -17,8 +17,8 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-    
-   
+
+
 
     <!-- Main content -->
    <form id="formCreateAbogado" method="POST" action="{{route('abogado.store')}}">
@@ -29,7 +29,7 @@
              <div class="card card-primary">
                <div class="card-header">
                  <h3 class="card-title">Abogado</h3>
-   
+
                  <div class="card-tools">
                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                      <i class="fas fa-minus"></i>
@@ -42,7 +42,7 @@
                   <div style="flex:1 0 100px;">
                     <label for="inputName">Cedula</label>
                     <input name="cedula" onkeypress="return valideKey(event);" type="text" id="cedula" value="{{ old('cedula') }}" class="form-control @error('cedula') is-invalid @enderror" minlength="10" maxlength="10">
-                    
+
                     @error('cedula')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -57,7 +57,7 @@
                       <img id="visto" style="visibility: hidden;"  src="{{ asset('assets/dist/img/visto.png') }}">
                       <img id="x" style="visibility: hidden; display:none;" src="{{ asset('assets/dist/img/x.png') }}">
                     </div>
-                    
+
                   </div>
                 </div>
 
@@ -139,7 +139,7 @@
              </div>
              <!-- /.card -->
            </div>
-           
+
          </div>
          <div class="row">
            <div class="col-12 d-flex justify-content-center my-2" style="gap:20px;">
@@ -147,7 +147,7 @@
            </div>
          </div>
        </section>
-    </form> 
+    </form>
     <!-- /.content -->
   </div>
 
@@ -179,10 +179,10 @@
 
     function enviarForm()
     {
-      if(!cedulaValida)
+    //   if(!cedulaValida)
         document.getElementById('formCreateAbogado').submit();
     }
-   
+
     var cedulaValida = false;
     function validarCedula(e)
     {
@@ -193,45 +193,34 @@
       $.ajax({
                 url: "{{ route('abogado.validarCedula') }}",
                 dataType: "json",
-                data: 
+                data:
                 {
                   cedula:e.target.value
                 }
             }).done(function(res)
             {
-                if(!res[0])
-                {
-                  inputCedula.style.border='2px solid red';
-                  imgEstadoX.style.display='';
-                  imgEstadoX.style.visibility='';
-                  imgEstadoVisto.style.display='none';
-                  imgEstadoVisto.style.visibility='hidden';
-                  cedulaValida=false;
-                }else
-                {
-                  imgEstadoX.style.display='none';
-                  imgEstadoX.style.visibility='hidden';
-                  imgEstadoVisto.style.display='';
-                  imgEstadoVisto.style.visibility='';
-                  inputCedula.style.border='2px solid #2ECC71';
-                  cedulaValida=true;
-                }
-                
-                if(!res[1])
-                {
-                  inputCedula.style.border='2px solid red';
-                  imgEstadoX.style.display='';
-                  imgEstadoX.style.visibility='';
-                  imgEstadoVisto.style.display='none';
-                  imgEstadoVisto.style.visibility='hidden';
-                  cedulaValida=false;
-                }else{
-                  imgEstadoX.style.display='none';
-                  imgEstadoX.style.visibility='hidden';
-                  imgEstadoVisto.style.display='';
-                  imgEstadoVisto.style.visibility='';
-                  inputCedula.style.border='2px solid #2ECC71';
-                  cedulaValida=true;
+                console.log(res)
+                if (res[0] == false || res[1] == false) {
+                    inputCedula.style.border = '2px solid red';
+                    imgEstadoX.style.display = '';
+                    imgEstadoX.style.visibility = '';
+                    imgEstadoVisto.style.display = 'none';
+                    imgEstadoVisto.style.visibility = 'hidden';
+                    cedulaValida = false;
+                }else if (e.target.value.length == 0) {
+                    imgEstadoX.style.display = 'none';
+                    imgEstadoX.style.visibility = 'hidden';
+                    imgEstadoVisto.style.display = '';
+                    imgEstadoVisto.style.visibility = '';
+                    inputCedula.style.border = '2px solid #2ECC71';
+                    cedulaValida = true;
+                }else {
+                    imgEstadoX.style.display = 'none';
+                    imgEstadoX.style.visibility = 'hidden';
+                    imgEstadoVisto.style.display = '';
+                    imgEstadoVisto.style.visibility = '';
+                    inputCedula.style.border = '2px solid #2ECC71';
+                    cedulaValida = true;
                 }
             })
 

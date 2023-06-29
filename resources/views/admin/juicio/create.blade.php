@@ -19,7 +19,7 @@
         </section>
 
 
-        @if (count($errors) > 0)
+        {{-- @if (count($errors) > 0)
         <div class="alert alert-danger" role="alert">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -29,7 +29,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
 
         <!-- Main content -->
         <form method="POST" action="{{ route('juicio.store') }}">
@@ -91,9 +91,9 @@
                                     @enderror
                                 </div>
 
-                                
+
                                 @if(isset($esAbogado) && $esAbogado)
-                            
+
                                 <input type="hidden" name="abogado_id" value="{{ $abogados->id }}">
                                 @else
                                 <div class="form-group">
@@ -117,7 +117,7 @@
                                     <input name="cliente" type="text" id="cliente" class="form-control ">
                                     <input name="cliente_id" type="hidden" id="cliente_id" class="form-control @error('cliente_id') is-invalid @enderror">
                                     <div id="resultado_clientes" style="display:flex;justify-content:flex-start;flex-flow:wrap;">
-                                      
+
                                     </div>
                                     {{-- <select id="cliente_id" name="cliente_id" class="form-control custom-select">
                                         <option selected disabled>Seleccionar cliente</option>
@@ -356,7 +356,7 @@
         function crearCliente()
         {
             // let formCliente = document.getElementById('formCrearCliente')
-            
+
             console.log($('input[name="_token"]').val())
             $.ajax({
                 url: "{{ route('cliente.storeAsync') }}",
@@ -421,7 +421,7 @@
                     cedulaValida = true;
                 }
 
-               
+
             })
 
 
@@ -446,28 +446,28 @@
            $.ajax({
                 url: "{{ route('cliente.buscarCliente') }}",
                 dataType: "json",
-                data: 
+                data:
                 {
                   palabra
                 }
             }).done(function(res)
             {
-                
+
                 if(res.length > 0)
                 {
                     let resClientes = document.getElementById('resultado_clientes')
                     resClientes.innerHTML = ''
-     
+
                     res.forEach(item=>
                     {
-                   
+
                      let cliente = `
                      <span id="${item.id}" onclick="seleccionarCliente('${item.nombres}','${item.apellidos}',${item.id})" style="margin:10px 5px; background-color:white; border-radius:10px; padding:0px 5px; cursor:pointer;">${item.nombres} ${item.apellidos}</span>
                      `;
                      $(resClientes).append(cliente);
-     
+
                     }
-               
+
                     )
                     resClientes.style.background = '#85929E';
                     resClientes.style.borderRadius = '10px';
@@ -485,9 +485,9 @@
                         <span style="color:white;margin-left:35%; font-weight:500">Sin resultados, <a data-toggle="modal" data-target="#modal-default" class='btn btn-info'>Agregar cliente</a></span>
                      `;
                      $(resClientes).append(cliente);
-                    
+
                 }
-         
+
             })
         }
 

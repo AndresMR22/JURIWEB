@@ -6,19 +6,20 @@ use App\Models\Abogado;
 use App\Models\Cliente;
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidarCedulaRepetida implements Rule
+class ValidarCedulaRepetidaAbogado implements Rule
 {
 
     public function __construct()
     {
-
+        //
     }
 
 
     public function passes($attribute, $value)
     {
 
-        $respuesta = Cliente::where('cedula',$value)->first();
+            $respuesta = Abogado::where('cedula',$value)->first();
+
 
         if($respuesta != null){// no hay cedula repetida
             return false;//si hay cedula repetida

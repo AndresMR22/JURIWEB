@@ -10,11 +10,11 @@ use App\Http\Requests\StoreAbogadoRequest;
 use App\Http\Requests\UpdateAbogadoRequest;
 use Illuminate\Http\Request;
 use App\Rules\ValidarCedula;
-use App\Rules\ValidarCedulaRepetida;
+use App\Rules\ValidarCedulaRepetidaAbogado;
 
 class AbogadoController extends Controller
 {
-  
+
     public function index()
     {
         $abogados = Abogado::all();
@@ -22,14 +22,14 @@ class AbogadoController extends Controller
         return view('admin.abogado.index',compact('abogados','empresas'));
     }
 
-   
+
     public function create()
     {
         $empresas = Empresa::all();
         return view('admin.abogado.create',compact('empresas'));
     }
 
-   
+
     public function store(StoreAbogadoRequest $request)
     {
         $user = User::create([
@@ -62,7 +62,7 @@ class AbogadoController extends Controller
             $abogado->update(["estatus"=>"2"]);
         else
             $abogado->update(["estatus"=>"1"]);
-        
+
         return back();
     }
 
@@ -72,9 +72,9 @@ class AbogadoController extends Controller
         $cedula = !empty($request->get('cedula')) ? $request->get('cedula') : '';
         $vc = new ValidarCedula;
         $msg1 =  $vc->passes('cedula',$cedula);
-        $vcr = new ValidarCedulaRepetida;
+        $vcr = new ValidarCedulaRepetidaAbogado;
         $msg2 = $vcr->passes('cedula',$cedula);
-        
+
         //logica para validar cedula
         return [$msg1,$msg2];
     }
@@ -88,6 +88,7 @@ class AbogadoController extends Controller
         $user->update(
             [
             "name"=>$request->nombres,
+            "email"=>$request->correo
             // "password"=>Hash::make($request->password)
             ]);
 
@@ -106,7 +107,7 @@ class AbogadoController extends Controller
         return back();
     }
 
-    
+
     public function destroy($id)
     {
         Abogado::destroy($id);
