@@ -33,10 +33,15 @@ class Juicio extends Model
     {
         return $this->belongsTo(UnidadJudicial::class);
     }
-    
+
     public function audiencias()
     {
         return $this->hasMany(Audiencia::class);
+    }
+
+    public function archivos()
+    {
+            return $this->morphMany(File::class, 'tipo');
     }
 
 }

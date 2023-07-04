@@ -21,6 +21,18 @@ class AudienciaController extends Controller
     {
         $audiencias = Audiencia::all();
         $juicios = Juicio::all();
+        if(auth()->user()->hasRole('Abogado'))
+        {
+            $abogado = Abogado::where('user_id',auth::id())->first();
+            $juicios = Juicio::where('abogado_id',$abogado->id)->get();
+            $audiencias = collect();
+            foreach($juicios as $juicio)
+            {
+                $audiencia = Audiencia::where('juicio_id',$juicio->id)->first();
+                $audiencias->push($audiencia);
+            }
+        }
+
         return view('admin.audiencia.index',compact('audiencias','juicios'));
     }
 
@@ -38,7 +50,7 @@ class AudienciaController extends Controller
         if($user->hasRole('Abogado'))
         {
             $id = Abogado::where('user_id',auth::id())->first('id');
-        
+
             $juicios = Juicio::where('abogado_id',$id->id)->get();
         }
         return view('admin.audiencia.create',compact('juicios'));
@@ -84,7 +96,7 @@ class AudienciaController extends Controller
         //
     }
 
-    
+
     public function update(UpdateAudienciaRequest $request, $id)
     {
         $audiencia = Audiencia::find($id);
@@ -105,7 +117,7 @@ class AudienciaController extends Controller
         return back();
     }
 
-   
+
     public function destroy(Audiencia $audiencia, $id)
     {
         Audiencia::destroy($id);

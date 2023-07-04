@@ -66,8 +66,8 @@ class RolesSeeder extends Seeder
         // ]);
         // $user3->assignRole('Cliente');//Asignación Rol Cliente
         Cliente::create([
-            "nombres"=>"Michael",
-            "apellidos"=>"Vera",
+            "nombres"=>"Michaels",
+            "apellidos"=>"Veras",
             "celular"=>"0988703045",
             "direccion"=>"Av. Guayas",
             "genero"=>"Masculino",

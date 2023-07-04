@@ -48,6 +48,7 @@ Route::group(['prefix' => 'dashboard'], function () {
 
         Route::get('juicio/cambiar_estado/{juicio_id}', [JuicioController::class,'cambiarEstado'])->name('juicio.cambiarEstado');
         Route::get('/buscarClientes', [ClienteController::class,'buscarCliente'])->name('cliente.buscarCliente');
+        Route::post('/cargar_avance',[JuicioController::class,'cargarAvance'])->name('juicio.cargarAvance');
     });
 
     Route::group(['middleware' => ['adminabogado']], function () {
