@@ -63,8 +63,10 @@
                                             <th>Materia</th>
                                             <th>Estado</th>
                                             <th>Fecha</th>
+                                            @if(auth()->user()->hasRole('Abogado'))
                                             <th>Estatus</th>
                                             <th>Avance</th>
+                                            @endif
                                             <th>Abogado</th>
                                             <th>Cliente</th>
                                             {{-- <th>Unidad</th> --}}
@@ -80,6 +82,7 @@
                                                 <td>{{ $juicio->materia }}</td>
                                                 <td>{{ $juicio->estadop }}</td>
                                                 <td>{{ date('d-m-y h:i', strtotime($juicio->fecha)) }}</td>
+                                               @if(auth()->user()->hasRole('Abogado'))
                                                 <td>{{ $juicio->estatus == '1' ? 'En proceso' : ($juicio->estatus == '2' ? 'Archivado' : 'Finalizado') }}
                                                     <a title="Cambiar estado"
                                                         href="{{ route('juicio.cambiarEstado', $juicio->id) }}"
@@ -89,6 +92,7 @@
                                                 <td><a class="btn btn-info" title="Abrir avances" data-toggle="modal"
                                                         data-target="#modal-avance{{ $juicio->id }}"><i
                                                             class="fas fa-file"></i></a></td>
+                                                    @endif
                                                 <td>{{ $juicio->abogado->nombres }}</td>
                                                 <td>{{ $juicio->cliente->nombres }}</td>
                                                 {{-- <td>{{isset($juicio->unidad_judicial) ? 'si' : 'no'}}</td> --}}
@@ -249,6 +253,20 @@
 
                                                                 <div class="fila">
                                                                     <div class="form-group">
+                                                                        <label for="inputName">Fecha</label>
+                                                                        <input name="fecha" type="date"
+                                                                        id="fecha"
+                                                                        class="form-control @error('fecha') is-invalid @enderror">
+                                                                        @error('fecha')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="fila">
+                                                                    <div class="form-group">
                                                                         <label for="inputName">Observación</label>
                                                                         <textarea class="form-control" name="observacion" id="observacion"></textarea>
                                                                         @error('observacion')
@@ -274,8 +292,11 @@
                                                                                     style="max-width: 100px;" autoplay
                                                                                     muted loop controls></video>
                                                                             @elseif(Str::endsWith($archivo->url, 'pdf'))
-                                                                                    <a class="btn btn-danger" href="{{ $archivo->url }}" download><i class="fas fa-file-pdf"></i></a>
-                                                                            @else
+                                                                                    <a class="btn btn-danger" href="{{ $archivo->url }}" target="_blank" download><i class="fas fa-file-pdf"></i></a>
+                                                                            @elseif(Str::endsWith($archivo->url, 'temp'))
+                                                                            <a class="btn btn-info" href="{{ $archivo->url }}" target="_blank" download><i class="fa-solid fa-file-word"></i></a>
+
+                                                                                    @else
                                                                                 <img title="observacion" style="max-width: 100px;" src="{{ $archivo->url }}"
                                                                                     alt="archivo">
                                                                             @endif

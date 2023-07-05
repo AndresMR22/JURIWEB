@@ -55,10 +55,12 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/audiencia', [AudienciaController::class,'index'])->name('audiencia.index');
         Route::get('/cliente', [ClienteController::class,'index'])->name('cliente.index');
         Route::get('/juicio', [JuicioController::class,'index'])->name('juicio.index');
+        Route::get('/seguimiento',[JuicioController::class,'seguimiento'])->name('juicio.seguimiento');
 
         //------------RUTAS AJAX-------------------//
         Route::get('/validarCedula', [AbogadoController::class,'validarCedula'])->name('abogado.validarCedula');
         Route::get('/cantonesByProvincia', [ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
+        Route::get('/avancesByJuicio', [JuicioController::class,'avancesByJuicio'])->name('juicio.avancesByJuicio');
     });
 
     // Route::group(['middleware' => 'cliente'], function () {

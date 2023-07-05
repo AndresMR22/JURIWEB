@@ -17,6 +17,33 @@ use Illuminate\Http\Request;
 
 class JuicioController extends Controller
 {
+
+    public function avancesByJuicio(Request $request)
+    {
+        $archivos = null;
+        $juicio = Juicio::find($request->juicio_id);
+        $cliente = $juicio->cliente()->first();
+        // dd($juicio->unidad_juidicial_id);
+        $unidad = UnidadJudicial::find($juicio->unidad_juidicial_id);
+        $archivos = $juicio->archivos()->get();
+        $info = array();
+        array_push($info,['juicio'=>$juicio,'cliente'=>$cliente,'unidad'=>$unidad,'archivos'=>$archivos]);
+        return $info;
+    }
+
+    public function seguimiento()
+    {
+        $juicios = Juicio::all();
+        if(auth()->user()->hasRole('Abogado'))
+        {
+            $user = User::find(auth::id());
+            $abogado = Abogado::where('user_id',$user->id)->first();
+            $juicios = Juicio::where('abogado_id',$abogado->id)->get();
+        }
+
+        return view('admin.juicio.seguimiento',compact('juicios'));
+    }
+
     public function index()
     {
         $juicios = Juicio::all();
@@ -42,16 +69,18 @@ class JuicioController extends Controller
             $file = $request->file('file');
             $extension = $request->file('file')->extension();
             // dd($extension);
-            if ($extension == "png" || $extension == "jpg" || $extension == "jpeg" || $extension == "gif" || $extension == "pdf" || $extension == "docx" || $extension == "xls" || $extension == "xlsx")
+            if ($extension == "png" || $extension == "jpg" || $extension == "jpeg" || $extension == "gif" || $extension == "pdf")
             {
-
                 $this->validate($request, [
                     'file'   => 'required',
-                    'file' => 'mimes:png,jpg,jpeg,gif,docx,pdf,xls,xlsx',
+                    'file' => 'mimes:png,jpg,jpeg,gif,pdf',
+                    'fecha'=>'required|date'
                 ],[
                     'file.required'=>'La imagen es requerida',
-                    'file.image'=>'El archivo tienen que ser una imagen, o extension de documento permitida (jpg,jpeg,gif,pdf,docx,xls,xlsx)',
+                    'file.image'=>'El archivo tienen que ser una imagen, o extension de documento permitida (jpg,jpeg,gif,pdf)',
                     'file.mimes'=>'La imagen debe ser tipo png, jpg o jpeg',
+                    'fecha.required'=>'La fecha es requerida',
+                    'fecha.date'=>'La fecha no tiene el formato adecuado'
                     // 'file.dimensions'=>'La imagen no cumple con las dimensiones 800x200 mínimo; 1800x600 máximo',
                     // 'file.max'=>'La imagen supera el peso permitido (1Megabyte)'
                 ]);
@@ -63,16 +92,45 @@ class JuicioController extends Controller
                     'url' => $url,
                     'public_id'=>$public_id,
                     'observacion'=>$request->observacion,
-                    'fecha'=>date('Y-m-d h:i:s')
+                    'fecha'=>$request->fecha,
+                ]);
+            }
+            elseif($extension == "pdf" || $extension == "docx" || $extension == "xls" || $extension == "xlsx")
+            {
+                $this->validate($request, [
+                    'file'   => 'required',
+                    'file' => 'mimes:docx,pdf,xls,xlsx',
+                    'fecha'=>'required|date'
+                ],[
+                    'file.required'=>'La imagen es requerida',
+                    'file.image'=>'El archivo tienen que ser una imagen, o extension de documento permitida (pdf,docx,xls,xlsx)',
+                    'file.mimes'=>'La imagen debe ser tipo png, jpg o jpeg',
+                    'fecha.required'=>'La fecha es requerida',
+                    'fecha.date'=>'La fecha no tiene el formato adecuado'
+                    // 'file.dimensions'=>'La imagen no cumple con las dimensiones 800x200 mínimo; 1800x600 máximo',
+                    // 'file.max'=>'La imagen supera el peso permitido (1Megabyte)'
+                ]);
+
+                $elemento = Cloudinary::uploadFile($file->getRealPath(), ['folder' => 'anexos'],['resource_type'=>'raw']);
+                $public_id = $elemento->getPublicId();
+                $url = $elemento->getSecurePath();
+                $juicio->archivos()->create([
+                    'url' => $url,
+                    'public_id'=>$public_id,
+                    'observacion'=>$request->observacion,
+                    'fecha'=>$request->fecha,
                 ]);
             }
             else
             {
                 $this->validate($request,[
-                    'file' =>'mimetypes:video/mp4,video|max:6000'
+                    'file' =>'mimetypes:video/mp4,video|max:6000',
+                    'fecha'=>'required|date'
                 ],[
                     'file.mp4'=>'El video debe ser tipo mp4',
-                    'file.max'=>'El video es muy pesado'
+                    'file.max'=>'El video es muy pesado',
+                    'fecha.required'=>'La fecha es requerida',
+                    'fecha.date'=>'La fecha no tiene el formato adecuado'
                 ]);
                 $elemento = Cloudinary::uploadVideo($file->getRealPath(), ['folder' => 'anexos']);
                   $public_id = $elemento->getPublicId();

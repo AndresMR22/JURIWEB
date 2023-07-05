@@ -406,6 +406,14 @@
                   <p>Listar</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="{{route('juicio.seguimiento')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Seguimiento</p>
+                </a>
+              </li>
+
             </ul>
           </li>
           @endif
