@@ -29,9 +29,13 @@ class AudienciaController extends Controller
             foreach($juicios as $juicio)
             {
                 $audiencia = Audiencia::where('juicio_id',$juicio->id)->first();
-                $audiencias->push($audiencia);
+                if($audiencia!=null)
+                {
+                    $audiencias->push($audiencia);
+                }
             }
         }
+        // dd($audiencias);
 
         return view('admin.audiencia.index',compact('audiencias','juicios'));
     }

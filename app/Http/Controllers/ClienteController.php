@@ -17,14 +17,15 @@ class ClienteController extends Controller
 
     public function index()
     {
-        $user = User::find(auth::id());
-        if($user->hasRole('Administrador'))
+        // $user = User::find(auth::id());
+        // if($user->hasRole('Administrador'))
             $clientes = Cliente::all();
-        else if($user->hasRole('Abogado'))
-        {
-            $abogado = Abogado::where('user_id',auth::id())->first();
-            $clientes = Cliente::where('responsable_id',$abogado->id)->get();
-        }else{$clientes='';}
+        // else if($user->hasRole('Abogado'))
+        // {
+        //     $abogado = Abogado::where('user_id',auth::id())->first();
+        //     $clientes = Cliente::where('responsable_id',auth::id())->get();
+        //     // dd($clientes);
+        // }else{$clientes='';}
 
         return view('admin.cliente.index',compact('clientes'));
     }

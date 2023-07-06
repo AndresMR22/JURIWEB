@@ -82,6 +82,10 @@
               <!-- /.row -->
 
               <!-- Table row -->
+              <div class="title_avances my-2" id="sinavances"  style="visibility:hidden; display:flex;flex-direction:row; justify-content:center; align-items:center;margin:15px 0px;">
+                <h4 style="font-weight: bold; color:orange;">Sin avances</h4>
+              </div>
+
               <div class="container_avances" style="visibility: hidden">
                 <div class="title_avances" style="display:flex;flex-direction:row; justify-content:center; align-items:center;margin:15px 0px;">
                   <h4 style="font-weight: bold;">Avances</h4>
@@ -144,12 +148,12 @@
                 console.log(res[0].archivos)
 
                 document.getElementById('valorMateria').textContent = res[0].juicio.materia
-                document.getElementById('valorProcesoJudicial').textContent = res[0].juicio.nro
+                document.getElementById('valorProcesoJudicial').textContent = res[0].juicio.estadop
                 document.getElementById('valorFecha').textContent = res[0].juicio.fecha
 
                 document.getElementById('valorCliente').textContent = res[0].cliente.nombres+' '+res[0].cliente.apellidos
                 document.getElementById('valorUnidadJudicial').textContent = res[0].unidad.nombre
-                document.getElementById('valorEstadoJuicio').textContent = res[0].juicio.estadop
+                document.getElementById('valorEstadoJuicio').textContent = res[0].juicio.estatus==1? 'En proceso' :'Finalizado'
 
                 // <b>Materia:</b><p id="valorMateria">-</p><br>
                 //     <b>Proceso Judicial:</b><p id="valorProcesoJudicial">-</p><br>
@@ -166,7 +170,7 @@
 
                 if(res[0].archivos.length>0)
                 {
-
+                    document.getElementById('sinavances').style.visibility='hidden';
                     document.querySelector('.container_avances').style.visibility=''
                     let body = document.getElementById('body_avances');
                     body.innerHTML = '';
@@ -197,7 +201,8 @@
                     })
                 }else
                 {
-                    alert('no dispones de avances aún en este juicio')
+                    // alert('no dispones de avances aún en este juicio')
+                    document.getElementById('sinavances').style.visibility='';
                     document.querySelector('.container_avances').style.visibility='hidden'
                     let body = document.getElementById('body_avances');
                     body.innerHTML = '';

@@ -49,7 +49,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                
+
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -130,14 +130,14 @@
                           </div>
                           <!-- /.modal-content -->
                         </div>
-                      
+
                     </form>
                     <!-- /.modal-dialog -->
 
                   </div>
 
 
-                  
+
 
                   <div class="modal fade" id="modal-danger{{$audiencia->id}}">
                     <form id="formEliminar"{{$audiencia->id}} method="POST" action="{{route('audiencia.destroy',$audiencia->id)}}">
@@ -167,7 +167,7 @@
 
                   </div>
 
-                  
+
 
                   @endforeach
                 </table>
@@ -185,7 +185,7 @@
     <!-- /.content -->
   </div>
 
-  
+
 
   <script>
     function eliminar(id)
