@@ -35,7 +35,7 @@
               <div class="row" style="display:flex; flex-direction:row; justify-content:center; align-items:center;">
                 <div class="col-3">
                     {{-- <label>Número de juicio</label> --}}
-                  <select name="juicio" class="form-control" id="select_juicio">
+                  <select onchange="actualizarJuicio_id()" name="juicio" class="form-control" id="select_juicio">
                     <option selected readonly>Seleccione un número de juicio</option>
                     @foreach($juicios as $juicio)
                     <option value="{{ $juicio->id }}">{{ $juicio->nro }}</option>
@@ -43,7 +43,12 @@
                   </select>
                 </div>
                 <div class="col-2">
-                    <a class="btn btn-outline-danger" title="Generar reporte"><i class="fas fa-file-pdf"></i></a>
+                    <form method="POST" id="formReporteSeguimiento" action ="{{ route('juicio.generarReporteSeguimiento') }}">
+                        @csrf
+                        <a onclick="generarReporte()" class="btn btn-outline-danger" title="Generar reporte"><i class="fas fa-file-pdf"></i></a>
+                        <input type="hidden" name="juicio_id" id="juicio_id">
+                    </form>
+
                 </div>
                 <!-- /.col -->
               </div>
@@ -133,9 +138,17 @@
     let select_juicio = document.getElementById('select_juicio').addEventListener('change',cargarAvances);
     });
 
+
+    function generarReporte()
+    {
+        document.getElementById('formReporteSeguimiento').submit();
+    }
+
     function cargarAvances(e)
     {
-        let nroJuicio = e.target.value
+        let nroJuicio = e.target.value;
+        document.getElementById('juicio_id').value = nroJuicio;
+
         $.ajax({
                 url: "{{ route('juicio.avancesByJuicio') }}",
                 dataType: "json",
@@ -172,8 +185,11 @@
                 {
                     document.getElementById('sinavances').style.visibility='hidden';
                     document.querySelector('.container_avances').style.visibility=''
+
                     let body = document.getElementById('body_avances');
+
                     body.innerHTML = '';
+                    
                     res['0'].archivos.forEach((item,index)=>
                     {
                         let extension = item.url.substr(-4)
@@ -181,7 +197,7 @@
                         if(extension == '.pdf')
                         {
                             btnArchivo = `<a class="btn btn-danger" href="${item.url}" download target="_blank"><i class="fas fa-file-pdf"></i></a>`
-                        }else if (extension == '.gif' || extension == '.png' || extension == '.jpg' || extension== '.jpeg')
+                        }else if (extension == '.gif' || extension == '.png' || extension == '.jpg' || extension== 'jpeg')
                         {
                             btnArchivo = `<a class="btn btn-secondary" href="${item.url}" download target="_blank"><i class="fas fa-image"></i></a>`
                         }else if(extension == '.mp4')

@@ -61,6 +61,8 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/validarCedula', [AbogadoController::class,'validarCedula'])->name('abogado.validarCedula');
         Route::get('/cantonesByProvincia', [ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
         Route::get('/avancesByJuicio', [JuicioController::class,'avancesByJuicio'])->name('juicio.avancesByJuicio');
+        Route::post('/generarPdfSeguimiento', [JuicioController::class,'generarReporteSeguimiento'])->name('juicio.generarReporteSeguimiento');
+
     });
 
     // Route::group(['middleware' => 'cliente'], function () {

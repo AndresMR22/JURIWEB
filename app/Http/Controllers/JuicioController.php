@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
+use PDF;
 
 class JuicioController extends Controller
 {
@@ -23,13 +24,36 @@ class JuicioController extends Controller
         $archivos = null;
         $juicio = Juicio::find($request->juicio_id);
         $cliente = $juicio->cliente()->first();
-        // dd($juicio->unidad_juidicial_id);
         $unidad = UnidadJudicial::find($juicio->unidad_juidicial_id);
         $archivos = $juicio->archivos()->get();
         $info = array();
         array_push($info,['juicio'=>$juicio,'cliente'=>$cliente,'unidad'=>$unidad,'archivos'=>$archivos]);
         return $info;
     }
+
+    public function generarReporteSeguimiento(Request $request)
+    {
+
+        $juicio = Juicio::find($request->juicio_id);
+        $cliente = $juicio->cliente()->first();
+        $unidad = UnidadJudicial::find($juicio->unidad_juidicial_id);
+        $archivos = $juicio->archivos()->get();
+        $pdf = PDF::loadView('admin.pdf.seguimiento', compact('juicio','cliente','unidad','archivos')); // se carga la data en la plantilla
+        return $pdf->stream('Reporte de seguimiento.pdf'); //retorna el pdf con el nombre compra_creditos.pdf
+    }
+
+    // public function acortarurl($url){
+    //     $longitud = strlen($url);
+    //     if($longitud > 45){
+    //         $longitud = $longitud - 30;
+    //         $parte_inicial = substr($url, 0, -$longitud);
+    //         $parte_final = substr($url, -15);
+    //         $nueva_url = $parte_inicial."[ ... ]".$parte_final;
+    //         return $nueva_url;
+    //     }else{
+    //         return $url;
+    //     }
+    // }
 
     public function seguimiento()
     {
@@ -40,7 +64,6 @@ class JuicioController extends Controller
             $abogado = Abogado::where('user_id',$user->id)->first();
             $juicios = Juicio::where('abogado_id',$abogado->id)->get();
         }
-
         return view('admin.juicio.seguimiento',compact('juicios'));
     }
 
