@@ -61,5 +61,9 @@ class UnidadJudicialTest extends TestCase
         //fuera de cualquier middleware. Caso contrario indicara que la tabla esta vacia ya que es necesario
         //estar logueado.
 
+        //5------------ Test de eliminacion de Unidad Judicial -------------------//
+        $this->delete(route('unidad.destroy',1));//se elimina la unidad de la tabla unidad_judicials
+        $this->assertDatabaseMissing("unidad_judicials", ['nombre'=>'name test']);//se pregunta si el nombre name test esta en la tabla
+
     }
 }

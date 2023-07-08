@@ -73,11 +73,11 @@ Route::group(['prefix' => 'dashboard'], function () {
 
     // --- Descomentar para prueba unitaria de Unidad Judicial y comentar en caso de no hacer pruebas
 
-    /*
+    
 
     Route::group(['middleware' => 'auth'], function () {
          Route::resource('unidad',UnidadJudicialController::class);
      });
 
-    */
+
 });
