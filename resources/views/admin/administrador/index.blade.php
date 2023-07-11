@@ -26,17 +26,7 @@
         }
     </style>
 
-@if (count($errors) > 0)
-<div class="alert alert-danger" role="alert">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>
-                {{ $error }}
-            </li>
-        @endforeach
-    </ul>
-</div>
-@endif
+
 
     <!-- Main content -->
     <section class="content">
@@ -49,7 +39,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                
+
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -111,14 +101,14 @@
                           </div>
                           <!-- /.modal-content -->
                         </div>
-                      
+
                     </form>
                     <!-- /.modal-dialog -->
 
                   </div>
 
 
-                  
+
 
                   <div class="modal fade" id="modal-danger{{$admin->id}}">
                     <form id="formEliminar"{{$admin->id}} method="POST" action="{{route('administrador.destroy',$admin->id)}}">
@@ -127,13 +117,13 @@
                       <div class="modal-dialog">
                         <div class="modal-content bg-danger">
                           <div class="modal-header">
-                            <h4 class="modal-title">Eliminar admin</h4>
+                            <h4 class="modal-title">Eliminar Administrador</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
                           <div class="modal-body">
-                            <p>¿Estás seguro de eliminar al admin {{$admin->nombres}} {{$admin->apellidos}} ?</p>
+                            <p>¿Estás seguro de eliminar al administrador {{$admin->nombres}} {{$admin->apellidos}} ?</p>
                           </div>
                           <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">No</button>
@@ -148,7 +138,7 @@
 
                   </div>
 
-                  
+
 
                   @endforeach
                 </table>
@@ -166,7 +156,7 @@
     <!-- /.content -->
   </div>
 
-  
+
 
   <script>
     function eliminar(id)

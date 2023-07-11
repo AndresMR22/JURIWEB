@@ -143,6 +143,14 @@
             <td></td>
             <td></td>
             <td></td>
+            <th><td>Abogado: {{$abogado->nombres.' '.$abogado->apellidos}}</td></th>
+        </tr>
+        <tr class="fila">
+            <td>Materia: {{$juicio->materia}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <th></th>
         </tr>
     </tbody>

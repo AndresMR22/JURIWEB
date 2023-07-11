@@ -35,10 +35,11 @@ class JuicioController extends Controller
     {
 
         $juicio = Juicio::find($request->juicio_id);
+        $abogado = Abogado::where('id',$juicio->abogado_id)->first();
         $cliente = $juicio->cliente()->first();
         $unidad = UnidadJudicial::find($juicio->unidad_juidicial_id);
         $archivos = $juicio->archivos()->get();
-        $pdf = PDF::loadView('admin.pdf.seguimiento', compact('juicio','cliente','unidad','archivos')); // se carga la data en la plantilla
+        $pdf = PDF::loadView('admin.pdf.seguimiento', compact('juicio','cliente','unidad','archivos','abogado')); // se carga la data en la plantilla
         return $pdf->stream('Reporte de seguimiento.pdf'); //retorna el pdf con el nombre compra_creditos.pdf
     }
 
