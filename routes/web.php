@@ -56,11 +56,15 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/cliente', [ClienteController::class,'index'])->name('cliente.index');
         Route::get('/juicio', [JuicioController::class,'index'])->name('juicio.index');
         Route::get('/seguimiento',[JuicioController::class,'seguimiento'])->name('juicio.seguimiento');
+        Route::get('/busqueda_seguimiento', [JuicioController::class,'busquedaSeguimiento'])->name('juicio.busquedaSeguimiento');
+        Route::post('/busqueda_seguimiento/buscar', [JuicioController::class,'buscarSeguimiento'])->name('juicio.buscarSeguimiento');
 
         //------------RUTAS AJAX-------------------//
         Route::get('/validarCedula', [AbogadoController::class,'validarCedula'])->name('abogado.validarCedula');
         Route::get('/cantonesByProvincia', [ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
         Route::get('/avancesByJuicio', [JuicioController::class,'avancesByJuicio'])->name('juicio.avancesByJuicio');
+        Route::get('/avances/{juicio_id}', [JuicioController::class,'avancesByJuicio2'])->name('juicio.avancesByJuicio2');
+
         Route::post('/generarPdfSeguimiento', [JuicioController::class,'generarReporteSeguimiento'])->name('juicio.generarReporteSeguimiento');
 
     });

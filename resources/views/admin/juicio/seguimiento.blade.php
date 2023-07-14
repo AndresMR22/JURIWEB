@@ -31,22 +31,13 @@
             <!-- Main content -->
             <div class="invoice p-3 mb-3">
               <!-- title row -->
-              <label>Número de juicio</label>
               <div class="row" style="display:flex; flex-direction:row; justify-content:center; align-items:center;">
-                <div class="col-3">
-                    {{-- <label>Número de juicio</label> --}}
-                  <select onchange="actualizarJuicio_id()" name="juicio" class="form-control" id="select_juicio">
-                    <option selected readonly>Seleccione un número de juicio</option>
-                    @foreach($juicios as $juicio)
-                    <option value="{{ $juicio->id }}">{{ $juicio->nro }}</option>
-                    @endforeach
-                  </select>
-                </div>
+
                 <div class="col-2">
                     <form method="POST" id="formReporteSeguimiento" action ="{{ route('juicio.generarReporteSeguimiento') }}">
                         @csrf
                         <a onclick="generarReporte()" class="btn btn-outline-danger" title="Generar reporte"><i class="fas fa-file-pdf"></i></a>
-                        <input type="hidden" name="juicio_id" id="juicio_id">
+                        <input type="hidden" name="juicio_id" id="juicio_id" value="{{ $juicio->id }}">
                     </form>
 
                 </div>
@@ -54,26 +45,57 @@
               </div>
               <!-- info row -->
               <div class="row invoice-info">
-                @if(count($juicios)>0)
+                {{-- @if(count($juicios)>0) --}}
                 <div class="col-sm-4 invoice-col">
                     {{-- <b>Invoice #007612</b><br> --}}
                     <br>
-                    <b>Materia:</b><p id="valorMateria">-</p><br>
-                    <b>Proceso Judicial:</b><p id="valorProcesoJudicial">-</p><br>
-                    <b>Fecha:</b> <p id="valorFecha">-</p>
+                    <b>Materia:</b><p id="valorMateria">{{ $juicio->materia }}</p><br>
+                    <b>Proceso Judicial:</b><p id="valorProcesoJudicial">{{ $juicio->estadop }}</p><br>
+                    <b>Fecha:</b> <p id="valorFecha">{{ $juicio->fecha }}</p>
                   </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <br>
-                    <b>Cliente:</b> <p id="valorCliente">-</p><br>
-                    <b>Unidad Judicial:</b><p id="valorUnidadJudicial">-</p><br>
-                    <b>Estado de Juicio:</b> <p id="valorEstadoJuicio">-</p>
+                    <b>Cliente:</b> <p id="valorCliente">{{ $juicio->cliente->nombres. ' '.$juicio->cliente->apellidos }}</p><br>
+                    <b>Unidad Judicial:</b><p id="valorUnidadJudicial">{{ $unidad->nombre }}</p><br>
+                    <b>Estado de Juicio:</b> <p id="valorEstadoJuicio">{{ $juicio->estatus == 1 ? 'En proceso' : 'Finalizado' }}</p>
                 </div>
-                @else
+
+                <div class="avances_by_juicio w-100">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                          <th>N°</th>
+                          <th>Fecha</th>
+                          <th>Observación</th>
+                          <th>Archivo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                          @foreach($archivos as $key => $arch)
+                        <tr>
+                          <td>{{ $key+1 }}</td>
+                          <td>{{ $arch->fecha }}</td>
+                          <td>{{ $arch->observacion }}</td>
+                          <td>
+                            @if (Str::endsWith($arch->url, 'pdf'))
+                            <a href="{{ $arch->url }}" target="_blank" download class="btn btn-danger"><i class="fas fa-file-pdf"></i></a></td>
+                            @elseif (Str::endsWith($arch->url, 'mp4'))
+                            <a href="{{ $arch->url }}" target="_blank" download class="btn btn-info"><i class="fas fa-file-video"></i></a></td>
+                            @else
+                            <a href="{{ $arch->url }}" target="_blank" download class="btn btn-secondary"><i class="fas fa-image"></i></a></td>
+                            @endif
+                        </tr>
+
+                        @endforeach
+                      </table>
+                </div>
+                {{-- @else
                 <div style="display:flex; justify-content:center; align-items:center; color:red;">
                     <p>No tienes juicios a los cuales darle seguimiento</p>
                 </div>
-                @endif
+                @endif --}}
                 <!-- /.col -->
                 {{-- <div class="col-sm-4 invoice-col">
                   <b>Invoice #007612</b><br>
@@ -189,7 +211,7 @@
                     let body = document.getElementById('body_avances');
 
                     body.innerHTML = '';
-                    
+
                     res['0'].archivos.forEach((item,index)=>
                     {
                         let extension = item.url.substr(-4)

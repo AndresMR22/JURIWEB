@@ -31,6 +31,85 @@ class JuicioController extends Controller
         return $info;
     }
 
+    public function avancesByJuicio2($juicio_id)
+    {
+        $archivos = null;
+        $juicio = Juicio::find($juicio_id);
+        $cliente = $juicio->cliente()->first();
+        $unidad = UnidadJudicial::find($juicio->unidad_juidicial_id);
+        $archivos = $juicio->archivos()->get();
+        return view('admin.juicio.seguimiento',compact('juicio','unidad','archivos'));
+    }
+
+    public function searchByCelular($celular)
+    {
+        $clientes = Cliente::where('celular',$celular)->get();
+        $juiciosTotal = collect();
+        foreach($clientes as $cliente)
+        {
+            foreach($cliente->juicios as $juicio)
+            {
+                $cliente = Cliente::find($cliente->id);
+                $juicio->setAttribute('cliente',$cliente);
+                $juiciosTotal->push($juicio);
+            }
+        }
+        return $juiciosTotal;
+    }
+
+    public function searchByNombre($nombres)
+    {
+        // $nombres = "a ve";
+        $data_nombres = explode(' ',$nombres);
+        $nombre = isset($data_nombres[0]) ? $data_nombres[0] : 'xyz';
+        $apellido = isset($data_nombres[1]) ? $data_nombres[1] : 'xyz' ;
+        $clientes = Cliente::where('nombres','like',$nombre.'%')->orWhere('apellidos','like',$apellido.'%')->get();
+        $juiciosTotal = collect();
+
+        foreach($clientes as $cliente)
+        {
+            foreach($cliente->juicios as $juicio)
+            {
+                $cliente = Cliente::find($cliente->id);
+                $juicio->setAttribute('cliente',$cliente);
+                $juiciosTotal->push($juicio);
+            }
+        }
+
+        return $juiciosTotal;
+    }
+
+    public function buscarSeguimiento(Request $request)
+    {
+        $nombres = $request->get('nombres');
+        $data_nombres = explode(' ',$nombres);
+        $nombre = isset($data_nombres[0]) ? $data_nombres[0] : '';
+        $apellido = isset($data_nombres[1]) ? $data_nombres[1] : '' ;
+        $celular = $request->get('celular');
+        $juicio = $request->get('nro_juicio');
+        $juicios = Juicio::where('nro','JN-'.$juicio)->get();
+
+        foreach($juicios as $juicio)
+        {
+            $cliente = Cliente::where('id',$juicio->cliente_id)->first();
+            $juicio->setAttribute('cliente',$cliente);
+        }
+
+        if($nombres != null && !isset($juicios[0]))
+        {
+            $juicios = $this->searchByNombre($nombres);
+        }elseif($celular != null && !isset($juicios[0]))
+        {
+            $juicios = $this->searchByCelular($celular);
+        }
+        return view('admin.juicio.resultados_busqueda',compact('juicios'));
+    }
+
+    public function busquedaSeguimiento()
+    {
+        return view('admin.juicio.busqueda_seguimiento');
+    }
+
     public function generarReporteSeguimiento(Request $request)
     {
 
