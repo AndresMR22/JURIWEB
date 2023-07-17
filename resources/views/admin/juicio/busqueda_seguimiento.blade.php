@@ -36,9 +36,9 @@
                </div>
                <div class="card-body">
                  <div class="form-group">
-                   <label for="inputName">Celular del cliente</label>
-                   <input name="celular" placeholder="Ejemplo: 0988703045"  type="text" id="celular" class="form-control @error('celular') is-invalid @enderror">
-                   @error('celular')
+                   <label for="inputName">Cédula del cliente</label>
+                   <input name="cedula" placeholder="Ejemplo: 2100463187"  type="text" id="cedula" class="form-control @error('cedula') is-invalid @enderror">
+                   @error('cedula')
                    <span class="invalid-feedback" role="alert">
                        <strong>{{ $message }}</strong>
                    </span>
@@ -55,7 +55,7 @@
                   </div>
                   <div class="form-group">
                     <label for="inputName">Número de juicio</label>
-                    <input name="nro_juicio" placeholder="Ejemplo: 123"  type="text" id="nro_juicio" class="form-control @error('nro_juicio') is-invalid @enderror">
+                    <input name="nro_juicio" placeholder="Ejemplo: JN-1"  type="text" id="nro_juicio" class="form-control @error('nro_juicio') is-invalid @enderror">
                     @error('nro_juicio')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

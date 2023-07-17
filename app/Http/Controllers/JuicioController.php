@@ -41,9 +41,9 @@ class JuicioController extends Controller
         return view('admin.juicio.seguimiento',compact('juicio','unidad','archivos'));
     }
 
-    public function searchByCelular($celular)
+    public function searchByCedula($cedula)
     {
-        $clientes = Cliente::where('celular',$celular)->get();
+        $clientes = Cliente::where('cedula',$cedula)->get();
         $juiciosTotal = collect();
         foreach($clientes as $cliente)
         {
@@ -85,9 +85,17 @@ class JuicioController extends Controller
         $data_nombres = explode(' ',$nombres);
         $nombre = isset($data_nombres[0]) ? $data_nombres[0] : '';
         $apellido = isset($data_nombres[1]) ? $data_nombres[1] : '' ;
-        $celular = $request->get('celular');
+        $cedula = $request->get('cedula');
         $juicio = $request->get('nro_juicio');
-        $juicios = Juicio::where('nro','JN-'.$juicio)->get();
+        if(strlen($juicio)>=3)//JN- 3 caracteres o más, quitamos los 3 primeros caracteres
+        {
+            //$juicio = substr($juicio, 3);
+            $juicios = Juicio::where('nro',strtoupper($juicio))->get();
+        }else
+        {
+            $juicios = Juicio::where('nro','JN-'.$juicio)->get();
+        }
+
 
         foreach($juicios as $juicio)
         {
@@ -98,9 +106,9 @@ class JuicioController extends Controller
         if($nombres != null && !isset($juicios[0]))
         {
             $juicios = $this->searchByNombre($nombres);
-        }elseif($celular != null && !isset($juicios[0]))
+        }elseif($cedula != null && !isset($juicios[0]))
         {
-            $juicios = $this->searchByCelular($celular);
+            $juicios = $this->searchByCedula($cedula);
         }
         return view('admin.juicio.resultados_busqueda',compact('juicios'));
     }
