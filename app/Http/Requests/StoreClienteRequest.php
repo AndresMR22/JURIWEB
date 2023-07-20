@@ -28,7 +28,7 @@ class StoreClienteRequest extends FormRequest
             'apellidos' => 'required|string|max:50',
             'celular'  => 'required|regex:/[0-9]{10}/',
             'direccion' => 'required|string|max:250',
-            'correo'    => 'required|email',
+            'correo'    => 'unique:users,email|required|email',
             'genero' =>'required|string|max:15',
             // 'estatus' =>'required|string',
             'cedula' => 'required|string|min:10|max:10',

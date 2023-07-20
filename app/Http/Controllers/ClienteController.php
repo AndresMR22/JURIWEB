@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ClienteController extends Controller
 {
@@ -61,7 +62,7 @@ class ClienteController extends Controller
 
         $cliente->cantones()->attach($request->get('canton_id'),['provincia_id'=>$request->get('provincia_id')]);
 
-
+        Alert::toast('Cliente registrado', 'success');
         return redirect()->route('cliente.index');
     }
 
@@ -120,11 +121,13 @@ class ClienteController extends Controller
             "correo"=>$request->correo
         ]);
 
+        Alert::toast('Cliente actualizado', 'success');
         return back();
     }
 
     public function destroy($id)
     {
+        Alert::toast('Cliente eliminado', 'success');
         Cliente::destroy($id);
         return back();
     }

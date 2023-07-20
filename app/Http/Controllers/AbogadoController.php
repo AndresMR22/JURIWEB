@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateAbogadoRequest;
 use Illuminate\Http\Request;
 use App\Rules\ValidarCedula;
 use App\Rules\ValidarCedulaRepetidaAbogado;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AbogadoController extends Controller
 {
@@ -52,6 +53,7 @@ class AbogadoController extends Controller
             "cedula"=>$request->cedula
         ]);
 
+        Alert::toast('Abogado registrado', 'success');
         return redirect()->route('abogado.index');
     }
 
@@ -63,6 +65,7 @@ class AbogadoController extends Controller
         else
             $abogado->update(["estatus"=>"1"]);
 
+        Alert::toast('Estado actualizado', 'info');
         return back();
     }
 
@@ -103,7 +106,7 @@ class AbogadoController extends Controller
             // "estatus"=>$request->estatus,
             "empresa_id"=>$request->empresa_id
         ]);
-
+        Alert::toast('Abogado actualizado', 'success');
         return back();
     }
 
@@ -111,6 +114,7 @@ class AbogadoController extends Controller
     public function destroy($id)
     {
         Abogado::destroy($id);
+        Alert::toast('Abogado eliminado', 'success');
         return back();
     }
 }

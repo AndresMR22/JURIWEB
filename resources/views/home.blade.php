@@ -408,6 +408,13 @@
               </li>
 
               <li class="nav-item">
+                <a href="{{route('juicio.calendario')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Calendario</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
                 <a href="{{route('juicio.busquedaSeguimiento')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Seguimiento</p>
@@ -459,6 +466,7 @@
 <script src="{{asset('assets/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->
 <script src="{{asset('assets/plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('assets/plugins/fullcalendar/main.js')}}"></script>
 <script src="{{asset('assets/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
@@ -504,6 +512,7 @@
     });
   });
 </script>
+@include('sweetalert::alert')
 </body>
 </html>
 

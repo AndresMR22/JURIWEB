@@ -51,7 +51,7 @@ class RolesSeeder extends Seeder
             "celular"=>"0988703045",
             "direccion"=>"av. 123",
             "genero"=>"Masculino",
-            "estatus"=>"2",
+            "estatus"=>"1",
             "empresa_id"=>$empresa->id,
             "user_id"=>$user2->id,
             "cedula"=>"2100463187"

@@ -624,4 +624,5 @@
         </section>
         <!-- /.content -->
     </div>
+    {{-- @include('sweetalert::alert') --}}
 @endsection

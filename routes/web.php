@@ -57,6 +57,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/juicio', [JuicioController::class,'index'])->name('juicio.index');
         Route::get('/seguimiento',[JuicioController::class,'seguimiento'])->name('juicio.seguimiento');
         Route::get('/busqueda_seguimiento', [JuicioController::class,'busquedaSeguimiento'])->name('juicio.busquedaSeguimiento');
+        Route::get('/calendario',[JuicioController::class,'calendario'])->name('juicio.calendario');
         Route::post('/busqueda_seguimiento/buscar', [JuicioController::class,'buscarSeguimiento'])->name('juicio.buscarSeguimiento');
 
         //------------RUTAS AJAX-------------------//

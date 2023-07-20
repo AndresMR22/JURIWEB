@@ -13,8 +13,11 @@ use App\Models\Provincia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use PDF;
+use App\Models\Evento;
+
 
 class JuicioController extends Controller
 {
@@ -255,6 +258,7 @@ class JuicioController extends Controller
             }
         }
 
+        Alert::toast('Avance registrado', 'success');
         return back();
     }
 
@@ -282,9 +286,15 @@ class JuicioController extends Controller
         return view('admin.juicio.create',compact('idSiguiente','juicios','esAbogado','abogados','clientes','unidades','provincias'));
     }
 
+    public function calendario()
+    {
+        $juicios = DB::table('eventos')->get();
+        // dd($juicios);
+        return view('admin.juicio.calendario',compact('juicios'));
+    }
+
     public function store(StoreJuicioRequest $request)
     {
-        // dd($request);
         Juicio::create([
             "nro"=>$request->nro,
             "materia"=>$request->materia,
@@ -295,6 +305,13 @@ class JuicioController extends Controller
             "unidad_juidicial_id"=>$request->unidad_id,
         ]);
 
+        Evento::create([
+            "start"=>$request->fecha,
+            // "end"=>$request->fecha_fin,
+            "title"=>$request->estadop
+        ]);
+
+        Alert::toast('Juicio registrado', 'success');
         return redirect()->route('juicio.index');
     }
 
@@ -312,6 +329,7 @@ class JuicioController extends Controller
             // "unidad_juidicial_id"=>$request->unidad_juidicial_id,
         ]);
 
+        Alert::toast('Juicio actualizado', 'success');
         return back();
 
     }
@@ -326,12 +344,15 @@ class JuicioController extends Controller
             $juicio->update(['estatus'=>"3"]);
         else if($estadoActual=="3")
             $juicio->update(['estatus'=>"1"]);
+
+        Alert::toast('Estado cambiado', 'info');
         return back();
     }
 
     public function destroy($id)
     {
         Juicio::destroy($id);
+        Alert::toast('Juicio eliminado', 'success');
         return back();
     }
 }

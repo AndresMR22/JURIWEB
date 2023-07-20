@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Administrador;
 use App\Http\Requests\StoreAdministradorRequest;
 use App\Http\Requests\UpdateAdministradorRequest;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdministradorController extends Controller
 {
@@ -35,6 +36,7 @@ class AdministradorController extends Controller
             "user_id"=>$user->id
         ]);
 
+        Alert::toast('Administrador registrado', 'success');
         return redirect()->route('administrador.index');
     }
 
@@ -49,11 +51,14 @@ class AdministradorController extends Controller
             "password"=>Hash::make($request->password)
             ]
         );
+        Alert::toast('Administrador actualizado', 'success');
         return back();
     }
 
     public function destroy($id)
     {
         Administrador::destroy($id);
+        Alert::toast('Administrador eliminado', 'success');
+        return back();
     }
 }
