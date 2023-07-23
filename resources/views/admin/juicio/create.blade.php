@@ -63,7 +63,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Materia</label>
-                                    <input name="materia" type="text" id="materia" class="form-control @error('materia') is-invalid @enderror">
+                                    <input name="materia" type="text" value="{{ old('materia') }}" id="materia" class="form-control @error('materia') is-invalid @enderror">
                                     @error('materia')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Estado</label>
-                                    <input name="estadop" type="text" id="estadop" class="form-control @error('estadop') is-invalid @enderror">
+                                    <input name="estadop" value="{{ old('estadop') }}" type="text" id="estadop" class="form-control @error('estadop') is-invalid @enderror">
                                     @error('estadop')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -83,7 +83,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Fecha</label>
-                                    <input name="fecha" min="{{date('Y-m-d h:i')}}" type="datetime-local" id="fecha" class="form-control @error('fecha') is-invalid @enderror">
+                                    <input name="fecha" value="{{ old('fecha') }}" min="{{date('Y-m-d h:i')}}" type="datetime-local" id="fecha" class="form-control @error('fecha') is-invalid @enderror">
                                     @error('fecha')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -101,7 +101,7 @@
                                     <select id="abogado_id" name="abogado_id" class="form-control custom-select @error('abogado_id') is-invalid @enderror">
                                         <option selected disabled>Seleccionar abogado</option>
                                         @foreach ($abogados as $abogado)
-                                            <option value="{{ $abogado->id }}">{{ $abogado->nombres }}</option>
+                                            <option value="{{ $abogado->id }}" {{ old('abogado_id') == $abogado->id ? 'selected' : '' }}>{{ $abogado->nombres }}</option>
                                         @endforeach
                                     </select>
                                     @error('abogado_id')
@@ -137,7 +137,7 @@
                                     <select id="unidad_id" name="unidad_id" class="form-control custom-select @error('unidad_id') is-invalid @enderror">
                                         <option selected disabled>Seleccionar unidad judicial</option>
                                         @foreach ($unidades as $unidad)
-                                            <option value="{{ $unidad->id }}">{{ $unidad->nombre }}</option>
+                                            <option value="{{ $unidad->id }}" {{ old('unidad_id') == $unidad->id ? 'selected' : '' }}>{{ $unidad->nombre }}</option>
                                         @endforeach
                                     </select>
                                     @error('unidad_id')
@@ -209,7 +209,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Nombres</label>
-                                    <input name="nombres" type="text" id="nombres"
+                                    <input name="nombres" type="text" id="nombres" value="{{ old('nombres') }}"
                                         class="form-control @error('nombres') is-invalid @enderror">
                                     @error('nombres')
                                         <span class="invalid-feedback" role="alert">
@@ -220,7 +220,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Apellidos</label>
-                                    <input name="apellidos" type="text" id="apellidos"
+                                    <input name="apellidos" type="text" id="apellidos" value="{{ old('apellidos') }}"
                                         class="form-control @error('apellidos') is-invalid @enderror">
                                     @error('apellidos')
                                         <span class="invalid-feedback" role="alert">
@@ -231,7 +231,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Celular</label>
-                                    <input name="celular" type="tel" id="celular"
+                                    <input name="celular" type="tel" id="celular" value="{{ old('celular') }}"
                                         class="form-control @error('celular') is-invalid @enderror">
                                     @error('celular')
                                         <span class="invalid-feedback" role="alert">
@@ -241,7 +241,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">Dirección</label>
-                                    <input name="direccion" type="text" id="direccion"
+                                    <input name="direccion" type="text" id="direccion" value="{{ old('direccion') }}"
                                         class="form-control @error('direccion') is-invalid @enderror">
                                     @error('direccion')
                                         <span class="invalid-feedback" role="alert">
@@ -255,9 +255,9 @@
                                     <select id="genero" name="genero"
                                         class="form-control custom-select @error('genero') is-invalid @enderror">
                                         <option selected disabled>Seleccionar genero</option>
-                                        <option value="M">Masculino</option>
-                                        <option value="F">Femenino</option>
-                                        <option value="I">Indefinido</option>
+                                        <option value="M" {{ old('genero') == 'M' ? 'selected' : '' }}>Masculino</option>
+                                        <option value="F" {{ old('genero') == 'F' ? 'selected' : '' }}>Femenino</option>
+                                        <option value="I" {{ old('genero') == 'I' ? 'selected' : '' }}>Indefinido</option>
                                     </select>
                                     @error('genero')
                                         <span class="invalid-feedback" role="alert">
@@ -268,7 +268,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Fecha de nacimiento</label>
-                                    <input name="fnacimiento" max="{{ date('Y-m-d') }}" type="date" id="fnacimiento"
+                                    <input name="fnacimiento" value="{{ old('fnacimiento') }}" max="{{ date('Y-m-d') }}" type="date" id="fnacimiento"
                                         class="form-control @error('fnacimiento') is-invalid @enderror">
                                     @error('fnacimiento')
                                         <span class="invalid-feedback" role="alert">
@@ -279,7 +279,7 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Correo</label>
-                                    <input name="correo" type="email" id="correo"
+                                    <input name="correo" type="email" id="correo" value="{{ old('correo') }}"
                                         class="form-control @error('correo') is-invalid @enderror">
                                     @error('correo')
                                         <span class="invalid-feedback" role="alert">
@@ -295,10 +295,10 @@
                                     <select id="estado_civil" name="estado_civil"
                                         class="form-control custom-select @error('estado_civil') is-invalid @enderror">
                                         <option selected disabled>Seleccionar estado</option>
-                                        <option value="casado">Casado</option>
-                                        <option value="soltero">Soltero</option>
-                                        <option value="divorciado">Divorciado</option>
-                                        <option value="viudo">Viudo</option>
+                                        <option value="casado" {{ old('estado_civil') == 'casado' ? 'selected' : '' }}>Casado</option>
+                                        <option value="soltero" {{ old('estado_civil') == 'soltero' ? 'selected' : '' }}>Soltero</option>
+                                        <option value="divorciado" {{ old('estado_civil') == 'divorciado' ? 'selected' : '' }}>Divorciado</option>
+                                        <option value="viudo" {{ old('estado_civil') == 'viudo' ? 'selected' : '' }}>Viudo</option>
                                     </select>
                                     @error('estado_civil')
                                         <span class="invalid-feedback" role="alert">
@@ -314,7 +314,7 @@
                                         class="form-control custom-select @error('provincia_id') is-invalid @enderror">
                                         <option selected disabled>Seleccionar provincia</option>
                                         @foreach ($provincias as $key => $provincia)
-                                            <option value="{{ $provincia->id }}">{{ $provincia->nombre }}</option>
+                                            <option value="{{ $provincia->id }}" {{ old('provincia_id') == $provincia->id ? 'selected' : '' }}>{{ $provincia->nombre }}</option>
                                         @endforeach
                                     </select>
                                     @error('provincia_id')

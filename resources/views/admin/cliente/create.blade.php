@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">Celular</label>
-                                    <input name="celular" type="tel" id="celular" minlength="10" maxlength="10" value="{{ old('celular') }}"
+                                    <input name="celular" type="number" id="celular" minlength="10" maxlength="10" value="{{ old('celular') }}"
                                         class="form-control @error('celular') is-invalid @enderror">
                                     @error('celular')
                                         <span class="invalid-feedback" role="alert">
@@ -112,9 +112,9 @@
                                     <select id="genero" name="genero"
                                         class="form-control custom-select @error('genero') is-invalid @enderror">
                                         <option selected disabled>Seleccionar genero</option>
-                                        <option value="M">Masculino</option>
-                                        <option value="F">Femenino</option>
-                                        <option value="I">Indefinido</option>
+                                        <option value="M" {{ old('genero') == 'M' ? 'selected' : '' }}>Masculino</option>
+                                        <option value="F" {{ old('genero') == 'F' ? 'selected' : '' }}>Femenino</option>
+                                        <option value="I" {{ old('genero') == 'I' ? 'selected' : '' }}>Indefinido</option>
                                     </select>
                                     @error('genero')
                                         <span class="invalid-feedback" role="alert">
@@ -152,10 +152,10 @@
                                     <select id="estado_civil" name="estado_civil"
                                         class="form-control custom-select @error('estado_civil') is-invalid @enderror">
                                         <option selected disabled>Seleccionar estado</option>
-                                        <option value="casado">Casado</option>
-                                        <option value="soltero">Soltero</option>
-                                        <option value="divorciado">Divorciado</option>
-                                        <option value="viudo">Viudo</option>
+                                        <option value="casado" {{ old('estado_civil') == 'casado' ? 'selected' : '' }}>Casado</option>
+                                        <option value="soltero" {{ old('estado_civil') == 'soltero' ? 'selected' : '' }}>Soltero</option>
+                                        <option value="divorciado" {{ old('estado_civil') == 'divorciado' ? 'selected' : '' }}>Divorciado</option>
+                                        <option value="viudo" {{ old('estado_civil') == 'viudo' ? 'selected' : '' }}>Viudo</option>
                                     </select>
                                     @error('estado_civil')
                                         <span class="invalid-feedback" role="alert">
@@ -171,7 +171,7 @@
                                         class="form-control custom-select @error('provincia_id') is-invalid @enderror">
                                         <option selected disabled>Seleccionar provincia</option>
                                         @foreach ($provincias as $key => $provincia)
-                                            <option value="{{ $provincia->id }}">{{ $provincia->nombre }}</option>
+                                            <option value="{{ $provincia->id }}" {{ old('provincia_id') == $provincia->id ? 'selected' : '' }}>{{ $provincia->nombre }}</option>
                                         @endforeach
                                     </select>
                                     @error('provincia_id')
@@ -233,6 +233,11 @@
 
         function validarCedula(e)
         {
+            validar(e.target.value);
+        }
+
+        function validar(cedula)
+        {
             let inputCedula = document.getElementById('cedula');
             let imgEstadoVisto = document.getElementById('visto');
             let imgEstadoX = document.getElementById('x');
@@ -241,7 +246,7 @@
                 url: "{{ route('abogado.validarCedula') }}",
                 dataType: "json",
                 data: {
-                    cedula: e.target.value
+                    cedula: cedula
                 }
             }).done(function(res) {
                 if (res[0] == false || res[1] == false) {
@@ -251,7 +256,7 @@
                     imgEstadoVisto.style.display = 'none';
                     imgEstadoVisto.style.visibility = 'hidden';
                     cedulaValida = false;
-                }else if (e.target.value.length == 0) {
+                }else if (cedula.length == 0) {
                     imgEstadoX.style.display = 'none';
                     imgEstadoX.style.visibility = 'hidden';
                     imgEstadoVisto.style.display = '';
@@ -266,41 +271,7 @@
                     inputCedula.style.border = '2px solid #2ECC71';
                     cedulaValida = true;
                 }
-
-                // if (!res[1]) {
-                //     inputCedula.style.border = '2px solid red';
-                //     imgEstadoX.style.display = '';
-                //     imgEstadoX.style.visibility = '';
-                //     imgEstadoVisto.style.display = 'none';
-                //     imgEstadoVisto.style.visibility = 'hidden';
-                //     cedulaValida = false;
-                // } else {
-                //     imgEstadoX.style.display = 'none';
-                //     imgEstadoX.style.visibility = 'hidden';
-                //     imgEstadoVisto.style.display = '';
-                //     imgEstadoVisto.style.visibility = '';
-                //     inputCedula.style.border = '2px solid #2ECC71';
-                //     cedulaValida = true;
-                // }
-
-                // if (e.target.value.length == 0) {
-                //     inputCedula.style.border = '2px solid red';
-                //     imgEstadoX.style.display = '';
-                //     imgEstadoX.style.visibility = '';
-                //     imgEstadoVisto.style.display = 'none';
-                //     imgEstadoVisto.style.visibility = 'hidden';
-                //     cedulaValida = false;
-                // } else {
-                //     imgEstadoX.style.display = 'none';
-                //     imgEstadoX.style.visibility = 'hidden';
-                //     imgEstadoVisto.style.display = '';
-                //     imgEstadoVisto.style.visibility = '';
-                //     inputCedula.style.border = '2px solid #2ECC71';
-                //     cedulaValida = true;
-                // }
             })
-
-
         }
 
         document.getElementById('provincia_id').addEventListener('change', function(e)
@@ -346,5 +317,6 @@
             })
 
         });
+
     </script>
 @endsection

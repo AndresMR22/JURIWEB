@@ -352,6 +352,12 @@
                   <p>Listar</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('audiencia.calendario')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Calendario</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -407,12 +413,6 @@
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a href="{{route('juicio.calendario')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Calendario</p>
-                </a>
-              </li>
 
               <li class="nav-item">
                 <a href="{{route('juicio.busquedaSeguimiento')}}" class="nav-link">

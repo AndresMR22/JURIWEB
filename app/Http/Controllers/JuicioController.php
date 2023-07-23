@@ -16,11 +16,48 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use PDF;
-use App\Models\Evento;
+
 
 
 class JuicioController extends Controller
 {
+
+    public function juicioByStatus($status)
+    {
+        $status  = strtoupper($status);
+        $estado = '';
+        switch($status)
+        {
+            case 'P':
+                if(auth()->user()->hasRole('Abogado'))
+                {
+                    $abogado = Abogado::where('user_id',auth::id())->first();
+                    $juicios = Juicio::where(['abogado_id'=>$abogado->id, 'estatus'=>1])->get();
+                }
+                $estado = 'En proceso';
+                break;
+            case 'A':
+                if(auth()->user()->hasRole('Abogado'))
+                {
+                    $abogado = Abogado::where('user_id',auth::id())->first();
+                    $juicios = Juicio::where(['abogado_id'=>$abogado->id, 'estatus'=>2])->get();
+                }
+                $estado = 'Archivado';
+                break;
+            case 'F':
+                if(auth()->user()->hasRole('Abogado'))
+                {
+                    $abogado = Abogado::where('user_id',auth::id())->first();
+                    $juicios = Juicio::where(['abogado_id'=>$abogado->id, 'estatus'=>3])->get();
+                }
+                $estado = 'Finalizado';
+                break;
+        }
+        $abogados = Abogado::all();
+        $clientes = Cliente::all();
+        // dd($juicios, $estado);
+        return view('admin.juicio.juiciosByStatus',compact('juicios','estado','abogados','clientes'));
+    }
 
     public function avancesByJuicio(Request $request)
     {
@@ -238,9 +275,10 @@ class JuicioController extends Controller
             else
             {
                 $this->validate($request,[
-                    'file' =>'mimetypes:video/mp4,video|max:6000',
+                    'file' =>'required|mimetypes:video/mp4,video|max:6000',
                     'fecha'=>'required|date'
                 ],[
+                    'file.required'=>'El archivo es requerido',
                     'file.mp4'=>'El video debe ser tipo mp4',
                     'file.max'=>'El video es muy pesado',
                     'fecha.required'=>'La fecha es requerida',
@@ -256,6 +294,18 @@ class JuicioController extends Controller
                     'fecha'=>date('Y-m-d h:i:s')
                 ]);
             }
+        }else
+        {
+            $this->validate($request,[
+                'file' =>'required|mimetypes:video/mp4,video|max:6000',
+                'fecha'=>'required|date'
+            ],[
+                'file.required'=>'El archivo es requerido',
+                'file.mp4'=>'El video debe ser tipo mp4',
+                'file.max'=>'El video es muy pesado',
+                'fecha.required'=>'La fecha es requerida',
+                'fecha.date'=>'La fecha no tiene el formato adecuado'
+            ]);
         }
 
         Alert::toast('Avance registrado', 'success');
@@ -286,12 +336,7 @@ class JuicioController extends Controller
         return view('admin.juicio.create',compact('idSiguiente','juicios','esAbogado','abogados','clientes','unidades','provincias'));
     }
 
-    public function calendario()
-    {
-        $juicios = DB::table('eventos')->get();
-        // dd($juicios);
-        return view('admin.juicio.calendario',compact('juicios'));
-    }
+
 
     public function store(StoreJuicioRequest $request)
     {
@@ -305,11 +350,6 @@ class JuicioController extends Controller
             "unidad_juidicial_id"=>$request->unidad_id,
         ]);
 
-        Evento::create([
-            "start"=>$request->fecha,
-            // "end"=>$request->fecha_fin,
-            "title"=>$request->estadop
-        ]);
 
         Alert::toast('Juicio registrado', 'success');
         return redirect()->route('juicio.index');
@@ -341,12 +381,19 @@ class JuicioController extends Controller
         if($estadoActual=="1")
             $juicio->update(['estatus'=>"2"]);
         else if($estadoActual=="2")
-            $juicio->update(['estatus'=>"3"]);
-        else if($estadoActual=="3")
             $juicio->update(['estatus'=>"1"]);
 
         Alert::toast('Estado cambiado', 'info');
         return back();
+    }
+
+    public function finalizarJuicio($juicio_id)
+    {
+        $juicio = Juicio::find($juicio_id);
+        $juicio->update(['estatus'=>"3"]);
+        Alert::toast('Juicio Finalizado', 'info');
+        return back();
+
     }
 
     public function destroy($id)

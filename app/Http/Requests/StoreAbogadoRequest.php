@@ -8,13 +8,13 @@ use App\Rules\ValidarCedulaRepetida;
 
 class StoreAbogadoRequest extends FormRequest
 {
-   
+
     public function authorize()
     {
         return true;
     }
 
-   
+
     public function rules()
     {
         return
@@ -23,10 +23,10 @@ class StoreAbogadoRequest extends FormRequest
             'apellidos' => 'required|string|max:50',
             'celular'  => 'required|regex:/[0-9]{10}/',
             'direccion' => 'required|string|max:250',
-            'correo'    => 'required|email',
+            'correo'    => 'required|email|unique:users,email',
             'genero' =>'required|string|max:15',
             // 'estatus' =>'required|string',
-            'cedula' => 'required|string|min:10|max:10',
+            'cedula' => 'required|string|min:10|max:10|unique:abogados,cedula',
         ];
     }
 }

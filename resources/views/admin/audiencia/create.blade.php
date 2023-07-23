@@ -17,7 +17,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-    
+
     <!-- Main content -->
    <form method="POST" action="{{route('audiencia.store')}}">
     @csrf
@@ -27,7 +27,7 @@
              <div class="card card-primary">
                <div class="card-header">
                  <h3 class="card-title">Audiencia</h3>
-   
+
                  <div class="card-tools">
                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                      <i class="fas fa-minus"></i>
@@ -37,7 +37,7 @@
                <div class="card-body">
                  <div class="form-group">
                    <label for="inputName">Fecha y hora</label>
-                   <input name="fechahora" min="<?=date('Y-m-d\Th:i')?>" type="datetime-local" id="fecha" class="form-control @error('fechahora') is-invalid @enderror">
+                   <input name="fechahora" min="<?=date('Y-m-d\Th:i')?>" value="{{ old('fechahora') }}" type="datetime-local" id="fecha" class="form-control @error('fechahora') is-invalid @enderror">
                    @error('fechahora')
                    <span class="invalid-feedback" role="alert">
                        <strong>{{ $message }}</strong>
@@ -46,7 +46,7 @@
                  </div>
                  <div class="form-group">
                    <label for="inputDescription">Observación</label>
-                   <textarea name="observacion" id="inputDescription" class="form-control @error('observacion') is-invalid @enderror" rows="4"></textarea>
+                   <textarea name="observacion" id="inputDescription" class="form-control @error('observacion') is-invalid @enderror" rows="4">{{ old('observacion') }}</textarea>
                    @error('observacion')
                    <span class="invalid-feedback" role="alert">
                        <strong>{{ $message }}</strong>
@@ -58,7 +58,7 @@
                    <select id="inputStatus" name="juicio_id" class="form-control custom-select @error('juicio_id') is-invalid @enderror">
                      <option selected disabled>Seleccionar juicio</option>
                      @foreach($juicios as $juicio)
-                     <option value="{{ $juicio->id }}">{{ $juicio->nro }}</option>
+                     <option value="{{ $juicio->id }}" {{ old('juicio_id') == $juicio->id ? 'selected' : '' }}>{{ $juicio->nro }}</option>
                      @endforeach
                    </select>
                    @error('juicio_id')
@@ -72,7 +72,7 @@
              </div>
              <!-- /.card -->
            </div>
-           
+
          </div>
          <div class="row">
            <div class="col-12 d-flex justify-content-center my-2" style="gap:20px;">
@@ -80,7 +80,7 @@
            </div>
          </div>
        </section>
-    </form> 
+    </form>
     <!-- /.content -->
   </div>
 @endsection

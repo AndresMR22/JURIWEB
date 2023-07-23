@@ -39,6 +39,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::resource('abogado', AbogadoController::class);
         Route::resource('unidad', UnidadJudicialController::class);//Comentar en caso de querer probar Prueba Unitaria. (UnidadJudicialTest.php)
         Route::get('abogado/cambiar_estado/{abogado_id}', [AbogadoController::class,'cambiarEstado'])->name('abogado.cambiarEstado');
+
     });
 
     Route::group(['middleware' => 'abogado'], function () {
@@ -47,6 +48,8 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::resource('juicio', JuicioController::class);
 
         Route::get('juicio/cambiar_estado/{juicio_id}', [JuicioController::class,'cambiarEstado'])->name('juicio.cambiarEstado');
+        Route::get('juicio/finalizar_juicio/{juicio_id}', [JuicioController::class,'finalizarJuicio'])->name('juicio.finalizarJuicio');
+
         Route::get('/buscarClientes', [ClienteController::class,'buscarCliente'])->name('cliente.buscarCliente');
         Route::post('/cargar_avance',[JuicioController::class,'cargarAvance'])->name('juicio.cargarAvance');
     });
@@ -57,7 +60,10 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/juicio', [JuicioController::class,'index'])->name('juicio.index');
         Route::get('/seguimiento',[JuicioController::class,'seguimiento'])->name('juicio.seguimiento');
         Route::get('/busqueda_seguimiento', [JuicioController::class,'busquedaSeguimiento'])->name('juicio.busquedaSeguimiento');
-        Route::get('/calendario',[JuicioController::class,'calendario'])->name('juicio.calendario');
+        Route::get('/calendario',[AudienciaController::class,'calendario'])->name('audiencia.calendario');
+        Route::get('/ver_detalle/audiencia',[AudienciaController::class,'verDetalle'])->name('audiencia.verDetalle');
+        Route::get('/juicioByStatus/{status}',[JuicioController::class,'juicioByStatus'])->name('juicio.juicioByStatus');
+
         Route::post('/busqueda_seguimiento/buscar', [JuicioController::class,'buscarSeguimiento'])->name('juicio.buscarSeguimiento');
 
         //------------RUTAS AJAX-------------------//

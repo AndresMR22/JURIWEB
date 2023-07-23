@@ -83,51 +83,50 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($juicios as $key => $juicio)
-                                            <tr>
-                                                <td>{{ $juicio->nro }}</td>
-                                                <td>{{ $juicio->materia }}</td>
-                                                <td>{{ $juicio->estadop }}</td>
-                                                <td>{{ date('d-m-y h:i', strtotime($juicio->fecha)) }}</td>
-                                                @if (auth()->user()->hasRole('Abogado'))
-                                                    <td>
-                                                        <a title="{{ $juicio->estatus == '1' ? 'En proceso' : ($juicio->estatus == '2' ? 'Archivado' : 'Finalizado') }}"
-                                                            href="{{ route('juicio.cambiarEstado', $juicio->id) }}"
-                                                            class="btn btn-{{ $juicio->estatus == '1' ? 'warning' : ($juicio->estatus == '2' ? 'primary' : 'success') }}"><i
-                                                                class="fas fa-arrow-right"></i></a>
+                                        <tr>
+                                            <td>{{ $juicio->nro }}</td>
+                                            <td>{{ $juicio->materia }}</td>
+                                            <td>{{ $juicio->estadop }}</td>
+                                            <td>{{ date('d-m-y h:i', strtotime($juicio->fecha)) }}</td>
+                                            @if (auth()->user()->hasRole('Abogado'))
+                                                <td>
+                                                    <a title="{{ $juicio->estatus == '1' ? 'En proceso' : ($juicio->estatus == '2' ? 'Archivado' : 'Finalizado') }}"
+                                                        href="{{ route('juicio.cambiarEstado', $juicio->id) }}"
+                                                        class="btn btn-{{ $juicio->estatus == '1' ? 'warning' : ($juicio->estatus == '2' ? 'primary' : 'success') }}"><i
+                                                            class="fas fa-arrow-right"></i></a>
 
-                                                                @if($juicio->estatus != '3')
-                                                        <a title="Finalizar Juicio"
-                                                            href="{{ route('juicio.finalizarJuicio', $juicio->id) }}"
-                                                            class="btn btn-danger"><i
-                                                                class="fas fa-arrow-down"></i></a>
-                                                            @endif
-                                                    </td>
-                                                    <td>
-                                                        @if($juicio->estatus != '3')
-                                                        <a class="btn btn-info" title="Abrir avances" data-toggle="modal"
-                                                            data-target="#modal-avance{{ $juicio->id }}"><i
-                                                                class="fas fa-file"></i></a>
+                                                            @if($juicio->estatus != '3')
+                                                    <a title="Finalizar Juicio"
+                                                        href="{{ route('juicio.finalizarJuicio', $juicio->id) }}"
+                                                        class="btn btn-danger"><i
+                                                            class="fas fa-arrow-down"></i></a>
                                                         @endif
+                                                </td>
+                                                <td>
+                                                    @if($juicio->estatus != '3')
+                                                    <a class="btn btn-info" title="Abrir avances" data-toggle="modal"
+                                                        data-target="#modal-avance{{ $juicio->id }}"><i
+                                                            class="fas fa-file"></i></a>
+                                                    @endif
 
-                                                            </td>
-                                                @endif
-                                                <td>{{ $juicio->abogado->nombres }}</td>
-                                                <td>{{ $juicio->cliente->nombres }}</td>
-                                                {{-- <td>{{isset($juicio->unidad_judicial) ? 'si' : 'no'}}</td> --}}
-                                                @if($juicio->estatus != '3')
-                                                @if (auth()->user()->hasRole('Abogado'))
-                                                    <td>
-                                                        <a data-toggle="modal"
-                                                            data-target="#modal-default{{ $juicio->id }}" title="Editar"
-                                                            class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                                        <a data-toggle="modal"
-                                                            data-target="#modal-eliminar{{ $juicio->id }}" title="Eliminar"
-                                                            class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                                    </td>
-                                                @endif
-                                                @endif
-                                            </tr>
-
+                                                        </td>
+                                            @endif
+                                            <td>{{ $juicio->abogado->nombres }}</td>
+                                            <td>{{ $juicio->cliente->nombres }}</td>
+                                            {{-- <td>{{isset($juicio->unidad_judicial) ? 'si' : 'no'}}</td> --}}
+                                            @if($juicio->estatus != '3')
+                                            @if (auth()->user()->hasRole('Abogado'))
+                                                <td>
+                                                    <a data-toggle="modal"
+                                                        data-target="#modal-default{{ $juicio->id }}" title="Editar"
+                                                        class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                                    <a data-toggle="modal"
+                                                        data-target="#modal-eliminar{{ $juicio->id }}" title="Eliminar"
+                                                        class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                </td>
+                                            @endif
+                                            @endif
+                                        </tr>
 
                                             <div class="modal fade" id="modal-eliminar{{ $juicio->id }}">
                                                 <form id="formEliminar"{{ $juicio->id }} method="POST"

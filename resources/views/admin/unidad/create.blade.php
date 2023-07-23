@@ -17,7 +17,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-    
+
     <!-- Main content -->
    <form method="POST" action="{{route('unidad.store')}}">
     @csrf
@@ -27,7 +27,7 @@
              <div class="card card-primary">
                <div class="card-header">
                  <h3 class="card-title">Unidad Judicial</h3>
-   
+
                  <div class="card-tools">
                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                      <i class="fas fa-minus"></i>
@@ -37,7 +37,7 @@
                <div class="card-body">
                  <div class="form-group">
                    <label for="inputName">Nombre</label>
-                   <input name="nombre" type="text" id="nombre" class="form-control @error('nombre') is-invalid @enderror">
+                   <input name="nombre" value="{{ old('nombre') }}" type="text" id="nombre" class="form-control @error('nombre') is-invalid @enderror">
                    @error('nombre')
                    <span class="invalid-feedback" role="alert">
                        <strong>{{ $message }}</strong>
@@ -46,7 +46,7 @@
                  </div>
                  <div class="form-group">
                     <label for="inputName">Ubicación</label>
-                    <input name="ubicacion" type="text" id="ubicacion" class="form-control @error('ubicacion') is-invalid @enderror">
+                    <input name="ubicacion" value="{{ old('ubicacion') }}" type="text" id="ubicacion" class="form-control @error('ubicacion') is-invalid @enderror">
                     @error('ubicacion')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -55,21 +55,21 @@
                   </div>
                   <div class="form-group">
                     <label for="inputName">Dirección</label>
-                    <input name="direccion" type="text" id="direccion" class="form-control @error('direccion') is-invalid @enderror">
+                    <input name="direccion" value="{{ old('direccion') }}" type="text" id="direccion" class="form-control @error('direccion') is-invalid @enderror">
                     @error('direccion')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
                   </div>
-                  
-                 
+
+
                </div>
                <!-- /.card-body -->
              </div>
              <!-- /.card -->
            </div>
-           
+
          </div>
          <div class="row">
            <div class="col-12 d-flex justify-content-center my-2" style="gap:20px;">
@@ -78,7 +78,7 @@
            </div>
          </div>
        </section>
-    </form> 
+    </form>
     <!-- /.content -->
   </div>
 @endsection

@@ -8,7 +8,11 @@ use App\Http\Requests\StoreAudienciaRequest;
 use App\Http\Requests\UpdateAudienciaRequest;
 use App\Models\User;
 use App\Models\Abogado;
+use App\Models\Cliente;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Evento;
+use Illuminate\Http\Request;
 
 class AudienciaController extends Controller
 {
@@ -38,6 +42,12 @@ class AudienciaController extends Controller
         // dd($audiencias);
 
         return view('admin.audiencia.index',compact('audiencias','juicios'));
+    }
+
+    public function calendario()
+    {
+        $juicios = DB::table('eventos')->get();
+        return view('admin.audiencia.calendario',compact('juicios'));
     }
 
     /**
@@ -75,7 +85,41 @@ class AudienciaController extends Controller
             "juicio_id"=>$request->get('juicio_id')
         ]);
 
+        $juicio = Juicio::find($request->get('juicio_id'));
+        $nroJuicio = $juicio->nro;
+
+
+        Evento::create([
+            "start"=>$fecha,
+            "title"=>'Juicio '.$nroJuicio
+        ]);
+
         return redirect()->route('audiencia.index');
+    }
+
+    public function verDetalle(Request $request)
+    {
+        $id = $request->get('id');
+        $juicio = Juicio::find($id);
+        $abogado = Abogado::find($juicio->abogado_id);
+        $cliente = Cliente::find($juicio->cliente_id);
+        $audiencia = Audiencia::where('juicio_id',$juicio->id)->first();
+        $data = collect();
+        $data->push($juicio);
+        $data->push($audiencia);
+        $data->push($abogado);
+        $data->push($cliente);
+        return $data;
+        // "nro",
+        // "materia",
+        // "estadop",
+        // "fecha",
+        // "estatus",
+        // "abogado_id",
+        // "cliente_id",
+        // "unidad_juidicial_id",
+//audiencia
+        // "fecha","observacion","juicio_id"
     }
 
     /**

@@ -31,7 +31,7 @@ class StoreClienteRequest extends FormRequest
             'correo'    => 'unique:users,email|required|email',
             'genero' =>'required|string|max:15',
             // 'estatus' =>'required|string',
-            'cedula' => 'required|string|min:10|max:10',
+            'cedula' => 'required|string|min:10|max:10|unique:clientes,cedula',
             'fnacimiento' =>'required|string',
             'estado_civil' =>'required|string',
             'provincia_id' =>'required',

@@ -99,7 +99,7 @@
                   </div>
                   <div class="form-group">
                     <label for="inputName">Celular</label>
-                    <input name="celular" value="{{ old('celular') }}" type="tel" id="celular" minlength="10" maxlength="10" class="form-control @error('celular') is-invalid @enderror">
+                    <input name="celular" value="{{ old('celular') }}" type="number" id="celular" minlength="10" maxlength="10" class="form-control @error('celular') is-invalid @enderror">
                     @error('celular')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -110,9 +110,9 @@
                     <label for="inputStatus">Genero</label>
                     <select id="genero" name="genero" class="form-control custom-select @error('genero') is-invalid @enderror">
                       <option selected disabled>Seleccionar genero</option>
-                      <option value="M">Masculino</option>
-                      <option value="F">Femenino</option>
-                      <option value="I">Indefinido</option>
+                      <option value="M" {{ old('genero') == 'M' ? 'selected' : '' }}>Masculino</option>
+                      <option value="F" {{ old('genero') == 'F' ? 'selected' : '' }}>Femenino</option>
+                      <option value="I" {{ old('genero') == 'i' ? 'selected' : '' }}>Indefinido</option>
                     </select>
                     @error('genero')
                                     <span class="invalid-feedback" role="alert">
@@ -125,7 +125,7 @@
                     <select id="empresa" name="empresa_id" class="form-control custom-select @error('empresa_id') is-invalid @enderror">
                       <option selected disabled>Seleccionar empresa</option>
                       @foreach($empresas as $empresa)
-                      <option value="{{$empresa->id}}">{{$empresa->razon}}</option>
+                      <option value="{{$empresa->id}}" {{ old('empresa_id') == $empresa->id ? 'selected' : '' }}>{{$empresa->razon}}</option>
                       @endforeach
                     </select>
                     @error('empresa_id')
@@ -162,7 +162,12 @@
 
     document.addEventListener('DOMContentLoaded',function()
     {
+
       document.getElementById('cedula').addEventListener('change',validarCedula)
+        if(document.getElementById('cedula').value != '')
+        {
+            validar(document.getElementById('cedula').value)
+        }
     })
 
     function valideKey(evt){
@@ -186,16 +191,22 @@
     var cedulaValida = false;
     function validarCedula(e)
     {
+      validar(e.target.value);
+    }
+
+
+    function validar(cedula)
+    {
       let inputCedula = document.getElementById('cedula');
       let imgEstadoVisto = document.getElementById('visto');
       let imgEstadoX = document.getElementById('x');
-      //ajax
-      $.ajax({
+
+        $.ajax({
                 url: "{{ route('abogado.validarCedula') }}",
                 dataType: "json",
                 data:
                 {
-                  cedula:e.target.value
+                  cedula:cedula
                 }
             }).done(function(res)
             {
@@ -207,7 +218,7 @@
                     imgEstadoVisto.style.display = 'none';
                     imgEstadoVisto.style.visibility = 'hidden';
                     cedulaValida = false;
-                }else if (e.target.value.length == 0) {
+                }else if (cedula.length == 0) {
                     imgEstadoX.style.display = 'none';
                     imgEstadoX.style.visibility = 'hidden';
                     imgEstadoVisto.style.display = '';
@@ -223,7 +234,6 @@
                     cedulaValida = true;
                 }
             })
-
     }
   </script>
 @endsection
