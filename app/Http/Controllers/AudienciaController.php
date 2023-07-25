@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Evento;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class AudienciaController extends Controller
 {
@@ -25,21 +27,12 @@ class AudienciaController extends Controller
     {
         $audiencias = Audiencia::all();
         $juicios = Juicio::all();
+
+        $abogado = Abogado::where('user_id',auth::id())->first();
         if(auth()->user()->hasRole('Abogado'))
         {
-            $abogado = Abogado::where('user_id',auth::id())->first();
             $juicios = Juicio::where('abogado_id',$abogado->id)->get();
-            $audiencias = collect();
-            foreach($juicios as $juicio)
-            {
-                $audiencia = Audiencia::where('juicio_id',$juicio->id)->first();
-                if($audiencia!=null)
-                {
-                    $audiencias->push($audiencia);
-                }
-            }
         }
-        // dd($audiencias);
 
         return view('admin.audiencia.index',compact('audiencias','juicios'));
     }
@@ -94,6 +87,7 @@ class AudienciaController extends Controller
             "title"=>'Juicio '.$nroJuicio
         ]);
 
+        Alert::toast('Audiencia registrada', 'success');
         return redirect()->route('audiencia.index');
     }
 
@@ -110,16 +104,6 @@ class AudienciaController extends Controller
         $data->push($abogado);
         $data->push($cliente);
         return $data;
-        // "nro",
-        // "materia",
-        // "estadop",
-        // "fecha",
-        // "estatus",
-        // "abogado_id",
-        // "cliente_id",
-        // "unidad_juidicial_id",
-//audiencia
-        // "fecha","observacion","juicio_id"
     }
 
     /**
@@ -162,13 +146,14 @@ class AudienciaController extends Controller
             "materia"=>$request->materia
         ]);
 
+        Alert::toast('Audiencia actualizada', 'success');
         return back();
     }
-
 
     public function destroy(Audiencia $audiencia, $id)
     {
         Audiencia::destroy($id);
+        Alert::toast('Audiencia eliminada', 'success');
         return back();
     }
 }
