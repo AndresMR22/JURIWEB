@@ -31,21 +31,20 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::group(['middleware' => 'admin'], function () {
-        Route::resource('audiencia', AudienciaController::class)->only(['index']);
-        Route::resource('cliente', ClienteController::class)->only(['index']);
-        Route::resource('juicio', JuicioController::class);
+        Route::resource('audiencia', AudienciaController::class)->only(['index']);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
+        Route::resource('cliente', ClienteController::class)->only(['index']);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
+        Route::resource('juicio', JuicioController::class);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
 
-        Route::resource('administrador', AdministradorController::class);
-        Route::resource('abogado', AbogadoController::class);
+        Route::resource('administrador', AdministradorController::class);//Comentar en caso de querer probar Prueba Unitaria. (AdministradorTest.php)
+        Route::resource('abogado', AbogadoController::class);//Comentar en caso de querer probar Prueba Unitaria. (AbogadoTest.php)
         Route::resource('unidad', UnidadJudicialController::class);//Comentar en caso de querer probar Prueba Unitaria. (UnidadJudicialTest.php)
         Route::get('abogado/cambiar_estado/{abogado_id}', [AbogadoController::class,'cambiarEstado'])->name('abogado.cambiarEstado');
-
     });
 
     Route::group(['middleware' => 'abogado'], function () {
-        Route::resource('audiencia', AudienciaController::class);
-        Route::resource('cliente', ClienteController::class);
-        Route::resource('juicio', JuicioController::class);
+        Route::resource('audiencia', AudienciaController::class);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
+        Route::resource('cliente', ClienteController::class);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
+        Route::resource('juicio', JuicioController::class);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
 
         Route::get('juicio/cambiar_estado/{juicio_id}', [JuicioController::class,'cambiarEstado'])->name('juicio.cambiarEstado');
         Route::get('juicio/finalizar_juicio/{juicio_id}', [JuicioController::class,'finalizarJuicio'])->name('juicio.finalizarJuicio');
@@ -71,9 +70,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('/cantonesByProvincia', [ProvinciaController::class,'cantonesByProvincia'])->name('provincia.cantonesByProvincia');
         Route::get('/avancesByJuicio', [JuicioController::class,'avancesByJuicio'])->name('juicio.avancesByJuicio');
         Route::get('/avances/{juicio_id}', [JuicioController::class,'avancesByJuicio2'])->name('juicio.avancesByJuicio2');
-
         Route::post('/generarPdfSeguimiento', [JuicioController::class,'generarReporteSeguimiento'])->name('juicio.generarReporteSeguimiento');
-
     });
 
     // Route::group(['middleware' => 'cliente'], function () {
@@ -82,13 +79,17 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/crearCliente', [ClienteController::class,'storeAsync'])->name('cliente.storeAsync');
 
 
-    // --- Descomentar para prueba unitaria de Unidad Judicial y comentar en caso de no hacer pruebas
+    // --- Descomentar todo para prueba unitarias y comentar en caso de no hacer pruebas
 
+    Route::group(['middleware' => 'auth'], function () {
+        // Route::resource('unidad',UnidadJudicialController::class);
+        // Route::resource('administrador', AdministradorController::class);
+        // Route::resource('abogado', AbogadoController::class);
+        // Route::resource('cliente', ClienteController::class);
+        // Route::resource('audiencia', AudienciaController::class);
+        // Route::resource('juicio', JuicioController::class);
 
-
-    // Route::group(['middleware' => 'auth'], function () {
-    //      Route::resource('unidad',UnidadJudicialController::class);
-    //  });
+     });
 
 
 });

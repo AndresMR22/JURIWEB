@@ -38,7 +38,7 @@ class AbogadoController extends Controller
             "name"=>$request->nombres,
             "password"=>Hash::make($request->celular)
         ]);
-
+        
         $user->assignRole('Abogado');
 
         Abogado::create([
