@@ -22,12 +22,12 @@
       <a href="#" class="h1"><b>JURI</b>WEB</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Iniciar sesión</p>
+      <p class="login-box-msg">Recuperar Contraseña</p>
 
-      <form method="POST" action="{{ route('login') }}">
-        @csrf
+      <form >
+
         <div class="input-group mb-3">
-          <input type="email" name="email" placeholder="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email" autofocus>
+          <input type="email" name="email" id="email" placeholder="correo electrónico" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email" autofocus>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -39,56 +39,30 @@
                                     </span>
                                 @enderror
         </div>
-        <div class="input-group mb-3">
-          <input type="password"  placeholder="contraseña" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-                @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
 
-        </div>
-        <div class="row" style="display:flex; justify-content:center; ">
-          {{-- <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
+        <div class="input-group mb-3">
+            <input type="number" name="telefono" placeholder="593988703044" class="form-control @error('telefono') is-invalid @enderror" value="{{ old('telefono') }}" id="telefono" required autocomplete="telefono" autofocus>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                    <a id="enlaceEnviar">E</a>
+              </div>
             </div>
-          </div> --}}
+            @error('telefono')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+          </div>
+
+        <div class="row" style="display:flex; justify-content:center; ">
+
           <!-- /.col -->
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
+            <a onclick="enviar()" target="_blank"  class="btn btn-primary btn-block">Enviar</a>
           </div>
-          {{-- <div class="col-6">
-            <a href="{{route('register')}}" class="btn btn-info">Registrarse</a>
-          </div> --}}
           <!-- /.col -->
         </div>
       </form>
-
-      {{-- <div class="social-auth-links text-center mt-2 mb-3">
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div> --}}
-      <!-- /.social-auth-links -->
-
-      <p class="mb-1">
-        <a href="{{ route('recuperar.recuperarContrasenia') }}">Olvide mi contraseña</a>
-      </p>
-      {{-- <p class="mb-0">
-        <a href="{{route('register')}}" class="text-center">Registrarse</a>
-      </p> --}}
     </div>
     <!-- /.card-body -->
   </div>
@@ -102,5 +76,29 @@
 <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+<script>
+
+
+    function enviar()
+    {
+        let form = document.getElementById('formRecuperarContrasenia');
+        let telefono = document.getElementById('telefono').value
+        let email = document.getElementById('email').value
+        if(telefono == "" || email == '')
+        {
+            alert('Asegurese de ingresar el número de telefono y correo')
+        }else if(telefono.length!=12)
+        {
+            alert('La longitud del número de teléfono no es la correcta.')
+        }else
+        {
+            window.location.href='https://api.whatsapp.com/send?phone='+telefono+'&text=http://localhost:8000/actualizarClave/'+email;
+        }
+
+    }
+
+
+
+</script>
 </body>
 </html>

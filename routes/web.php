@@ -9,6 +9,7 @@ use App\Http\Controllers\UnidadJudicialController;
 use App\Http\Controllers\JuicioController;
 use App\Http\Controllers\ProvinciaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RecuperarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/recuperarcontrasena', [RecuperarController::class,'recuperarContrasenia'])->name('recuperar.recuperarContrasenia');
+Route::post('/recuperar', [RecuperarController::class,'recuperar'])->name('recuperar.recuperarContraseniaStore');
+Route::get('/actualizarClave/{email}', [RecuperarController::class,'actualizarClave'])->name('recuperar.actualizarClave');
+Route::post('/actualizarcontrasenia', [RecuperarController::class,'actualizarContrasenia'])->name('recuperar.actualizarContrasenia');
+
+
+
+
 Auth::routes();
+
+
 
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

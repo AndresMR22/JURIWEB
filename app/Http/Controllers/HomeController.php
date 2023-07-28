@@ -36,5 +36,10 @@ class HomeController extends Controller
         return view('dashboard',compact('administradores','abogados','clientes','juicios'));
     }
 
+    public function recuperarContrasenia()
+    {
+        return view('recuperarContrasenia');
+    }
+
 }
 
