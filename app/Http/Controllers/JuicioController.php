@@ -75,10 +75,11 @@ class JuicioController extends Controller
     {
         $archivos = null;
         $juicio = Juicio::find($juicio_id);
+        $abogado = Abogado::find($juicio->abogado_id);
         $cliente = $juicio->cliente()->first();
         $unidad = UnidadJudicial::find($juicio->unidad_juidicial_id);
         $archivos = $juicio->archivos()->get();
-        return view('admin.juicio.seguimiento',compact('juicio','unidad','archivos'));
+        return view('admin.juicio.seguimiento',compact('juicio','unidad','archivos','abogado'));
     }
 
     public function searchByCedula($cedula)
@@ -205,15 +206,22 @@ class JuicioController extends Controller
             $juicios = Juicio::where('abogado_id',$abogado->id)->get();
         }
 
+
+
         $abogados = Abogado::all();
         $clientes = Cliente::all();
         $unidades = UnidadJudicial::all();
-        // dd($juicios[0]->unidad_judicial);
+        foreach($juicios as $juicio)
+        {
+            $unidad = UnidadJudicial::where('id',$juicio->id)->first();
+            $juicio->setAttribute('unidad',$unidad);
+        }
         return view("admin.juicio.index",compact('juicios','abogados','clientes'));
     }
 
     public function cargarAvance(Request $request)
     {
+
         if ($request->hasFile('file'))
         {
             $juicio = Juicio::find($request->juicio_id);
@@ -225,13 +233,16 @@ class JuicioController extends Controller
                 $this->validate($request, [
                     'file'   => 'required',
                     'file' => 'mimes:png,jpg,jpeg,gif,pdf',
-                    'fecha'=>'required|date'
+                    'fecha'=>'required|date',
+                    'observacion'=>'required'
                 ],[
                     'file.required'=>'La imagen es requerida',
                     'file.image'=>'El archivo tienen que ser una imagen, o extension de documento permitida (jpg,jpeg,gif,pdf)',
                     'file.mimes'=>'La imagen debe ser tipo png, jpg o jpeg',
                     'fecha.required'=>'La fecha es requerida',
-                    'fecha.date'=>'La fecha no tiene el formato adecuado'
+                    'fecha.date'=>'La fecha no tiene el formato adecuado',
+                    'observacion.required'=>'La observación es requerida'
+
                     // 'file.dimensions'=>'La imagen no cumple con las dimensiones 800x200 mínimo; 1800x600 máximo',
                     // 'file.max'=>'La imagen supera el peso permitido (1Megabyte)'
                 ]);
@@ -251,13 +262,17 @@ class JuicioController extends Controller
                 $this->validate($request, [
                     'file'   => 'required',
                     'file' => 'mimes:docx,pdf,xls,xlsx',
-                    'fecha'=>'required|date'
+                    'fecha'=>'required|date',
+                    'observacion'=>'required'
+
                 ],[
                     'file.required'=>'La imagen es requerida',
                     'file.image'=>'El archivo tienen que ser una imagen, o extension de documento permitida (pdf,docx,xls,xlsx)',
                     'file.mimes'=>'La imagen debe ser tipo png, jpg o jpeg',
                     'fecha.required'=>'La fecha es requerida',
-                    'fecha.date'=>'La fecha no tiene el formato adecuado'
+                    'fecha.date'=>'La fecha no tiene el formato adecuado',
+                    'observacion.required'=>'La observación es requerida'
+
                     // 'file.dimensions'=>'La imagen no cumple con las dimensiones 800x200 mínimo; 1800x600 máximo',
                     // 'file.max'=>'La imagen supera el peso permitido (1Megabyte)'
                 ]);
@@ -276,13 +291,16 @@ class JuicioController extends Controller
             {
                 $this->validate($request,[
                     'file' =>'required|mimetypes:video/mp4,video|max:6000',
-                    'fecha'=>'required|date'
+                    'fecha'=>'required|date',
+                    'observacion'=>'required'
+
                 ],[
                     'file.required'=>'El archivo es requerido',
                     'file.mp4'=>'El video debe ser tipo mp4',
                     'file.max'=>'El video es muy pesado',
                     'fecha.required'=>'La fecha es requerida',
-                    'fecha.date'=>'La fecha no tiene el formato adecuado'
+                    'fecha.date'=>'La fecha no tiene el formato adecuado',
+                    'observacion.required'=>'La observación es requerida'
                 ]);
                 $elemento = Cloudinary::uploadVideo($file->getRealPath(), ['folder' => 'anexos']);
                   $public_id = $elemento->getPublicId();
@@ -298,13 +316,15 @@ class JuicioController extends Controller
         {
             $this->validate($request,[
                 'file' =>'required|mimetypes:video/mp4,video|max:6000',
-                'fecha'=>'required|date'
+                'fecha'=>'required|date',
+                'observacion'=>'required'
             ],[
                 'file.required'=>'El archivo es requerido',
                 'file.mp4'=>'El video debe ser tipo mp4',
                 'file.max'=>'El video es muy pesado',
                 'fecha.required'=>'La fecha es requerida',
-                'fecha.date'=>'La fecha no tiene el formato adecuado'
+                'fecha.date'=>'La fecha no tiene el formato adecuado',
+                'observacion.required'=>'La observación es requerida'
             ]);
         }
 

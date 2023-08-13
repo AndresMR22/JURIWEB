@@ -65,7 +65,7 @@
                   <tbody>
                     @foreach($audiencias as $key => $audiencia)
                   <tr>
-                    <td>{{ date('d-m-y h:i', strtotime($audiencia->fecha))}}</td>
+                    <td>{{ date('d-m-y H:i', strtotime($audiencia->fecha))}}</td>
                     <td>{{$audiencia->observacion}}</td>
                     <td>{{$audiencia->juicio->nro}}</td>
                     <td>{{$audiencia->juicio->materia}}</td>

@@ -142,24 +142,6 @@
                                                                         @enderror
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label for="inputName">Cedula</label>
-                                                                        <input required name="cedula" type="text"
-                                                                            onkeypress="return valideKey(event);"
-                                                                            id="cedula" value="{{ $abogado->cedula }}"
-                                                                            class="form-control @error('cedula') is-invalid @enderror">
-                                                                        @error('cedula')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                    {{-- <div class="form-group">
-                                  <label for="inputName">Correo</label>
-                                  <input name="correo" type="mail" id="correo" value="{{$abogado->correo}}" class="form-control">
-                                </div> --}}
-                                                                </div>
-                                                                <div class="fila">
-                                                                    <div class="form-group">
                                                                         <label for="inputName">Celular</label>
                                                                         <input required name="celular" type="tel"
                                                                             id="celular" value="{{ $abogado->celular }}" minlength="10"
@@ -171,9 +153,8 @@
                                                                             </span>
                                                                         @enderror
                                                                     </div>
-
-
-
+                                                                </div>
+                                                                <div class="fila">
                                                                     <div class="form-group">
                                                                         <label for="inputStatus">Genero</label>
                                                                         <select required id="genero" name="genero"
@@ -196,8 +177,7 @@
                                                                             </span>
                                                                         @enderror
                                                                     </div>
-                                                                </div>
-                                                                <div class="fila">
+
                                                                     <div class="form-group">
                                                                         <label for="inputStatus">Empresa</label>
                                                                         <select required id="empresa" name="empresa_id"
@@ -216,6 +196,9 @@
                                                                             </span>
                                                                         @enderror
                                                                     </div>
+                                                                </div>
+                                                                <div class="fila">
+
 
                                                                     <div class="fila">
                                                                         <div class="form-group">
@@ -230,28 +213,6 @@
                                                                             @enderror
                                                                         </div>
                                                                     </div>
-                                                                    {{-- <div class="form-group">
-                                                                        <label for="inputStatus">Estatus</label>
-                                                                        <select required id="estatus" name="estatus"
-                                                                            class="form-control custom-select @error('estatus') is-invalid @enderror">
-                                                                            <option selected disabled>Seleccionar estatus
-                                                                            </option>
-                                                                            <option value="1"
-                                                                                {{ $abogado->estatus == '1' ? 'selected' : '' }}>
-                                                                                Estatus 1</option>
-                                                                            <option value="2"
-                                                                                {{ $abogado->estatus == '2' ? 'selected' : '' }}>
-                                                                                Estatus 2</option>
-                                                                            <option value="3"
-                                                                                {{ $abogado->estatus == '3' ? 'selected' : '' }}>
-                                                                                Estatus 3</option>
-                                                                        </select>
-                                                                        @error('estatus')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                        @enderror
-                                                                    </div> --}}
                                                                 </div>
 
                                                             </div>

@@ -33,8 +33,9 @@ class UpdateAdministradorRequest extends FormRequest
                 ->mixedCase()// 1 may y 1 min
                 ->numbers()//al menos 1 num
                 ->symbols()//al menos 1 caracter especial
-                //->uncompromised() 
+                //->uncompromised()
             ],
+            'correo' => 'required|email'
         ];
     }
 }

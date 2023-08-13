@@ -12,6 +12,9 @@ use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Rules\ValidarCedula;
+use Carbon\Carbon;
+
 
 class ClienteController extends Controller
 {
@@ -39,6 +42,40 @@ class ClienteController extends Controller
 
     public function store(StoreClienteRequest $request)
     {
+
+        $vc = new ValidarCedula;
+        $msg1 =  $vc->passes('cedula',$request->cedula);
+
+        if($msg1 == false)
+        {
+            $campos = [
+                'cedula' => 'required',
+            ];
+            $mensaje = [
+                'required' => ':attribute no es valida',
+            ];
+            $request2 = new Request;
+            $request2['cedula'] = '';
+            $this->validate($request2, $campos, $mensaje);
+        }
+        $fechaActual = Carbon::now();
+        $fnacimiento = Carbon::parse($request->fnacimiento);
+        $diferencia = $fnacimiento->diffInYears($fechaActual);
+
+        if($diferencia < 18)
+        {
+            $campos = [
+                'fnacimiento' => 'required',
+            ];
+            $mensaje = [
+                'required' => 'El cliente debe ser mayor de edad',
+            ];
+            $request2 = new Request;
+            $request2['fnacimiento'] = '';
+            $this->validate($request2, $campos, $mensaje);
+        }
+
+
         $user = User::create([
             "name"=>$request->nombres,
             "email"=>$request->correo,
@@ -101,7 +138,16 @@ class ClienteController extends Controller
 
     public function buscarCliente(Request $request)
     {
-        $clientes = Cliente::where('nombres','LIKE','%'.$request->get('palabra').'%')->get();
+        $nombres = explode(" ", $request->get('palabra'));
+        // dd($nombres);
+        if(count($nombres)>1)
+        {
+            $clientes = Cliente::where('nombres','LIKE','%'.$nombres[0].'%')->orWhere('apellidos','LIKE','%'.$nombres[1].'%')->get();
+        }else
+        {
+            $clientes = Cliente::where('nombres','LIKE','%'.$nombres[0].'%')->orWhere('apellidos','LIKE','%'.$request->get('palabra').'%')->get();
+
+        }
         return $clientes;
     }
 

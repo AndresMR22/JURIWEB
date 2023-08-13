@@ -71,7 +71,7 @@
          </div>
          <div class="row">
            <div class="col-12 d-flex justify-content-center my-2" style="gap:20px;">
-             <input type="submit" value="Crear" class="btn btn-success float-right">
+             <input type="submit" value="Buscar" class="btn btn-success float-right">
            </div>
          </div>
        </section>

@@ -26,7 +26,17 @@
         }
     </style>
 
-
+@if (count($errors) > 0)
+<div class="alert alert-danger" role="alert">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>
+                {{ $error }}
+            </li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
     <!-- Main content -->
     <section class="content">
@@ -85,13 +95,35 @@
 
                                     <div class="form-group">
                                         <label for="inputName">Contraseña</label>
-                                        <input name="password" type="text" id="password" value="" class="form-control @error('password') is-invalid @enderror">
-                                        @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        <div style="display:flex; justify-content:space-between; align-items:start;">
+                                            <div style="width:100%; margin-right:5px;">
+                                                <input type="password" name="password" id="password{{ $key }}" value="{{ old('password') }}"
+                                                    style="margin-right:5px;" class="form-control @error('password') is-invalid @enderror">
+                                                    @error('password')
+                                                    <span  class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div>
+                                                <a class="btn btn-info" onclick="verContrasenia({{ $key }})" title="Ver contraseña"><i class="fas fa-eye"></i></a>
+                                            </div>
+                                        </div>
                                       </div>
+                                </div>
+
+                                <div class="fila">
+                                    <div class="form-group">
+                                        <label for="inputName">Correo</label>
+                                        <input name="correo" type="email" id="correo" value="{{$admin->user->email}}" class="form-control @error('correo') is-invalid @enderror">
+                                        @error('correo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                    </div>
+
+
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
@@ -165,5 +197,24 @@
         console.log(form)
         form.submit();
     }
+
+    var show = false;
+    function verContrasenia(id)
+    {
+        if(show )
+        {
+            // console.log('pasando a pass', document.getElementById('password'))
+            document.getElementById('password'+id).type = "password";
+            show = false;
+        }
+        else
+        {
+            // console.log('pasando a texto', document.getElementById('password'))
+            document.getElementById('password'+id).type = "text";
+            show = true;
+        }
+    }
+
   </script>
+
 @endsection

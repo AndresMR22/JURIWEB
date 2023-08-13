@@ -61,13 +61,21 @@
 
                                 <div class="form-group">
                                     <label for="inputName">Contraseña</label>
-                                    <input type="password" name="password" id="password"
-                                        class="form-control @error('password') is-invalid @enderror">
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <div style="display:flex; justify-content:space-between; align-items:start;">
+                                        <div style="width:100%; margin-right:5px;">
+                                            <input type="password" name="password" id="password" value="{{ old('password') }}"
+                                                style="margin-right:5px;" class="form-control @error('password') is-invalid @enderror">
+                                                @error('password')
+                                                <span  class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-info" onclick="verContrasenia()" title="Ver contraseña"><i class="fas fa-eye"></i></a>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -85,4 +93,21 @@
 
         </section>
     </div>
+
+    <script>
+        var show = false;
+        function verContrasenia()
+        {
+            if(show)
+            {
+                document.getElementById('password').type = "password";
+                show = false;
+            }
+            else
+            {
+                document.getElementById('password').type = "text";
+                show = true;
+            }
+        }
+    </script>
 @endsection

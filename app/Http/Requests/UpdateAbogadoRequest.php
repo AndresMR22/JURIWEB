@@ -23,7 +23,7 @@ class UpdateAbogadoRequest extends FormRequest
             'correo'    => 'required|email',
             'genero' =>'required|string|max:15',
             // 'estatus' =>'required|string',
-            'cedula' => 'required|string|min:10|max:10',
+            // 'cedula' => 'required|string|min:10|max:10',
         ];
     }
 }

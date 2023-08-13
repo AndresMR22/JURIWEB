@@ -99,7 +99,7 @@
                   </div>
                   <div class="form-group">
                     <label for="inputName">Celular</label>
-                    <input name="celular" value="{{ old('celular') }}" type="number" id="celular" minlength="10" maxlength="10" class="form-control @error('celular') is-invalid @enderror">
+                    <input name="celular" onkeypress="return valideKey(event);" value="{{ old('celular') }}" type="text" id="celular" minlength="10" maxlength="10" class="form-control @error('celular') is-invalid @enderror">
                     @error('celular')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

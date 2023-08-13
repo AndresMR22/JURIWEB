@@ -23,6 +23,40 @@ class AbogadoController extends Controller
         return view('admin.abogado.index',compact('abogados','empresas'));
     }
 
+    public function perfilAbogado()
+    {
+
+        return view('admin.abogado.perfil');
+    }
+
+    public function editarPerfil(Request $request)
+    {
+        if($request->password != $request->password_confirm)
+        {
+            Alert::toast('Contraseñas no coinciden', 'info');
+            return back();
+        }
+
+        $this->validate($request, [
+            'password'   => 'required',
+            'password_confirm' => 'required'
+        ],[
+            'password.required'=>'La contraseña es requerida',
+            'password_confirm.required'=>'La contraseña de confirmación es requerida',
+            // 'file.dimensions'=>'La imagen no cumple con las dimensiones 800x200 mínimo; 1800x600 máximo',
+            // 'file.max'=>'La imagen supera el peso permitido (1Megabyte)'
+        ]);
+
+        $user = User::find(auth()->user()->id);
+        $user->update(
+            [
+            "password"=>Hash::make($request->password)
+            ]);
+
+        Alert::toast('Contraseña actualizada', 'success');
+        return back();
+    }
+
 
     public function create()
     {
@@ -33,13 +67,33 @@ class AbogadoController extends Controller
 
     public function store(StoreAbogadoRequest $request)
     {
+
+        $vc = new ValidarCedula;
+        $msg1 =  $vc->passes('cedula',$request->cedula);
+
+        if($msg1 == false)
+        {
+            $campos = [
+                'cedula' => 'required',
+            ];
+            $mensaje = [
+                'required' => ':attribute no es valida',
+            ];
+            $request2 = new Request;
+            $request2['cedula'] = '';
+            $this->validate($request2, $campos, $mensaje);
+        }
+
         $user = User::create([
             "email"=>$request->correo,
             "name"=>$request->nombres,
             "password"=>Hash::make($request->celular)
         ]);
-        
+
         $user->assignRole('Abogado');
+
+
+
 
         Abogado::create([
             "nombres"=>$request->nombres,
@@ -97,7 +151,7 @@ class AbogadoController extends Controller
 
 
         $abogado->update([
-            "cedula"=>$request->cedula,
+            // "cedula"=>$request->cedula,
             "nombres"=>$request->nombres,
             "apellidos"=>$request->apellidos,
             "celular"=>$request->celular,

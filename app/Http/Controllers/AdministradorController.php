@@ -48,7 +48,8 @@ class AdministradorController extends Controller
         $user->update(
             [
             "name"=>$request->username,
-            "password"=>Hash::make($request->password)
+            "password"=>Hash::make($request->password),
+            "email"=>$request->correo
             ]
         );
         Alert::toast('Administrador actualizado', 'success');

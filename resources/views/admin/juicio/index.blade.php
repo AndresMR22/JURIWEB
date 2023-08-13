@@ -75,7 +75,7 @@
                                             @endif
                                             <th>Abogado</th>
                                             <th>Cliente</th>
-                                            {{-- <th>Unidad</th> --}}
+                                            <th>Unidad</th>
                                             @if (auth()->user()->hasRole('Abogado'))
                                                 <th>Acciones</th>
                                             @endif
@@ -113,7 +113,7 @@
                                                 @endif
                                                 <td>{{ $juicio->abogado->nombres }}</td>
                                                 <td>{{ $juicio->cliente->nombres }}</td>
-                                                {{-- <td>{{isset($juicio->unidad_judicial) ? 'si' : 'no'}}</td> --}}
+                                                <td>{{ isset($juicio->unidad->nombre) ? $juicio->unidad->nombre : 'Sin unidad' }}</td>
                                                 @if($juicio->estatus != '3')
                                                 @if (auth()->user()->hasRole('Abogado'))
                                                     <td>
@@ -320,7 +320,7 @@
                                                                 <div class="fila">
                                                                     <div class="form-group">
                                                                         <label for="inputName">Observación</label>
-                                                                        <textarea class="form-control" name="observacion" id="observacion">{{ old('observacion') }}</textarea>
+                                                                        <textarea  class="form-control  @error('observacion') is-invalid @enderror" name="observacion" id="observacion">{{ old('observacion') }}</textarea>
                                                                         @error('observacion')
                                                                             <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
@@ -332,7 +332,7 @@
                                                                 <input type="hidden" name="juicio_id"
                                                                     value="{{ $juicio->id }}">
 
-                                                                <div class="titulo_archivos_subidos">
+                                                                {{-- <div class="titulo_archivos_subidos">
                                                                     <h5 class="text-center">Archivos subidos</h5>
                                                                 </div>
                                                                 <div class="archivos "
@@ -363,7 +363,7 @@
                                                                         </div>
                                                                     @endforeach
 
-                                                                </div>
+                                                                </div> --}}
                                                                 <div class="modal-footer justify-content-between">
                                                                     <a onclick="subir({{ $juicio->id }})"
                                                                         class="btn btn-primary">Subir</a>

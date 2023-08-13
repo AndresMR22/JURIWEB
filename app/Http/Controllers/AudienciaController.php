@@ -14,15 +14,11 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Evento;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Carbon\Carbon;
 
 
 class AudienciaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $audiencias = Audiencia::all();
@@ -43,11 +39,7 @@ class AudienciaController extends Controller
         return view('admin.audiencia.calendario',compact('juicios'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
 
@@ -63,15 +55,18 @@ class AudienciaController extends Controller
         return view('admin.audiencia.create',compact('juicios'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAudienciaRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreAudienciaRequest $request)
     {
         $fecha = $request->get('fechahora');
+        $existe = $this->existeYaAudiencia($fecha);
+
+        if($existe)
+        {
+            Alert::toast('Ya existe una audiencia para esa fecha', 'info');
+            return back();
+        }
+
+
         Audiencia::create([
             "fecha"=>$fecha,
             "observacion"=>$request->get('observacion'),
@@ -91,41 +86,40 @@ class AudienciaController extends Controller
         return redirect()->route('audiencia.index');
     }
 
+    public function existeYaAudiencia($fecha1)
+    {
+        $audiencias = Audiencia::all();
+
+        $fecha1 = Carbon::parse($fecha1);
+        $fecha1 = $fecha1->format('Y-m-d');
+        $band = false;
+        foreach($audiencias as $audiencia)
+        {
+            $fecha = Carbon::parse($audiencia->fecha);
+            $fecha = $fecha->format('Y-m-d');
+            if($fecha == $fecha1)
+            {
+                $band = true;
+            }
+        }
+        return $band;
+    }
+
     public function verDetalle(Request $request)
     {
         $id = $request->get('id');
+        $hora = $request->get('hora');
         $juicio = Juicio::find($id);
         $abogado = Abogado::find($juicio->abogado_id);
         $cliente = Cliente::find($juicio->cliente_id);
-        $audiencia = Audiencia::where('juicio_id',$juicio->id)->first();
+        // dd($hora);
+        $audiencia = DB::select('select * from audiencias where DATE_FORMAT(fecha, "%H:%i") = ? and juicio_id = ? ',[$hora, $id]);
         $data = collect();
         $data->push($juicio);
-        $data->push($audiencia);
+        $data->push($audiencia[0]);
         $data->push($abogado);
         $data->push($cliente);
         return $data;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Audiencia  $audiencia
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Audiencia $audiencia)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Audiencia  $audiencia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Audiencia $audiencia)
-    {
-        //
     }
 
 
@@ -152,6 +146,11 @@ class AudienciaController extends Controller
 
     public function destroy(Audiencia $audiencia, $id)
     {
+
+        $audiencia = Audiencia::find($id);
+        $fecha = Carbon::parse($audiencia->fecha);
+        $fecha = $fecha->format('Y-m-d H:i:s');
+        DB::table('eventos')->where('start', $fecha)->delete();
         Audiencia::destroy($id);
         Alert::toast('Audiencia eliminada', 'success');
         return back();

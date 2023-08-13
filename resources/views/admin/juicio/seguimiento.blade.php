@@ -51,14 +51,15 @@
                     <br>
                     <b>Materia:</b><p id="valorMateria">{{ $juicio->materia }}</p><br>
                     <b>Proceso Judicial:</b><p id="valorProcesoJudicial">{{ $juicio->estadop }}</p><br>
-                    <b>Fecha:</b> <p id="valorFecha">{{ $juicio->fecha }}</p>
+                    <b>Fecha:</b> <p id="valorFecha">{{ $juicio->fecha }}</p><br>
+                    <b>Abogado:</b> <p id="valorAbogado">{{ $abogado->nombres.' '.$abogado->apellidos }}</p>
                   </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <br>
                     <b>Cliente:</b> <p id="valorCliente">{{ $juicio->cliente->nombres. ' '.$juicio->cliente->apellidos }}</p><br>
                     <b>Unidad Judicial:</b><p id="valorUnidadJudicial">{{ $unidad->nombre }}</p><br>
-                    <b>Estado de Juicio:</b> <p id="valorEstadoJuicio">{{ $juicio->estatus == 1 ? 'En proceso' : 'Finalizado' }}</p>
+                    <b>Estado de Juicio:</b> <p id="valorEstadoJuicio">{{ $juicio->estatus == 1 ? 'En proceso' : ($juicio->estatus == 2 ? 'Archivado' : 'Finalizado')  }}</p>
                 </div>
 
                 <div class="avances_by_juicio w-100">
@@ -188,7 +189,7 @@
 
                 document.getElementById('valorCliente').textContent = res[0].cliente.nombres+' '+res[0].cliente.apellidos
                 document.getElementById('valorUnidadJudicial').textContent = res[0].unidad.nombre
-                document.getElementById('valorEstadoJuicio').textContent = res[0].juicio.estatus==1? 'En proceso' :'Finalizado'
+                document.getElementById('valorEstadoJuicio').textContent = res[0].juicio.estatus==1? 'En proceso' : (res[0].juicio.estatus==2 ? 'Archivado' : 'Finalizado')
 
                 // <b>Materia:</b><p id="valorMateria">-</p><br>
                 //     <b>Proceso Judicial:</b><p id="valorProcesoJudicial">-</p><br>

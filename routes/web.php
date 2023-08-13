@@ -57,6 +57,8 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::resource('audiencia', AudienciaController::class);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
         Route::resource('cliente', ClienteController::class);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
         Route::resource('juicio', JuicioController::class);//Comentar en caso de querer probar Prueba Unitaria. (JuicioTest.php)
+        Route::get('/perfil-abogado',[AbogadoController::class,'perfilAbogado'])->name('abogado.perfil');
+        Route::post('/perfil-abogado-guardar',[AbogadoController::class,'editarPerfil'])->name('abogado.editarPerfil');
 
         Route::get('juicio/cambiar_estado/{juicio_id}', [JuicioController::class,'cambiarEstado'])->name('juicio.cambiarEstado');
         Route::get('juicio/finalizar_juicio/{juicio_id}', [JuicioController::class,'finalizarJuicio'])->name('juicio.finalizarJuicio');

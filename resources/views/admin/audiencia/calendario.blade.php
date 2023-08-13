@@ -113,7 +113,7 @@
   }
         });
         calendar.render();
-
+        // fc-daygrid-event
         document.querySelectorAll('.fc-event-title').forEach((item,i)=>{
            item.addEventListener('click',verDetalle)
         })
@@ -123,15 +123,18 @@
 
       function verDetalle(e)
       {
+
         $('#modal-default').show();
-        console.log(e.target.textContent)
         let idJuicio = e.target.textContent;
+        let hora = e.target.parentNode.querySelector('.fc-event-time').textContent
+        console.log(hora)
         let id = idJuicio.substr(10)
         $.ajax({
                 url: "{{ route('audiencia.verDetalle') }}",
                 dataType: "json",
                 data: {
-                    id
+                    id,
+                    hora
                 }
             }).done(function(res) {
                 document.getElementById('fecha').value = res[1].fecha;

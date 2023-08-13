@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">Celular</label>
-                                    <input name="celular" type="number" id="celular" minlength="10" maxlength="10" value="{{ old('celular') }}"
+                                    <input name="celular" onkeypress="return valideKey(event);" type="text" id="celular" minlength="10" maxlength="10" value="{{ old('celular') }}"
                                         class="form-control @error('celular') is-invalid @enderror">
                                     @error('celular')
                                         <span class="invalid-feedback" role="alert">
@@ -210,6 +210,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('btn_enviar').addEventListener('click', enviarForm);
             document.getElementById('cedula').addEventListener('change', validarCedula)
+            if(document.getElementById('cedula').value != '')
+        {
+            validar(document.getElementById('cedula').value)
+        }
         })
 
         function valideKey(evt) {
