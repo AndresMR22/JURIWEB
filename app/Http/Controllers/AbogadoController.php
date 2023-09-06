@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Abogado;
 use App\Models\Empresa;
+use App\Models\Cliente;
+use App\Models\Juicio;
+use App\Models\UnidadJudicial;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreAbogadoRequest;
@@ -16,6 +19,51 @@ use RealRashid\SweetAlert\Facades\Alert;
 class AbogadoController extends Controller
 {
 
+    public function verJuicios(Request $request)
+    {
+        $abogado = Abogado::find($request->get('idAbogado'));
+        $juicios = $abogado->juicios()->get();
+        foreach($juicios as $juicio)
+        {
+            $idCliente = $juicio->cliente_id;
+            $idUnidad = $juicio->unidad_juidicial_id;
+            $cliente = Cliente::find($idCliente);
+            $unidad = UnidadJudicial::find($idUnidad);
+            $juicio->setAttribute('cliente',$cliente);
+            $juicio->setAttribute('unidad',$unidad);
+        }
+        return $juicios;
+    }
+
+    public function reasignarJuicioStore(Request $request)
+    {
+
+        $id_abogado_inactivo = $request->get('abogado_inactivo');
+        $id_abogado_activo = $request->get('abogado_activo');
+
+        $campos = [
+            'abogado_inactivo' => 'required',
+            'abogado_activo' => 'required',
+        ];
+        $mensaje = [
+            'required' => ':attribute es requerido',
+        ];
+        $this->validate($request, $campos, $mensaje);
+
+       // dd($id_abogado_activo, $id_abogado_inactivo);
+
+        $juicios_abg_ina = Juicio::where('abogado_id',$id_abogado_inactivo)->get();
+       // dd($juicios_abg_ina);
+        foreach($juicios_abg_ina as $juicio)
+        {
+            $juicio->update([
+                "abogado_id"=>$id_abogado_activo
+            ]);
+        }
+        Alert::toast('Juicios Reasignados', 'success');
+        return back();
+    }
+
     public function index()
     {
         $abogados = Abogado::all();
@@ -27,6 +75,14 @@ class AbogadoController extends Controller
     {
 
         return view('admin.abogado.perfil');
+    }
+
+    public function reasignarJuicio()
+    {
+        $abogadosactivos = Abogado::where('estatus','1')->get();
+        $abogadosinactivos = Abogado::where('estatus','2')->get();
+
+        return view('admin.abogado.reasignarJuicio',compact('abogadosactivos','abogadosinactivos'));
     }
 
     public function editarPerfil(Request $request)

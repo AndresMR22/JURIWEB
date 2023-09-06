@@ -51,6 +51,10 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::resource('abogado', AbogadoController::class);//Comentar en caso de querer probar Prueba Unitaria. (AbogadoTest.php)
         Route::resource('unidad', UnidadJudicialController::class);//Comentar en caso de querer probar Prueba Unitaria. (UnidadJudicialTest.php)
         Route::get('abogado/cambiar_estado/{abogado_id}', [AbogadoController::class,'cambiarEstado'])->name('abogado.cambiarEstado');
+        Route::get('reasignar-juicio',[AbogadoController::class,'reasignarJuicio'])->name('abogado.reasignarJuicio');
+        Route::post('reasignar-juicio-store',[AbogadoController::class,'reasignarJuicioStore'])->name('abogado.reasignarJuicioStore');
+        Route::get('ver-juicios-por-abogado',[AbogadoController::class,'verJuicios'])->name('abogado.verJuicios');
+
     });
 
     Route::group(['middleware' => 'abogado'], function () {
