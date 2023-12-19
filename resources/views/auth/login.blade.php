@@ -1,106 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
+<!-- Mirrored from www.urbanui.com/melody/template/pages/samples/login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Sep 2018 06:08:53 GMT -->
 <head>
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>JURIWEB</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="{{asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{{asset('login/vendors/iconfonts/font-awesome/css/all.min.css')}}">
+  <link rel="stylesheet" href="{{asset('login/vendors/css/vendor.bundle.base.css')}}">
+  <link rel="stylesheet" href="{{asset('login/vendors/css/vendor.bundle.addons.css')}}">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ asset('login/css/style.css')}}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{ asset('login/images/favicon.png')}}" />
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <a href="#" class="h1"><b>JURI</b>WEB</a>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+        <div class="row flex-grow">
+          <div class="col-lg-6 d-flex align-items-center justify-content-center">
+            <div class="auth-form-transparent text-left p-3">
+              <div class="brand-logo">
+                <img src="{{ asset('login/images/logo.svg')}}" alt="logo">
+              </div>
+              <h4>Bienvenido!</h4>
+              <h6 class="font-weight-light"></h6>
+              <form class="pt-3" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="form-group">
+                  <label for="exampleInputEmail">Correo electrónico</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="fa fa-user text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="email" name="email" class="form-control form-control-lg border-left-0 @error('email') is-invalid @enderror" id="email" placeholder="">
+                  </div>
+                  @error('email')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                 @enderror
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword">Contraseña</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="fa fa-lock text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="password" class="form-control form-control-lg border-left-0 @error('password') is-invalid @enderror" name="password" id="" placeholder="">
+                  </div>
+                  @error('password')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                    @enderror
+                </div>
+                {{-- <div class="my-2 d-flex justify-content-between align-items-center">
+                  <div class="form-check">
+                    <label class="form-check-label text-muted">
+                      <input type="checkbox" class="form-check-input">
+                      Keep me signed in
+                    </label>
+                  </div>
+                  <a href="#" class="auth-link text-black">Forgot password?</a>
+                </div> --}}
+                <div class="my-3">
+                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" >Iniciar sesión</button>
+                </div>
+                {{-- <div class="mb-2 d-flex">
+                  <button type="button" class="btn btn-facebook auth-form-btn flex-grow mr-1">
+                    <i class="fab fa-facebook-f mr-2"></i>Facebook
+                  </button>
+                  <button type="button" class="btn btn-google auth-form-btn flex-grow ml-1">
+                    <i class="fab fa-google mr-2"></i>Google
+                  </button>
+                </div> --}}
+                <div class="text-center mt-4 font-weight-light">
+                  No tiene cuenta? <a href="{{ route('register') }}" class="text-primary">Registrese</a>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-6 login-half-bg d-flex flex-row">
+            <p class="text-white font-weight-medium text-center flex-grow align-self-end"></p>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
     </div>
-    <div class="card-body">
-      <p class="login-box-msg">Iniciar sesión</p>
-
-      <form method="POST" action="{{ route('login') }}">
-        @csrf 
-        <div class="input-group mb-3">
-          <input type="email" name="email" placeholder="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email" autofocus>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-          @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-        </div>
-        <div class="input-group mb-3">
-          <input type="password"  placeholder="contraseña" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-                @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-
-        </div>
-        <div class="row" style="display:flex; justify-content:center; ">
-          {{-- <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div> --}}
-          <!-- /.col -->
-          <div class="col-6">
-            <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
-          </div>
-          <div class="col-6">
-            <a href="{{route('register')}}" class="btn btn-info">Registrarse</a>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
-
-      {{-- <div class="social-auth-links text-center mt-2 mb-3">
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div> --}}
-      <!-- /.social-auth-links -->
-
-      {{-- <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
-      </p> --}}
-      {{-- <p class="mb-0">
-        <a href="{{route('register')}}" class="text-center">Registrarse</a>
-      </p> --}}
-    </div>
-    <!-- /.card-body -->
+    <!-- page-body-wrapper ends -->
   </div>
-  <!-- /.card -->
-</div>
-<!-- /.login-box -->
-
-<!-- jQuery -->
-<script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{{ asset('login/vendors/js/vendor.bundle.base.js')}}"></script>
+  <script src="{{ asset('login/vendors/js/vendor.bundle.addons.js')}}"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="{{ asset('login/js/off-canvas.js')}}"></script>
+  <script src="{{ asset('login/js/hoverable-collapse.js')}}"></script>
+  <script src="{{ asset('login/js/misc.js')}}"></script>
+  <script src="{{ asset('login/js/settings.js')}}"></script>
+  <script src="{{ asset('login/js/todolist.js')}}"></script>
+  <!-- endinject -->
 </body>
+
+
+<!-- Mirrored from www.urbanui.com/melody/template/pages/samples/login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Sep 2018 06:08:53 GMT -->
 </html>

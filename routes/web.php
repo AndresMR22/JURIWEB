@@ -54,6 +54,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::get('reasignar-juicio',[AbogadoController::class,'reasignarJuicio'])->name('abogado.reasignarJuicio');
         Route::post('reasignar-juicio-store',[AbogadoController::class,'reasignarJuicioStore'])->name('abogado.reasignarJuicioStore');
         Route::get('ver-juicios-por-abogado',[AbogadoController::class,'verJuicios'])->name('abogado.verJuicios');
+        Route::get('ver-info-juicio',[JuicioController::class,'verInfo'])->name('juicio.infoJuicio');
 
     });
 

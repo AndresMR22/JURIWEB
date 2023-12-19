@@ -228,12 +228,7 @@
                   <p>Listar</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{route('abogado.reasignarJuicio')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Reasignar juicio</p>
-                </a>
-              </li>
+
             </ul>
           </li>
 
@@ -354,6 +349,13 @@
                 <a href="{{route('juicio.busquedaSeguimiento')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Seguimiento</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('abogado.reasignarJuicio')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reasignar juicio</p>
                 </a>
               </li>
 

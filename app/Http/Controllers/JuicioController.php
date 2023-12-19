@@ -219,6 +219,16 @@ class JuicioController extends Controller
         return view("admin.juicio.index",compact('juicios','abogados','clientes'));
     }
 
+    public function verInfo(Request $request)
+    {
+        // dd($request->get('juicio_id'));
+        $juicio = Juicio::find($request->get('juicio_id'));
+        $abogado = Abogado::find($juicio->abogado_id);
+        $abogados_activos = Abogado::where('estatus','1')->where('id','<>',$juicio->abogado_id)->get();
+        // dd($abogado,$abogados_activos);
+        return array('abogado'=>$abogado, 'abogados_activos'=>$abogados_activos);
+    }
+
     public function cargarAvance(Request $request)
     {
 

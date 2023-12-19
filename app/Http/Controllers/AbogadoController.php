@@ -37,7 +37,7 @@ class AbogadoController extends Controller
 
     public function reasignarJuicioStore(Request $request)
     {
-
+        // dd($request);
         $id_abogado_inactivo = $request->get('abogado_inactivo');
         $id_abogado_activo = $request->get('abogado_activo');
 
@@ -81,8 +81,8 @@ class AbogadoController extends Controller
     {
         $abogadosactivos = Abogado::where('estatus','1')->get();
         $abogadosinactivos = Abogado::where('estatus','2')->get();
-
-        return view('admin.abogado.reasignarJuicio',compact('abogadosactivos','abogadosinactivos'));
+        $juicios = Juicio::where('estatus','1')->orWhere('estatus','2')->get();
+        return view('admin.abogado.reasignarJuicio',compact('abogadosactivos','abogadosinactivos','juicios'));
     }
 
     public function editarPerfil(Request $request)
