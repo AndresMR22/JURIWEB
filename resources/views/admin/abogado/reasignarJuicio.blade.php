@@ -51,7 +51,7 @@
                         <select id="juicio_id" name="juicio_id" class="form-control custom-select">
                           <option selected disabled>Seleccionar juicio</option>
                           @foreach($juicios as $juicio)
-                          <option value="{{ $juicio->id }}">{{ $juicio->materia }}</option>
+                          <option value="{{ $juicio->id }}">{{ $juicio->nro }}</option>
                           @endforeach
                         </select>
                     </div>
