@@ -36,7 +36,7 @@
                 <div class="col-2">
                     <form method="POST" id="formReporteSeguimiento" action ="{{ route('juicio.generarReporteSeguimiento') }}">
                         @csrf
-                        <a onclick="generarReporte()" class="btn btn-outline-danger" title="Generar reporte"><i class="fas fa-file-pdf"></i></a>
+                        <a onclick="generarReporte()" target="_blank" class="btn btn-outline-danger" title="Generar reporte"><i class="fas fa-file-pdf"></i></a>
                         <input type="hidden" name="juicio_id" id="juicio_id" value="{{ $juicio->id }}">
                     </form>
 

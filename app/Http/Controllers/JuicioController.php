@@ -16,7 +16,7 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use PDF;
-
+use Dompdf\Options;
 
 
 class JuicioController extends Controller
@@ -167,6 +167,7 @@ class JuicioController extends Controller
         $cliente = $juicio->cliente()->first();
         $unidad = UnidadJudicial::find($juicio->unidad_juidicial_id);
         $archivos = $juicio->archivos()->get();
+        
         $pdf = PDF::loadView('admin.pdf.seguimiento', compact('juicio','cliente','unidad','archivos','abogado')); // se carga la data en la plantilla
         return $pdf->stream('Reporte de seguimiento.pdf'); //retorna el pdf con el nombre compra_creditos.pdf
     }

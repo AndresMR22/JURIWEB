@@ -46,9 +46,9 @@
                             <div class="card-header">
                                 <h3 class="card-title">Listado</h3>
                                 <div class="botones_filtros">
-                                    <a class="btn btn-warning" href="{{ route('juicio.juicioByStatus','P') }}" title="En proceso">P</a>
-                                    <a class="btn btn-primary" href="{{ route('juicio.juicioByStatus','A') }}" title="Archivado">A</a>
-                                    <a class="btn btn-success" href="{{ route('juicio.juicioByStatus','F') }}" title="Finalizado">F</a>
+                                    <a class="btn btn-success" href="{{ route('juicio.juicioByStatus','P') }}" title="En proceso">En Proceso</a>
+                                    <a class="btn btn-warning" href="{{ route('juicio.juicioByStatus','A') }}" title="Archivado">Archivado</a>
+                                    <a class="btn btn-danger" href="{{ route('juicio.juicioByStatus','F') }}" title="Finalizado">Finalizado</a>
 
                                 </div>
                             </div>
@@ -92,8 +92,8 @@
                                                 <td>
                                                     <a title="{{ $juicio->estatus == '1' ? 'En proceso' : ($juicio->estatus == '2' ? 'Archivado' : 'Finalizado') }}"
                                                         href="{{ route('juicio.cambiarEstado', $juicio->id) }}"
-                                                        class="btn btn-{{ $juicio->estatus == '1' ? 'warning' : ($juicio->estatus == '2' ? 'primary' : 'success') }}"><i
-                                                            class="fas fa-arrow-right"></i></a>
+                                                        class="btn btn-{{ $juicio->estatus == '1' ? 'success' : ($juicio->estatus == '2' ? 'danger' : 'warning') }}"><i
+                                                        class="fas fa-arrow-right"></i></a>
 
                                                             @if($juicio->estatus != '3')
                                                     <a title="Finalizar Juicio"

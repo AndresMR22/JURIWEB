@@ -68,26 +68,11 @@
                       @enderror
                   </div>
                 </div>
-                {{-- <div class="my-2 d-flex justify-content-between align-items-center">
-                  <div class="form-check">
-                    <label class="form-check-label text-muted">
-                      <input type="checkbox" class="form-check-input">
-                      Keep me signed in
-                    </label>
-                  </div>
-                  <a href="#" class="auth-link text-black">Forgot password?</a>
-                </div> --}}
+            
                 <div class="my-3">
                   <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style="background: #463019; border-color:black;" type="submit" >Iniciar sesión</button>
                 </div>
-                {{-- <div class="mb-2 d-flex">
-                  <button type="button" class="btn btn-facebook auth-form-btn flex-grow mr-1">
-                    <i class="fab fa-facebook-f mr-2"></i>Facebook
-                  </button>
-                  <button type="button" class="btn btn-google auth-form-btn flex-grow ml-1">
-                    <i class="fab fa-google mr-2"></i>Google
-                  </button>
-                </div> --}}
+
                 <div class="text-center mt-4 font-weight-light" style="color:black !important;">
                   No tiene cuenta? <a href="{{ route('register') }}" class="text-primary" style="color:black !important;">Registrese</a>
                 </div>
